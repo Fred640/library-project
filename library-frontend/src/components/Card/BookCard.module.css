@@ -1,0 +1,129 @@
+.card {
+    width: 185px;
+    height: 260px;
+    padding-left: 0;
+    display: block;
+    margin: 10px;
+    border-radius: 20px;
+}
+
+.card:hover {
+    transition: all 300ms;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px;
+}
+
+.title {
+    width: 100%;
+    background-color: rgb(166, 213, 254);
+    height: 32%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    position: relative;
+}
+
+.titleText {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin:3px;
+}
+
+.list {
+    all: unset;
+    padding-top: 15px;
+}
+
+.body {
+    background-color: rgb(242, 244, 232);
+    height: 68%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.param {
+    padding-left: 0;
+}
+
+@media (min-width: 270px) {
+    .card{
+        font-size: 9px;
+        width: 80px;
+        height: 130px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@media (min-width: 315px) {
+    .card{
+        font-size: 10px;
+        width: 100px;
+        height: 145px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@media (min-width: 400px) {
+    .card{
+        font-size: small;
+        width: 130px;
+        height: 190px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+
+@media (min-width: 475px) {
+    .card{
+        font-size: small;
+        width: 150px;
+        height: 180px;
+        margin: 1px;
+    }
+}
+
+
+
+@media (min-width: 576px) {
+    .card{
+        font-size: small;
+        width: 110px;
+        height: 150px;
+    }
+}
+
+@media (min-width: 768px) {
+    .card{
+        font-size: small;
+        width: 145px;
+        height: 200px;
+    }
+}
+
+@media (min-width: 992px) {
+    .card{
+        font-size: 11px;
+        width: 150px;
+        height: 220px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card{
+        font-size: 13px;
+        width: 170px;
+        height: 250px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .card{
+        font-size: 14px;
+        width: 185px;
+        height: 260px;
+    }
+}

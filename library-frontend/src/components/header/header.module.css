@@ -1,0 +1,65 @@
+.mainDiv {
+    justify-content: center;
+    display: flex;
+    border-inline: 2px solid black;
+    border-bottom: 2px solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+
+
+
+.searchButton {
+    position: absolute;
+    left: 10px;
+    top: 28px;
+}
+
+@media (min-width: 100px) {
+    .profileDiv {
+        justify-content: center;
+    }
+        .searchButton {
+        top: 85px; 
+        left: 5px;
+    }
+}
+
+@media (min-width: 576px) {
+    .profileDiv {
+        justify-content: center;
+    }
+    .searchButton {
+        top: 50px;
+        left: 5px;
+    }
+}
+
+@media (min-width: 992px) {
+    .profileDiv {
+        justify-content: center;
+    }
+    .searchButton {
+        top: 30px;
+        left: 5px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .profileDiv {
+        justify-content: center;
+    }
+    .searchButton {
+        top: 16px;
+        left: 5px;
+    }
+}
+
+.headerButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,21 @@
+.dropdownList {
+    overflow: hidden;
+    margin: 10px 0;    
+}
+
+.dropdownToogle {
+    width: 100%;
+    padding: 15px;
+    background: #f8f9fa;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.dropdownToogle:hover {
+    background-color: rgb(204, 234, 234);
+}

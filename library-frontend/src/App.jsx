@@ -1,33 +1,28 @@
 import axios from "axios"
 import React, { Component } from 'react';
-class App extends React.Component{
-  state = {details:[],}
+import {BrowserRouter, Route, Routes, useRoutes} from "react-router-dom"
+import MainPage from "./pages/MainPage";
+import GenreFilterPage from "./pages/GenreFilterPage";
+import MyShellPage from "./pages/MyShellPage";
+import ProfilePage from "./pages/ProfilePage";
+function App() {
 
-  componentDidMount(){
-    let data;
-    axios.get("http://127.0.0.1:8000")
-    .then(res => {
-      data = res.data
-      this.setState({
-        details:data
-      })
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  }
-  render() {
-    return (
-      <div>
-        <p>asd</p>
-        {this.state.details.map((output, id) => (
-        <div key={id}>
-          <p>{output.title}</p>
-          <p>{output.author}</p>
-        </div>))}
-      </div>
-    )
-  }
+  return(
+
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<MainPage/>}/>
+      <Route path="/GenresFilter" element={<GenreFilterPage/>}/>
+      <Route path="/MyShell" element={<MyShellPage/>}/>
+      <Route path="/Profile" element={<ProfilePage />}/>
+
+      
+
+    </Routes>
+      
+    </BrowserRouter>
+    
+  )
 }
 
 export default App

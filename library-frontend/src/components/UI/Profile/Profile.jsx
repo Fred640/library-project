@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Profile.module.css"
+import classes from "../../header/Header.module.css"
 import { useNavigate } from "react-router-dom";
 
 const Profile = ({User}) => {

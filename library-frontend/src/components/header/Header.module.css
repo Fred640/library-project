@@ -8,9 +8,6 @@
     position: relative;
 }
 
-
-
-
 .searchButton {
     position: absolute;
     left: 10px;
@@ -21,7 +18,7 @@
     .profileDiv {
         justify-content: center;
     }
-        .searchButton {
+    .searchButton {
         top: 85px; 
         left: 5px;
     }
@@ -62,4 +59,36 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 5px;
+}
+
+
+.Avatar {
+    all: unset;
+    width: 30px;
+    height: 30px;
+    background-color: chartreuse;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(234, 231, 231);
+}
+
+
+
+.ebychiuLink:hover {
+    text-decoration: none;
+}
+
+.nickname:hover {
+    all: unset;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.profileDiv {
+    all: unset;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }

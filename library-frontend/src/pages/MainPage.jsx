@@ -50,11 +50,10 @@ const MainPage = () => {
     }))
   }
 
-  const [searcActive, setSearchActive] = useState(false)
   
   return (
     <div className="App">
-        <Header search={searcActive} searchFunc={searchBook}/>
+        <Header searchFunc={searchBook}/>
         <CardsList books={searchedBooks}/>
 
     </div>

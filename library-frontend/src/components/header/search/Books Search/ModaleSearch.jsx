@@ -9,17 +9,15 @@ const ModalSearch = ({visible, searchFunc, ASvisible}) => {
 
     const searchB = (event) => {
         event.preventDefault()
-        const sQ = searchQuery
-        searchFunc(sQ)
-        
+        searchFunc(searchQuery)
     }
-
+    
     const render = visible && !ASvisible
 
     return(
         <>
         {render
-        ? <div className={`container ${classes.searchDiv} ${visible ? 'visible' : ''}`}>
+        ? <div className={`container ${classes.searchDiv} `}>
             <div className="row">
                 <div className="col-5">
                     <Inp placeholder="Введите название книги" 

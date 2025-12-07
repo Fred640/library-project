@@ -25,7 +25,7 @@ const ProfilePage = () => {
     return(
         <>
             <div className={classes.HeaderDiv}>
-                <Btn onClick={() => {navigate("/")}}>На главную</Btn>
+                <div><Link style={{textDecoration:"none"}} to="/"><Btn>На Главную</Btn></Link></div>
                 <div className={classes.userNameDiv}>{User.name}</div>
                 <div style={{backgroundColor:`${User.color}`}} className={classes.Avatar}>{String(User.name)[0]}</div>
             </div>

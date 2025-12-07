@@ -9,17 +9,13 @@ function App() {
 
   return(
 
-    <BrowserRouter>
+    <BrowserRouter basename="/">
     <Routes>
       <Route path="/" element={<MainPage/>}/>
       <Route path="/GenresFilter" element={<GenreFilterPage/>}/>
       <Route path="/MyShell" element={<MyShellPage/>}/>
       <Route path="/Profile" element={<ProfilePage />}/>
-
-      
-
     </Routes>
-      
     </BrowserRouter>
     
   )

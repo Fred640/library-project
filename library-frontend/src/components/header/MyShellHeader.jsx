@@ -1,4 +1,4 @@
-import classes from "./header.module.css"
+import classes from "./Header.module.css"
 import Btn from "../UI/button/Btn";
 import "./header.css"
 import { Link } from "react-router-dom";

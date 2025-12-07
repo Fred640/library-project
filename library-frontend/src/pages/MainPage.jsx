@@ -41,7 +41,6 @@ const MainPage = () => {
     setSearchedBooks(books.filter(book => {
       if(sQ) {
         return(book.title.includes(sQ))
-        
       } else {
         return(books)
         

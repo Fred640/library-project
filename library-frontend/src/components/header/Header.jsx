@@ -7,6 +7,7 @@ import ModalSearch from "./search/Books Search/ModaleSearch";
 import ModaleAuthorSearch from "./search/Authors Search/ModaleAuthorSearch";
 import {Link} from "react-router-dom"
 import Profile from "../UI/Profile/Profile";
+const f = <Profile User={{name:"Fedor Sapronov", color:"red"}}/>
 
 const Header = ({searchFunc}) => {
 
@@ -29,7 +30,7 @@ const Header = ({searchFunc}) => {
 
             <div className="row" style={{width:"70%"}}>
                 <div className="col-lg-3 col-md-12">
-                    <Profile User={{name:"Fedor Sapronov", color:"red"}}/>
+                    {f}
                 </div>
                 <div className={`col-lg-2 col-md-6 col-12 ${classes.headerButton}`}>
                     <Btn onClick={() => {

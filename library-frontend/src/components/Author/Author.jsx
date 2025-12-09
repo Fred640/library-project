@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Author.module.css"
 
+
 const Author = ({ author }) => {
   const nameParts = author.name.split(" ");
   const firstName = nameParts[0] || "";
@@ -25,3 +26,4 @@ const Author = ({ author }) => {
 }
 
 export default Author
+

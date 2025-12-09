@@ -7,7 +7,7 @@ import CardsList from "../components/Card/CardsList";
 const MainPage = () => {
   const [books, setBooks] = useState([
   {title:"Гроза", author:"Островский", genre:"Драмма", id: 1},
-  {title:"Евгений Онегин", author:"Пушкин", genre:"роман", id: 2},
+  {title:"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", author:"Пушкинyyyyyyyyyyyyyyyyyy", genre:"роман", id: 2},
   {title:"Грозаф", author:"Островский", genre:"Драмма", id: 3},
   {title:"Герой нашего времени", author:"Лермонтов", genre:"роман", id: 4},
   {title:"Герой нашего времени", author:"Лермонтов", genre:"роман", id: 5},

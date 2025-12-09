@@ -20,10 +20,6 @@ const HeaderGenres = ({searchFunc}) => {
                 <div className={`col-lg-1 col-sm-6 ${classes.headerButton}`}><Btn>Поиск</Btn></div>
             </div>
         </div>
-
-        
-        
-        
         </>
 
     )

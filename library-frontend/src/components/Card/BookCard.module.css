@@ -20,6 +20,10 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     position: relative;
+    align-items: center;
+    font-weight: 600;
+    word-wrap: break-word;
+    font-size-adjust: 0.5;
 }
 
 .titleText {
@@ -27,6 +31,9 @@
     left: 0;
     bottom: 0;
     margin:3px;
+    word-wrap: break-word;
+    max-width: 100%;
+    
 }
 
 .list {
@@ -39,6 +46,7 @@
     height: 68%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    overflow-wrap: break-word;
 }
 
 .param {
@@ -90,17 +98,17 @@
 
 @media (min-width: 576px) {
     .card{
-        font-size: small;
-        width: 110px;
-        height: 150px;
+        font-size: 13px;
+        width: 160px;
+        height: 210px;
     }
 }
 
 @media (min-width: 768px) {
     .card{
-        font-size: small;
-        width: 145px;
-        height: 200px;
+        font-size: 11px;
+        width: 110px;
+        height: 160px;
     }
 }
 

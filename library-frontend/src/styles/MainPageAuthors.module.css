@@ -1,0 +1,33 @@
+.searchButton {
+    position: absolute;
+    left: 10px;
+    top: 28px;
+}
+
+@media (min-width: 100px) {
+    .searchButton {
+        top: 85px; 
+        left: 5px;
+    }
+}
+
+@media (min-width: 576px) {
+    .searchButton {
+        top: 50px;
+        left: 5px;
+    }
+}
+
+@media (min-width: 992px) {
+    .searchButton {
+        top: 30px;
+        left: 5px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .searchButton {
+        top: 16px;
+        left: 5px;
+    }
+}

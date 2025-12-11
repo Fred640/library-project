@@ -3,33 +3,26 @@ import classes from "./ModaleSearch.module.css"
 import Inp from "../../../UI/input/Inp";
 import Btn from "../../../UI/button/Btn";
 
-const ModalSearch = ({visible, searchFunc, ASvisible}) => {
-
+const ModalSearch = ({visible, searchFunc, placeholder}) => {
     const [searchQuery, setSearchQuery] = useState("")
-
     const searchB = (event) => {
         event.preventDefault()
         searchFunc(searchQuery)
     }
-    
-    const render = visible && !ASvisible
 
     return(
         <>
-        {render
+        {visible
         ? <div className={`container ${classes.searchDiv} `}>
             <div className="row">
-                <div className="col-5">
-                    <Inp placeholder="Введите название книги" 
+                <div className="col-8">
+                    <Inp placeholder={placeholder}
                     value={searchQuery}
                     onChange={(event)=>{setSearchQuery(event.target.value)}}/>
                 </div>
                 <div className="col-4">
                     <Btn onClick={searchB}>поиск</Btn>
-                </div>
-                <button className={`col-3 ${classes.favorite}`}>
-                    Избранные
-                </button> 
+                </div> 
             </div>
         </div>
         : <></>

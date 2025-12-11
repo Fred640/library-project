@@ -2,9 +2,6 @@ import axios from "axios"
 import React, { Component } from 'react';
 import {BrowserRouter, Route, Routes, useRoutes} from "react-router-dom"
 import MainPage from "./pages/MainPage";
-import GenreFilterPage from "./pages/GenreFilterPage";
-import MyShellPage from "./pages/MyShellPage";
-import ProfilePage from "./pages/ProfilePage";
 import MainPageAuthors from "./pages/MainPageAuthors";
 
 function App() {
@@ -14,11 +11,7 @@ function App() {
     <BrowserRouter basename="/">
     <Routes>
       <Route path="/" element={<MainPage/>}/>
-      <Route path="/GenresFilter" element={<GenreFilterPage/>}/>
-      <Route path="/MyShell" element={<MyShellPage/>}/>
-      <Route path="/Profile" element={<ProfilePage />}/>
       <Route path="/authors" element={<MainPageAuthors />}/>
-      
     </Routes>
     </BrowserRouter>
     

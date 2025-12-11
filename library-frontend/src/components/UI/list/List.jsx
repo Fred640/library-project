@@ -16,7 +16,7 @@ const List = ({title, children}) => {
                 {title} {isOpen ? "▼" : "▶"}
             </button>
 
-            <div ref={contentRef} className={`dropdownContent ${isopen ? classes.open : ""}`}>
+            <div ref={contentRef} className={`dropdownContent ${isOpen ? classes.open : ""}`}>
                 {children}
             </div>
         </div>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Author.module.css"
-
+import { apiService } from '../../services/api.js';
 
 const Author = ({ author }) => {
   const nameParts = author.name.split(" ");

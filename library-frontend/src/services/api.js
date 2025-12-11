@@ -1,0 +1,29 @@
+import axios from 'axios';
+
+const API_BASE_URL = 'http://127.0.0.1:8000/';
+
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+
+export const apiService = {
+  getAuthors: () => api.get('/authors/'),
+  getAuthor: (id) => api.get(`/authors/${id}/`),
+  createAuthor: (data) => api.post('/authors/', data),
+  updateAuthor: (id, data) => api.put(`/authors/${id}/`, data),
+  deleteAuthor: (id) => api.delete(`/authors/${id}/`),
+  
+  getBooks: () => api.get('/books/'),
+  getBook: (id) => api.get(`/books/${id}/`),
+  createBook: (data) => api.post('/books/', data),
+  updateBook: (id, data) => api.put(`/books/${id}/`, data),
+  deleteBook: (id) => api.delete(`/books/${id}/`),
+  
+  getBooksByAuthor: (authorId) => api.get(`/books/?author=${authorId}`),
+  searchBooks: (query) => api.get(`/books/?search=${query}`),
+};

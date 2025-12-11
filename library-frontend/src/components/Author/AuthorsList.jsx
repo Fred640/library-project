@@ -1,7 +1,33 @@
 import React from "react";
 import Author from "./Author";
+import { useState } from "react";
+import { apiService } from '../../services/api.js';
+import { useEffect } from "react";
 
-const AuthorsList = ({authors}) => {
+const AuthorsList = () => {
+
+  const [authors, setAuthors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchAuthors();
+  }, []);
+
+  const fetchAuthors = async () => {
+    try {
+      setLoading(true);
+      const response = await apiService.getAuthors();
+      setAuthors(response.data);
+      setError(null);
+    } catch (err) {
+      setError('Ошибка при загрузке авторов');
+      console.error('Ошибка API:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
     const sliceFunc = (array, size) => {
     const rows = []
     for (let i = 0; i < array.length; i += size) {
@@ -9,6 +35,8 @@ const AuthorsList = ({authors}) => {
     }
     return(rows)
   }
+
+
   let A = sliceFunc(authors, 6)
     return(
         <div className="container">

@@ -11,7 +11,7 @@ const api = axios.create({
 });
 
 
-export const apiService = {
+const apiService = {
   getAuthors: () => api.get('/authors/'),
   getAuthor: (id) => api.get(`/authors/${id}/`),
   createAuthor: (data) => api.post('/authors/', data),
@@ -27,3 +27,10 @@ export const apiService = {
   getBooksByAuthor: (authorId) => api.get(`/books/?author=${authorId}`),
   searchBooks: (query) => api.get(`/books/?search=${query}`),
 };
+
+
+// Добавьте default export
+export default apiService;
+
+// Или оставьте оба варианта
+export { apiService };

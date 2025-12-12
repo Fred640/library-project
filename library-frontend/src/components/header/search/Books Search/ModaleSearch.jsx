@@ -5,9 +5,11 @@ import Btn from "../../../UI/button/Btn";
 
 const ModalSearch = ({visible, searchFunc, placeholder}) => {
     const [searchQuery, setSearchQuery] = useState("")
-    const searchB = (event) => {
+    const searchA = (event) => {
         event.preventDefault()
-        searchFunc(searchQuery)
+        const SQ = searchQuery
+        searchFunc(SQ)
+
     }
 
     return(
@@ -21,7 +23,7 @@ const ModalSearch = ({visible, searchFunc, placeholder}) => {
                     onChange={(event)=>{setSearchQuery(event.target.value)}}/>
                 </div>
                 <div className="col-4">
-                    <Btn onClick={searchB}>поиск</Btn>
+                    <Btn onClick={searchA}>поиск</Btn>
                 </div> 
             </div>
         </div>

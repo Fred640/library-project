@@ -18,7 +18,7 @@ const apiService = {
   updateAuthor: (id, data) => api.put(`/authors/${id}/`, data),
   deleteAuthor: (id) => api.delete(`/authors/${id}/`),
   
-  getBooks: () => api.get('/books/'),
+  getBooks: () => api.get('/'),
   getBook: (id) => api.get(`/books/${id}/`),
   createBook: (data) => api.post('/books/', data),
   updateBook: (id, data) => api.put(`/books/${id}/`, data),
@@ -29,8 +29,6 @@ const apiService = {
 };
 
 
-// Добавьте default export
 export default apiService;
 
-// Или оставьте оба варианта
 export { apiService };

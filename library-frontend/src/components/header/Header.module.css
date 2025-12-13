@@ -81,6 +81,16 @@
     cursor: pointer;
 }
 
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nickname {
+    all: unset;
+}
+
 .profileDiv {
     all: unset;
     display:flex;

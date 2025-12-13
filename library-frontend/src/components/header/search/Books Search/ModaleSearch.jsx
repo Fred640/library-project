@@ -3,12 +3,12 @@ import classes from "./ModaleSearch.module.css"
 import Inp from "../../../UI/input/Inp";
 import Btn from "../../../UI/button/Btn";
 
-const ModalSearch = ({visible, searchFunc, placeholder}) => {
+const ModalSearch = ({visible, ...props}) => {
     const [searchQuery, setSearchQuery] = useState("")
     const searchA = (event) => {
         event.preventDefault()
         const SQ = searchQuery
-        searchFunc(SQ)
+        props.searchFunc(SQ)
 
     }
 
@@ -18,7 +18,7 @@ const ModalSearch = ({visible, searchFunc, placeholder}) => {
         ? <div className={`container ${classes.searchDiv} `}>
             <div className="row">
                 <div className="col-8">
-                    <Inp placeholder={placeholder}
+                    <Inp placeholder={props.placeholder}
                     value={searchQuery}
                     onChange={(event)=>{setSearchQuery(event.target.value)}}/>
                 </div>

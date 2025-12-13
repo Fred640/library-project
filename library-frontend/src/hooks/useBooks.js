@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { apiService } from '../services/api';
 
-export const useAuthors = () => {
-  const [authors, setAuthors] = useState([]);
+export const useBooks = () => {
+  const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const loadAuthors = async () => {
+    const loadBooks = async () => {
       try {
         setLoading(true);
-        const response = await apiService.getAuthors();
-        setAuthors(response.data);
+        const response = await apiService.getBooks();
+        setBooks(response.data);
         setError(null);
       } catch (err) {
         setError('Ошибка при загрузке авторов');
@@ -21,8 +21,8 @@ export const useAuthors = () => {
       }
     };
 
-    loadAuthors();
+    loadBooks();
   }, []);
 
-  return { authors, loading, error };
+  return { books, loading, error };
 };

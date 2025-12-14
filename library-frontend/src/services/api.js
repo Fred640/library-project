@@ -26,6 +26,8 @@ const apiService = {
   
   getBooksByAuthor: (authorId) => api.get(`/books/?author=${authorId}`),
   searchBooks: (query) => api.get(`/books/?search=${query}`),
+
+  getAuthorById: (id) => api.get(`/author/${id}/`),
 };
 
 

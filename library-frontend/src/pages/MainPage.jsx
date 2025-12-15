@@ -13,7 +13,7 @@ const MainPage = () => {
   const Elements = [
     {content:<Profile User={{name:"Fedor Sapronov", color:"red"}}/>, divClasses:"col-lg-3 col-md-12"},
     {content:<Link to="/authors" style={{textDecoration:"none"}}><Btn>Авторы</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
-    {content:<Link style={{textDecoration:"none"}} to="/GenresFilter"><Btn>Фильтры</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
+    {content:<Link style={{textDecoration:"none"}} to="/GenresFilter"><Btn>Категории</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
   ]
   const {books, loading, error} = useBooks()
   const [searchedBooks, setSearchedBooks] = useState([...books])

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classes from "./Author.module.css"
 import { apiService } from '../../services/api.js';
+import { Link } from "react-router-dom";
 
 const Author = ({ author }) => {
   const nameParts = author.name.split(" ");
@@ -11,6 +12,7 @@ const Author = ({ author }) => {
   const initials = `${firstName.charAt(0)}. ${middleName.charAt(0)}.`;
   
   return (
+    <Link to={`/author/${author.id}/`} className={classes.link}>
     <div className={classes.card} key={author.id}>
         <div className={classes.surname}>
             {surname}
@@ -22,6 +24,8 @@ const Author = ({ author }) => {
             {initials}
         </div>
     </div>
+    </Link>
+    
   );
 }
 

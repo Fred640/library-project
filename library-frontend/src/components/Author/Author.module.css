@@ -28,6 +28,12 @@
     font-weight: 700;
 }
 
+.link {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
+}
+
 @media (max-width: 1400px) {
     .card{
         width: 180px;

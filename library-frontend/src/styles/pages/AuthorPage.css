@@ -1,3 +1,6 @@
-.name {
+.AuthorName {
     display: flex;
+    justify-content: center;
+    font-size: large;
+    padding-top: 15px;
 }

@@ -2,30 +2,76 @@ import React from "react";
 import HeaderTemplate from "../components/header/HeaderTemplate";
 import { useParams } from 'react-router-dom';
 import Profile from "../components/UI/Profile/Profile";
-import { Link } from "react-router-dom";
 import Btn from "../components/UI/button/Btn";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import CardsList from "../components/Card/CardsList";
-import { useEffect } from "react";
-import { apiService } from '../services/api';
 import "../styles/pages/AuthorPage.css"
 import { useAuthorWithBooks } from "../hooks/useAuthorWithBooks";
+import { useNavigate } from "react-router-dom";
+import Author from '../components/Author/Author.jsx'
 
 const AuthorPage = () => {
+    const navigate= useNavigate()
     const Elements = [
-    {content:<Profile User={{name:"Fedor Sapronov", color:"red"}}/>, divClasses:"col-lg-3 col-md-12"},
-    {content:<Btn onClick={()=>{navigate(-1)}}>Назад</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
+        {content:<Profile User={{name:"Fedor Sapronov", color:"red"}}/>, divClasses:"col-lg-3 col-md-12"},
+        {content:<Btn onClick={()=>{navigate(-1)}}>Назад</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
     ]
-    const {author_id} = useParams()
-    const {author, books, loading, error} = useAuthorWithBooks(author_id)
 
+    const params = useParams()
+    console.log(params)
+    console.log(params.author_id)
+    const {author, books, loading, error} = useAuthorWithBooks(params.author_id)
+    console.log('Author:', author)
+
+    if (loading) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                    searchIclude={true} 
+                    modaleSearchProps={{placeholder:"Введите название книги"}}
+                />
+                <div>Загрузка...</div>
+            </>
+        )
+    }
+
+    if (error) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                    searchIclude={true} 
+                    modaleSearchProps={{placeholder:"Введите название книги"}}
+                />
+                <div>Ошибка: {error}</div>
+            </>
+        )
+    }
+
+
+    if (!author) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                    searchIclude={true} 
+                    modaleSearchProps={{placeholder:"Введите название книги"}}
+                />
+                <div>Автор не найден</div>
+            </>
+        )
+    }
 
     return(
         <>
-        <HeaderTemplate ContainerElements={Elements} searchIclude={true} modaleSearchProps={{placeholder:"Введите название книги"}}/>
-        <div>{author.name}</div>
-        <CardsList books={books}/>
+            <HeaderTemplate 
+                ContainerElements={Elements} 
+                searchIclude={true} 
+                modaleSearchProps={{placeholder:"Введите название книги"}}
+            />
+           
+            <div className="AuthorName"><Author author={author}/></div>
+            <CardsList books={books}/>
         </>
     )
 }

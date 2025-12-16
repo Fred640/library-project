@@ -29,10 +29,10 @@ class AuthorsView(APIView):
             return Response(serializer.data)
         
 class AuthorsBooks(APIView):
-    def get(self, request, author_id):
+    def get(self, request, slug):
         author = get_object_or_404(
             Authors.objects.prefetch_related('books'), 
-            id=author_id
+            slug=slug
         )
         serializer = AuthorsBooksSerializer(author)
         return Response(serializer.data)

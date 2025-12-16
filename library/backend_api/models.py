@@ -10,6 +10,8 @@ class Books(models.Model):
         populate_from='title',
         unique=True,
         slugify=slugify_ru,
+        blank=True,
+        null=True
     )
 
     def __str__(self):
@@ -21,3 +23,4 @@ class Books(models.Model):
 class Authors(models.Model):
     name = models.CharField(max_length=100)
     user_name = models.CharField(max_length=50, blank=True, null=True)
+    slug = AutoSlugField(populate_from="name", unique=True, slugify=slugify_ru)

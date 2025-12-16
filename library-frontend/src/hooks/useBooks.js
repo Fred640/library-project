@@ -14,8 +14,8 @@ export const useBooks = () => {
         setBooks(response.data);
         setError(null);
       } catch (err) {
-        setError('Ошибка при загрузке авторов');
-        console.error('Ошибка загрузки авторов:', err);
+        setError('Ошибка при загрузке книг');
+        console.error('Ошибка загрузки книг:', err);
       } finally {
         setLoading(false);
       }

@@ -18,7 +18,7 @@ const BookCard = ({props, book}) => {
                 </div>
             </div>
             <div className={classes.body}>
-                <div className={classes.param}><span style={{fontWeight:700}}>Автор:</span> <Link to={`/author/${book.author_id}/`}>{AuthorName}</Link></div>
+                <div className={classes.param}><span style={{fontWeight:700}}>Автор:</span> <Link to={`/author/${book.author_slug}/`}>{AuthorName}</Link></div>
                 <div className={classes.param}><span style={{fontWeight:700}}>Жанр:</span> {book.genre}</div>
             </div>
         </div>

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { apiService } from '../services/api';
 
-export const useAuthorWithBooks = (authorId) => {
+export const useAuthorWithBooks = (authorSlug) => {
   const [author, setAuthor] = useState(null);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!authorId) {
+    if (!authorSlug) {
       setAuthor(null);
       setBooks([]);
       setError('Нет ID автора');
@@ -21,17 +21,16 @@ export const useAuthorWithBooks = (authorId) => {
       setError(null);
 
       try {
-        const response = await apiService.getAuthorById(authorId);
+        const response = await apiService.getAuthorBySlug(authorSlug);
         const data = response.data;
         
-        // ДАННЫЕ ЕСТЬ - УСТАНАВЛИВАЕМ АВТОРА И КНИГИ
         setAuthor({
           id: data.id,
           name: data.name,
+          slug: data.slug,
           user_name: data.user_name,
         });
         
-        // books гарантированно есть в вашем ответе
         setBooks(data.books || []);
 
       } catch (err) {
@@ -43,7 +42,7 @@ export const useAuthorWithBooks = (authorId) => {
     };
 
     fetchData();
-  }, [authorId]);
+  }, [authorSlug]);
 
   return { author, books, loading, error };
 };

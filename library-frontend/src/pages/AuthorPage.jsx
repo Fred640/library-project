@@ -17,9 +17,7 @@ const AuthorPage = () => {
     ]
 
     const params = useParams()
-    console.log(params)
-    console.log(params.author_id)
-    const {author, books, loading, error} = useAuthorWithBooks(params.author_id)
+    const {author, books, loading, error} = useAuthorWithBooks(params.author_slug)
     console.log('Author:', author)
 
     if (loading) {

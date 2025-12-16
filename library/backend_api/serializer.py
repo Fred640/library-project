@@ -4,17 +4,17 @@ from .models import Books, Authors
 
 class BooksSerializer(serializers.ModelSerializer):
 
-    author_id = serializers.IntegerField(source='author.id', read_only=True)
     author_name = serializers.CharField(source='author.name', read_only=True)
+    author_slug = serializers.SlugField(source="author.slug", read_only=True)
 
     class Meta:
         model = Books
-        fields = ['title', 'author_id', 'author_name', 'genre']
+        fields = ['title', 'author_id', 'author_name', 'genre', 'author_slug']
 
 class AuthorsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Authors
-        fields = ["id", "name", 'user_name']
+        fields = ["id", "name", 'slug', 'user_name']
 
 class AuthorsBooksSerializer(serializers.ModelSerializer):
 
@@ -23,4 +23,4 @@ class AuthorsBooksSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Authors
-        fields = ['id', 'name', 'user_name', 'books']
+        fields = ['id', 'name', "slug", 'user_name', 'books']

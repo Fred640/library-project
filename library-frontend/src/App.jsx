@@ -13,7 +13,7 @@ function App() {
     <Routes>
       <Route path="/" element={<MainPage/>}/>
       <Route path="/authors" element={<MainPageAuthors />}/>
-      <Route path="/author/:author_id/" element={<AuthorPage/>}/>
+      <Route path="/author/:author_slug/" element={<AuthorPage/>}/>
     </Routes>
     </BrowserRouter>
     

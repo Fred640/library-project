@@ -12,7 +12,7 @@ const Author = ({ author }) => {
   const initials = `${firstName.charAt(0)}. ${middleName.charAt(0)}.`;
   
   return (
-    <Link to={`/author/${author.id}/`} className={classes.link}>
+    <Link to={`/author/${author.slug}/`} className={classes.link}>
     <div className={classes.card} key={author.id}>
         <div className={classes.surname}>
             {surname}

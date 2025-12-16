@@ -56,6 +56,12 @@
     padding-left: 0;
 }
 
+.Link {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
+}
+
 @media (min-width: 270px) {
     .card{
         font-size: 9px;

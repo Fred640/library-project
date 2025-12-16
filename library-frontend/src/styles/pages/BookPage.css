@@ -1,0 +1,17 @@
+.MainDiv {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+.BookPageHeader {
+    display: flex;
+    height: 30vh;
+    width: 70%;
+    background-color: rgb(166, 213, 254);
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    align-items: center;
+    justify-content: center;
+}

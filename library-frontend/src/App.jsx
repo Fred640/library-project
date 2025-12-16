@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes, useRoutes} from "react-router-dom"
 import MainPage from "./pages/MainPage";
 import MainPageAuthors from "./pages/MainPageAuthors";
 import AuthorPage from "./pages/AuthorPage";
+import BookPage from './pages/BookPage.jsx'
 
 function App() {
 
@@ -14,9 +15,9 @@ function App() {
       <Route path="/" element={<MainPage/>}/>
       <Route path="/authors" element={<MainPageAuthors />}/>
       <Route path="/author/:author_slug/" element={<AuthorPage/>}/>
+      <Route path="/book/:book_slug/" element={<BookPage/>}/>
     </Routes>
     </BrowserRouter>
-    
   )
 }
 

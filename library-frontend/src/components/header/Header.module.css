@@ -19,8 +19,8 @@
         justify-content: center;
     }
     .searchButton {
-        top: 85px; 
-        left: 5px;
+        top: 10px; 
+        left: 10px;
     }
 }
 
@@ -39,7 +39,7 @@
         justify-content: center;
     }
     .searchButton {
-        top: 30px;
+        top: 15px;
         left: 5px;
     }
 }

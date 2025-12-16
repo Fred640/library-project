@@ -19,7 +19,7 @@ const apiService = {
   deleteAuthor: (id) => api.delete(`/authors/${id}/`),
   
   getBooks: () => api.get('/'),
-  getBook: (id) => api.get(`/books/${id}/`),
+  getBook: (slug) => api.get(`/book/${slug}/`),
   createBook: (data) => api.post('/books/', data),
   updateBook: (id, data) => api.put(`/books/${id}/`, data),
   deleteBook: (id) => api.delete(`/books/${id}/`),

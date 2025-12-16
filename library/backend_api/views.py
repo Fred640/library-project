@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
 from .models import Books, Authors
-from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer
+from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer
 from rest_framework.response import Response
 
 
@@ -16,6 +16,18 @@ class BooksView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+        
+class BookView(APIView):
+    def get(self, request, book_slug):
+        book = Books.objects.get(slug=book_slug)
+        serializer = BookSerializer(book)
+        return Response(serializer.data)
+    
+    # def post(self, request):
+    #     serializer = BooksSerializer(data=request.data)
+    #     if serializer.is_valid(raise_exception=True):
+    #         serializer.save()
+    #         return Response(serializer.data)
 
 class AuthorsView(APIView):
     def get(self, request):

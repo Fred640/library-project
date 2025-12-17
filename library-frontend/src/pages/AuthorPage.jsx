@@ -7,7 +7,7 @@ import CardsList from "../components/Card/CardsList";
 import "../styles/pages/AuthorPage.css"
 import { useAuthorWithBooks } from "../hooks/useAuthorWithBooks";
 import { useNavigate } from "react-router-dom";
-import Author from '../components/Author/Author.jsx'
+import Author from "../components/Author/Author";
 
 const AuthorPage = () => {
     const navigate= useNavigate()
@@ -68,8 +68,8 @@ const AuthorPage = () => {
                 modaleSearchProps={{placeholder:"Введите название книги"}}
             />
            
-            <div className="AuthorName"><Author author={author}/></div>
-            <CardsList books={books}/>
+            <div className="AuthorName"><Author author={author} link={false}/></div>
+            <CardsList books={books} isCardsList={true}/>
         </>
     )
 }

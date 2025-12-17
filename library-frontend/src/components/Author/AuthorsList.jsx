@@ -4,7 +4,7 @@ import { useState } from "react";
 import { apiService } from '../../services/api.js';
 import { useEffect } from "react";
 
-const AuthorsList = ({authors}) => {
+const AuthorsList = ({authors, isCardLink}) => {
 
     const sliceFunc = (array, size) => {
     const rows = []
@@ -22,7 +22,7 @@ const AuthorsList = ({authors}) => {
         {A.map((row, index) =>
           <div className="row justify-content-center"  style={{marginBottom:"7px", marginTop:"7px"}} key={index}> {row.map((author) => 
             <div className="col-lg-2 col-sm-4 col-md-2 col-4" style={{padding:5}}>
-              <Author author={author} key={author.id} />
+              <Author author={author} key={author.id} link={isCardLink}/>
             </div>)}
           </div>)}
       </div>

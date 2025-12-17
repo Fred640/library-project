@@ -1,7 +1,7 @@
 import React from "react";
 import BookCard from "./BookCard";
 
-const CardsList = ({books}) => {
+const CardsList = ({books, isCardsList}) => {
   const sliceFunc = (array, size) => {
     const rows = []
     for (let i = 0; i < books.length; i += size) {
@@ -17,7 +17,7 @@ const CardsList = ({books}) => {
         {b.map((row, index) => 
           <div className="row justify-content-center"  style={{marginBottom:"7px", marginTop:"7px"}} key={index}> {row.map((book)=> 
             <div className="col-lg-2 col-sm-4 col-md-2 col-4" style={{padding:5}}>
-              <BookCard book={book} key={book.id} />
+              <BookCard isList={isCardsList} book={book} key={book.id} />
             </div>)}
           </div>)}
       </div>

@@ -38,7 +38,7 @@ const MainPage = () => {
   return (
     <div className="App">
         <HeaderTemplate ContainerElements={Elements} searchIclude={true} modaleSearchProps={{placeholder:"Введите название книги", searchFunc:searchBook}}/>
-        <CardsList books={searchedBooks}/>  
+        <CardsList books={searchedBooks} isCardsList={true}/>
     </div>
   );
 }

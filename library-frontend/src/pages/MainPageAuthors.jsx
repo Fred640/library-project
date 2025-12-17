@@ -36,7 +36,7 @@ const searchAuthors = (sq) => {
     return(
     <>
         <HeaderTemplate ContainerElements={Elements} searchIclude={true} modaleSearchProps={{placeholder:"Введите имя автора", searchFunc:searchAuthors}}/>
-        <AuthorsList authors={searchedAuthors}/>
+        <AuthorsList authors={searchedAuthors} isCardLink={true}/>
     </>)
 }
 

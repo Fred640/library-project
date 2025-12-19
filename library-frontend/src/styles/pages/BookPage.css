@@ -2,7 +2,6 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 }
 
 
@@ -41,8 +40,6 @@
 
 .book-main-info {
     display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
     margin-bottom: 40px;
     padding: 30px;
     background: white;
@@ -54,35 +51,12 @@
     flex: 0 0 250px;
 }
 
-.cover-placeholder {
-    width: 100%;
-    height: 350px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-}
-
-.cover-text {
-    font-size: 72px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
 
 .book-details {
     flex: 1;
     min-width: 300px;
 }
 
-.book-title {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
 
 .book-author, .book-genre, .book-year {
     margin-bottom: 15px;
@@ -137,7 +111,6 @@
     margin: 0;
 }
 
-/* Кнопки действий */
 .book-actions {
     display: flex;
     flex-wrap: wrap;
@@ -147,10 +120,9 @@
     border-top: 1px solid #eee;
 }
 
-.download-btn {
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-    color: white;
-    border: none;
+.btn {
+    color: black;
+    border: 2px solid black;
     padding: 12px 25px;
     font-size: 1rem;
     font-weight: 600;
@@ -159,27 +131,11 @@
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.download-btn:hover {
+.btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+    box-shadow: 0 6px 15px rgb(0, 0, 0);
 }
 
-.read-btn {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.read-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
-}
 
 .back-btn {
     background: #6c757d;
@@ -193,9 +149,6 @@
     transition: background 0.2s;
 }
 
-.back-btn:hover {
-    background: #545b62;
-}
 
 
 

@@ -5,6 +5,7 @@
     display: block;
     margin: 10px;
     border-radius: 12px;
+    background-color: rgb(242, 244, 232);
 }
 
 .card:hover {
@@ -44,35 +45,6 @@
     padding-top: 15px;
 }
 
-.body {
-    background-color: rgb(242, 244, 232);
-    height: 57%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    overflow-wrap: break-word;
-}
-
-
-
-/* @media (min-width: 270px) {
-    .card{
-        font-size: 9px;
-        width: 80px;
-        height: 111px;
-        padding: 0;
-        margin: 0;
-    }
-}
-
-@media (min-width: 315px) {
-    .card{
-        font-size: 10px;
-        width: 100px;
-        height: 145px;
-        padding: 0;
-        margin: 0;
-    }
-} */
 
 @media (min-width: 400px) {
     .card{
@@ -124,10 +96,3 @@
     }
 }
 
-/* @media (min-width: 1400px) {
-    .card{
-        font-size: 20px;
-        width: 200px;
-        height: 290px;
-    }
-} */

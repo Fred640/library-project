@@ -117,17 +117,17 @@ const BookPage = () => {
                             
                             <div className="book-actions">
                                 <Btn 
-                                    className="download-btn"
+                                    className="btn"
                                     onClick={() => console.log("Скачать книгу:", book.id)}
                                 >
-                                    📥 Скачать
+                                    Скачать
                                 </Btn>
                                 
                                 <Btn 
-                                    className="read-btn"
+                                    className="btn"
                                     onClick={() => console.log("Читать онлайн:", book.id)}
                                 >
-                                    📖 Читать онлайн
+                                    Читать онлайн
                                 </Btn>
                             </div>
                         </div>

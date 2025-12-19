@@ -8,6 +8,7 @@ import "../styles/pages/AuthorPage.css"
 import { useAuthorWithBooks } from "../hooks/useAuthorWithBooks";
 import { useNavigate } from "react-router-dom";
 import Author from "../components/Author/Author";
+import { Link } from "react-router-dom";
 
 const AuthorPage = () => {
     const navigate= useNavigate()
@@ -60,18 +61,45 @@ const AuthorPage = () => {
         )
     }
 
-    return(
+    return (
         <>
             <HeaderTemplate 
                 ContainerElements={Elements} 
-                searchIclude={true} 
-                modaleSearchProps={{placeholder:"Введите название книги"}}
             />
-           
-            <div className="AuthorName"><Author author={author} link={false}/></div>
-            <CardsList books={books} isCardsList={true}/>
+            
+            <div className="author-page-container">
+                <div className="author-page-content">
+                    <div className="breadcrumbs">
+                        <span onClick={() => navigate("/")}>Главная</span>
+                        <span> / </span>
+                        <span onClick={() => navigate("/authors")}>Авторы</span>
+                        <span> / </span>
+                        <span to={`/author/${author.slug}/`}>{author.name}</span>
+                        <span> / </span>
+                    </div>
+
+                    <div className="author-main-info">
+                        <div className="author-cover">
+                            <Author author={author} link={false}/>
+                        </div>
+                        <div className="author-details">
+                            {author.user_name ?
+                            <div><span>Имя пользователя: </span>{author.user_name}</div> 
+                            : <></>}
+                            <div className="author-actions">
+                                <Btn className="btn">
+                                    Добавить в избранных
+                                </Btn>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </>
-    )
+    );
 }
 
 export default AuthorPage

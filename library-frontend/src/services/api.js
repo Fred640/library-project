@@ -29,6 +29,7 @@ const apiService = {
 
   getAuthorById: (id) => api.get(`/author/${id}/`),
   getAuthorBySlug: (slug) => api.get(`/author/${slug}/`),
+  getGenres: () => api.get('/genres/'),
 };
 
 

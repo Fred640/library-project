@@ -9,8 +9,6 @@ import { useEffect } from "react";
 import Modal from "../components/UI/modal/Modal.jsx";
 import Genres from "../components/genres/Genres.jsx";
 
-
-
 const MainPage = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const Elements = [
@@ -22,29 +20,42 @@ const MainPage = () => {
   const [searchedBooks, setSearchedBooks] = useState([...books])
   
   useEffect(() => {
-          if (books.length > 0) {
-              setSearchedBooks([...books]);
-          }
-      }, [books]);
+    if (books.length > 0) {
+      setSearchedBooks([...books]);
+    }
+  }, [books]);
+  
   const searchBook = (sQ) => {
     setSearchedBooks(books.filter(book => {
       if(sQ) {
         return(book.title.includes(sQ))
       } else {
         return(books)
-        
       }
-       return(books)
+      return(books)
     }))
   }
 
-  
   return (
     <div className="App">
-        <HeaderTemplate ContainerElements={Elements} searchIclude={true} modaleSearchProps={{placeholder:"Введите название книги", searchFunc:searchBook}}/>
-        <CardsList books={searchedBooks} isCardsList={true}/>
-        <Modal visble={modalVisible} setVisble={setModalVisible}></Modal>
+      <HeaderTemplate 
+        ContainerElements={Elements} 
+        searchIclude={true} 
+        modaleSearchProps={{
+          placeholder:"Введите название книги", 
+          searchFunc:searchBook
+        }}
+      />
+      <CardsList books={searchedBooks} isCardsList={true}/>
+      
+      <Modal 
+        visible={modalVisible} 
+        setVisible={setModalVisible}
+      >
+        <Genres />
+      </Modal>
     </div>
   );
 }
-export default MainPage
+
+export default MainPage;

@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Genres.modale.css"
+// import classes from "./Genres.module.css"
 import { useGenres } from "../../hooks/useGenres";
 const Genres = () => {
     const sliceFunc = (array, size) => {
@@ -11,17 +11,15 @@ const Genres = () => {
     }
     const {genres, loading, error} = useGenres()
     const g = sliceFunc(genres, 6)
-
     return(
           <div className="container">
-            <div className="row">
-              {g.map((row, index) => {
-                <div className="col-lg-2 col-md-2 col-sm-4 col-4">
-                  <div className={classes.genre}></div>
-                </div>
-              })}
-            </div>
-            
+            {g.map((row, index) => 
+              <div className="row justify-content-center"  style={{marginBottom:"7px", marginTop:"7px"}} key={index}> 
+                {row.map((genre)=> 
+                  <div className="col-lg-2 col-sm-4 col-md-2 col-4" style={{padding:5}}>
+                    <div>{genre.cat}</div>
+                  </div>)}
+              </div>)}
           </div>
     )
 } 

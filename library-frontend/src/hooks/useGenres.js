@@ -1,5 +1,6 @@
 import React from "react";
 import {apiService} from "../services/api";
+import { useState, useEffect } from "react";
 export const useGenres = () => {
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +10,7 @@ export const useGenres = () => {
     const loadGenres = async () => {
       try {
         setLoading(true);
-        const response = await apiService.getG2enres();
+        const response = await apiService.getGenres();
         setGenres(response.data);
         setError(null);
       } catch (err) {

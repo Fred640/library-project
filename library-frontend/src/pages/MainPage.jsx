@@ -17,24 +17,50 @@ const MainPage = () => {
     {content:<Btn onClick={() => setModalVisible(true)}>Категории</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
   ]
   const {books, loading, error} = useBooks()
-  const [searchedBooks, setSearchedBooks] = useState([...books])
+  const [selectedGenre, setSelectedGenre] = useState("")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filteredBooks, setFilteredBooks] = useState([])
   
+
+
+  useEffect(() => {
+    if (books.length === 0) return;
+    
+    let result = [...books];
+    
+    if (selectedGenre) {
+      result = result.filter(book => book.genre === selectedGenre);
+    }
+    
+    if (searchQuery) {
+      result = result.filter(book => 
+        book.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    setFilteredBooks(result);
+    
+  }, [books, selectedGenre, searchQuery]);
+
   useEffect(() => {
     if (books.length > 0) {
-      setSearchedBooks([...books]);
+      setFilteredBooks([...books]);
     }
   }, [books]);
+
+
+
+    const handleGenreSelect = (genreSlug) => {
+        setSelectedGenre(genreSlug);
+        setModalVisible(false);
+        console.log("Selected genre in MainPage:", genreSlug);
+    }
   
-  const searchBook = (sQ) => {
-    setSearchedBooks(books.filter(book => {
-      if(sQ) {
-        return(book.title.includes(sQ))
-      } else {
-        return(books)
-      }
-      return(books)
-    }))
+    const searchBook = (sQ) => {
+    setSearchQuery(sQ);
   }
+
+    
 
   return (
     <div className="App">
@@ -46,13 +72,13 @@ const MainPage = () => {
           searchFunc:searchBook
         }}
       />
-      <CardsList books={searchedBooks} isCardsList={true}/>
+      <CardsList books={filteredBooks} isCardsList={true}/>
       
       <Modal 
         visible={modalVisible} 
         setVisible={setModalVisible}
       >
-        <Genres />
+        <Genres onGenreSelect={handleGenreSelect}/>
       </Modal>
     </div>
   );

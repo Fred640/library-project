@@ -1,6 +1,7 @@
 import React from "react";
-// import classes from "./Genres.module.css"
+import classes from "./Genres.module.css"
 import { useGenres } from "../../hooks/useGenres";
+import Btn from '../UI/button/Btn.jsx'
 const Genres = () => {
     const sliceFunc = (array, size) => {
     const rows = []
@@ -12,12 +13,12 @@ const Genres = () => {
     const {genres, loading, error} = useGenres()
     const g = sliceFunc(genres, 6)
     return(
-          <div className="container">
+          <div className={`container ${classes.mainDiv}`}>
             {g.map((row, index) => 
               <div className="row justify-content-center"  style={{marginBottom:"7px", marginTop:"7px"}} key={index}> 
                 {row.map((genre)=> 
-                  <div className="col-lg-2 col-sm-4 col-md-2 col-4" style={{padding:5}}>
-                    <div>{genre.cat}</div>
+                  <div className={`col-lg-4 col-sm-4 col-md-2 col-4`} style={{padding:5}}>
+                    <Btn className={classes.genreName}>{genre.cat}</Btn>
                   </div>)}
               </div>)}
           </div>

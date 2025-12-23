@@ -56,8 +56,9 @@ const Modal = ({ children, visible, setVisible }) => {
           ✕
         </button> */}
       </div>
+      
     </div>
   );
 };
 
-export default Modal;
+export default Modal

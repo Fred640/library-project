@@ -9,11 +9,13 @@
 }
 
 .myModalContent {
-    padding: 25px;
+    padding: 10px;
     background-color: white;
     border-radius: 10px;
-    min-width: 250px;
+    min-width: 200px;
 }
+
+
 
 
 .myModal.active {
@@ -21,3 +23,80 @@
     justify-content: center;
     align-items: center;
 }
+
+/* @media (min-width: 270px) {
+   .myModalContent {
+    padding: 25px;
+    width: 250px;
+    height: 125px;
+}
+}
+
+@media (min-width: 315px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+
+@media (min-width: 400px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+
+
+
+@media (min-width: 475px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+
+
+
+@media (min-width: 576px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+
+@media (min-width: 768px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+
+@media (min-width: 992px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+
+@media (min-width: 1200px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+
+@media (min-width: 1400px) {
+    .myModalContent {
+    padding: 25px;
+    width: 1000px;
+    height: 700px;
+}
+}
+ */

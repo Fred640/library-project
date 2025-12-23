@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import classes from './Modal.module.css';
-
+import { ModalContext } from '../../context/ModalContext.jsx';
+import { useContext } from "react";
 const Modal = ({ children, visible, setVisible }) => {
   const myClasses = [classes.myModal];
-  
+  const modalContext = useContext(ModalContext);
   if (visible) {
     myClasses.push(classes.active);
   }
@@ -38,6 +39,7 @@ const Modal = ({ children, visible, setVisible }) => {
   };
 
   return (
+    <ModalContext.Provider value={{ setVisible }}>
     <div 
       className={myClasses.join(" ")} 
       onClick={handleOverlayClick}
@@ -58,6 +60,7 @@ const Modal = ({ children, visible, setVisible }) => {
       </div>
       
     </div>
+    </ModalContext.Provider>
   );
 };
 

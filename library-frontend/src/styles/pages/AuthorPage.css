@@ -48,7 +48,8 @@
 }
 
 .author-cover {
-    flex: 0 0 250px;
+    flex: 0 0 1px;
+    padding-right: 20px;
 }
 
 
@@ -207,5 +208,34 @@
         font-size: 12px;
         overflow-x: auto;
         white-space: nowrap;
+    }
+}
+
+
+@media (max-width: 725px) {
+    .author-cover {
+        display: flex;
+        justify-content: center;
+        /* flex: none; */
+        padding-bottom: 20px;
+    }
+    .author-main-info {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .breadcrumbs {
+        margin-bottom: 2px !important;
+    }
+    .btn {
+        padding: 5px !important;
+        font-size: 13px !important;
+
+    }
+    .author-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 5px;
     }
 }

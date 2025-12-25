@@ -25,7 +25,7 @@ export const useBook = (BookSlug) => {
         setBook({
           id: data.id,
           title: data.title,
-          genre: data.genre,
+          genre: data.category,
           slug: data.slug,
           author_name: data.author_name,
           author_slug: data.author_slug,

@@ -16,10 +16,12 @@ class BookSerializer(serializers.ModelSerializer):
 
     author_name = serializers.CharField(source='author.name', read_only=True)
     author_slug = serializers.SlugField(source="author.slug", read_only=True)
+    category = serializers.CharField(source="category.cat", read_only=True)
+
 
     class Meta:
         model = Books
-        fields = ['id', 'title', 'genre', 'slug', 'author_slug', 'author_name']
+        fields = ['id', 'title', 'category', 'slug', 'author_slug', 'author_name']
 
 class AuthorsSerializer(serializers.ModelSerializer):
     class Meta:

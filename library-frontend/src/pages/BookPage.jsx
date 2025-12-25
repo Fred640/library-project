@@ -98,7 +98,8 @@ const BookPage = () => {
                             
                             <div className="book-genre">
                                 <span className="label">Жанр: </span>
-                                <span className="genre">{book.genre}</span>
+                                <span className="genre">{book.genre
+                                    }</span>
                             </div>
                             
                             {book.year && (

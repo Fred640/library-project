@@ -1,0 +1,151 @@
+.card {
+    width: 1px;
+    height: 230px;
+    padding-left: 0;
+    display: block;
+    margin: 10px;
+    border-radius: 12px;
+    background-color: rgb(242, 244, 232);
+}
+
+.card:hover {
+    transition: all 300ms;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px;
+}
+
+.title {
+    width: 100%;
+    background-color: rgb(166, 213, 254);
+    height: 43%;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    position: relative;
+    align-items: center;
+    font-weight: 600;
+    word-wrap: break-word;
+    font-size-adjust: 0.5;
+    display: flex;
+    justify-content: center;
+}
+
+.titleText {
+    /* position: absolute;
+    left: 0;
+    bottom: 0; */
+    text-align: center;
+    margin:3px;
+    word-wrap: break-word;
+    max-width: 100%;
+    
+}
+
+.list {
+    all: unset;
+    padding-top: 15px;
+}
+
+
+@media (min-width: 270px) {
+    .card{
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+        width: 70px;
+        height: 100px;
+        padding: 0;
+        margin: 0;
+    }
+    .justify-content-center {
+        background-color: black;
+    }
+}
+
+@media (min-width: 308px) {
+    .card{
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        width: 90px;
+        height: 125px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@media (min-width: 400px) {
+    .card{
+        font-size: small;
+        display: flex;
+        justify-content: center;
+        width: 110px;
+        height: 160px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+@media (min-width: 450px) {
+    .card{
+        font-size: small;
+        display: flex;
+        justify-content: center;
+        width: 140px;
+        height: 190px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+@media (min-width: 574px) {
+    .card{
+        font-size: 13px;
+        width: 150px;
+        height: 200px;
+        margin: 1px;
+    }
+}
+
+@media (min-width: 725px) {
+    .card{
+        font-size: 13px;
+        width: 140px;
+        height: 200px;
+    }
+}
+
+@media (min-width: 768px) {
+    .card{
+        font-size: 11px;
+        width: 80px;
+        height: 120px;
+    }
+}
+
+@media (min-width: 900px) {
+    .card{
+        font-size: 13px;
+        width: 100px;
+        height: 130px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .card{
+        font-size: 16px;
+        width: 120px;
+        height: 170px;
+    }
+}
+
+
+@media (min-width: 1150px) {
+    .card{
+        font-size: 16px;
+        width: 130px;
+        height: 200px;
+    }
+}
+

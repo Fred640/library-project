@@ -90,9 +90,9 @@ const AuthorPage = () => {
                                 <Btn className="btn">
                                     Добавить в избранных
                                 </Btn>
-
-
                             </div>
+                            <CardsList books={books} isAuthorPage={true}/>
+                            
                         </div>
                     </div>
 

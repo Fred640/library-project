@@ -215,3 +215,16 @@
         white-space: nowrap;
     }
 }
+
+@media (max-width: 590px) {
+    .book-main-info {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .book-cover {
+        display: flex;
+        justify-content: center;
+        flex: 0 0 170px;
+    }
+}

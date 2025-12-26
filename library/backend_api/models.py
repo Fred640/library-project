@@ -12,6 +12,11 @@ class Books(models.Model):
         blank=True,
         null=True
     )
+    text_file = models.FileField(
+        upload_to='book_texts/',
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return self.title

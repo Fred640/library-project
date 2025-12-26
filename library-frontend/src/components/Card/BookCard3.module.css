@@ -118,23 +118,27 @@
 
 @media (min-width: 768px) {
     .card{
-        font-size: 11px;
+        
         width: 80px;
         height: 120px;
+    }
+    .titleText {
+        font-weight: 400;
+        font-size: 10px;
     }
 }
 
 @media (min-width: 900px) {
     .card{
-        font-size: 13px;
-        width: 100px;
+        font-size: 11px;
+        width: 110px;
         height: 130px;
     }
 }
 
 @media (min-width: 1100px) {
     .card{
-        font-size: 16px;
+        font-size: 12px;
         width: 120px;
         height: 170px;
     }
@@ -143,7 +147,7 @@
 
 @media (min-width: 1150px) {
     .card{
-        font-size: 16px;
+        font-size: 13px;
         width: 130px;
         height: 200px;
     }

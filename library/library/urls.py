@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.urls import re_path
 from backend_api.views import BooksView, AuthorsView, AuthorsBooks, BookView, Genres
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -12,3 +14,7 @@ urlpatterns = [
     path('book/<slug:book_slug>/', BookView.as_view(), name="book"),
     path('genres/', Genres.as_view(), name="genres"),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

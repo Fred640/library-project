@@ -29,6 +29,7 @@ export const useBook = (BookSlug) => {
           slug: data.slug,
           author_name: data.author_name,
           author_slug: data.author_slug,
+          download_url: data.download_url,
 
 
         });

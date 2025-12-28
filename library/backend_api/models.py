@@ -1,6 +1,18 @@
 from django.db import models
 from autoslug import AutoSlugField
 from .utils.slugify import slugify_ru
+import os
+
+def book_file_path(instance, filename):
+    """
+    Файлы будут сохраняться в:
+    media/books/{author_slug}/{book_slug}/{filename}
+    """
+    author_slug = instance.author.slug
+    book_slug = instance.slug
+    
+    # Создаем путь
+    return os.path.join('books', author_slug, book_slug, filename)
 
 class Books(models.Model):
     title = models.CharField(max_length=200)
@@ -13,7 +25,7 @@ class Books(models.Model):
         null=True
     )
     text_file = models.FileField(
-        upload_to='book_texts/',
+        upload_to=book_file_path,
         blank=True,
         null=True,
     )

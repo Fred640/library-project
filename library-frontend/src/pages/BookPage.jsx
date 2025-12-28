@@ -22,6 +22,50 @@ const BookPage = () => {
             divClasses: "col-lg-3 col-md-6 col-12"
         },
     ];
+    const handleDownload = () => {
+        if (book && book.download_url) {
+            window.open(book.download_url, '_blank');
+        } else {
+            console.error("URL для скачивания не найден");
+            alert("Файл книги недоступен для скачивания");
+        }
+    };
+    const handleDownloadWithFetch = async () => {
+        if (!book) return;
+        
+        try {
+            // Используем fetch для скачивания
+            const response = await fetch(`/api/books/${book.slug}/download/`);
+            
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+            
+            // Получаем blob
+            const blob = await response.blob();
+            
+            // Создаем ссылку для скачивания
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            
+            // Определяем имя файла
+            const filename = `${book.slug}.txt`; // или извлеките из Content-Disposition
+            a.download = filename;
+            
+            // Добавляем на страницу и кликаем
+            document.body.appendChild(a);
+            a.click();
+            
+            // Очистка
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+        } catch (error) {
+            console.error("Ошибка скачивания:", error);
+            alert("Ошибка при скачивании файла");
+        }
+    };
 
     if (loading) {
         return (
@@ -119,7 +163,7 @@ const BookPage = () => {
                             <div className="book-actions">
                                 <Btn 
                                     className="btn"
-                                    onClick={() => console.log("Скачать книгу:", book.id)}
+                                    onClick={handleDownload}
                                 >
                                     Скачать
                                 </Btn>

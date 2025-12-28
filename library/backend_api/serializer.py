@@ -8,6 +8,8 @@ class BooksSerializer(serializers.ModelSerializer):
     author_slug = serializers.SlugField(source="author.slug", read_only=True)
     genre = serializers.CharField(source="category.cat", read_only=True)
 
+    
+
     class Meta:
         model = Books
         fields = ['title', 'slug', 'author_id', 'author_name', 'genre', 'author_slug']
@@ -18,10 +20,20 @@ class BookSerializer(serializers.ModelSerializer):
     author_slug = serializers.SlugField(source="author.slug", read_only=True)
     category = serializers.CharField(source="category.cat", read_only=True)
 
+    download_url = serializers.SerializerMethodField()
+    def get_download_url(self, obj):
+        if obj.text_file:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(
+                    f'/book/{obj.slug}/download/'
+                )
+        return None
+
 
     class Meta:
         model = Books
-        fields = ['id', 'title', 'category', 'slug', 'author_slug', 'author_name']
+        fields = ['id', 'title', 'category', 'slug', 'author_slug', 'author_name', 'download_url']
 
 class AuthorsSerializer(serializers.ModelSerializer):
     class Meta:

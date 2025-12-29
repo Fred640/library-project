@@ -170,7 +170,7 @@ const BookPage = () => {
                                 
                                 <Btn 
                                     className="btn"
-                                    onClick={() => console.log("Читать онлайн:", book.id)}
+                                    onClick={() => navigate(`/book/${book.slug}/read`)}
                                 >
                                     Читать онлайн
                                 </Btn>

@@ -5,7 +5,7 @@ import MainPage from "./pages/MainPage";
 import MainPageAuthors from "./pages/MainPageAuthors";
 import AuthorPage from "./pages/AuthorPage";
 import BookPage from './pages/BookPage.jsx'
-
+import ReadBookPage from "./pages/ReadBookPage.jsx";
 function App() {
 
   return(
@@ -16,6 +16,7 @@ function App() {
       <Route path="/authors" element={<MainPageAuthors />}/>
       <Route path="/author/:author_slug/" element={<AuthorPage/>}/>
       <Route path="/book/:book_slug/" element={<BookPage/>}/>
+      <Route path="/book/:book_slug/read" element={<ReadBookPage />} />
     </Routes>
     </BrowserRouter>
   )

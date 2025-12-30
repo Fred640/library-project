@@ -8,11 +8,16 @@ def book_file_path(instance, filename):
     Файлы будут сохраняться в:
     media/books/{author_slug}/{book_slug}/{filename}
     """
+    """
+    Сокращаем имя файла перед сохранением
+    """
     author_slug = instance.author.slug
     book_slug = instance.slug
     
-    # Создаем путь
-    return os.path.join('books', author_slug, book_slug, filename)
+    file_ext = os.path.splitext(filename)[1]
+    short_filename = f"{book_slug}{file_ext}"
+    
+    return os.path.join('books', author_slug, book_slug, short_filename)
 
 class Books(models.Model):
     title = models.CharField(max_length=200)
@@ -28,6 +33,7 @@ class Books(models.Model):
         upload_to=book_file_path,
         blank=True,
         null=True,
+        max_length=500
     )
 
     def __str__(self):

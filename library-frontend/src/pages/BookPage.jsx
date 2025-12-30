@@ -12,6 +12,7 @@ const BookPage = () => {
     const params = useParams();
     const { book, loading, error } = useBook(params.book_slug);
 
+
     const Elements = [
         {
             content: <Profile User={{ name: "Fedor Sapronov", color: "red" }} />,
@@ -34,30 +35,24 @@ const BookPage = () => {
         if (!book) return;
         
         try {
-            // Используем fetch для скачивания
             const response = await fetch(`/api/books/${book.slug}/download/`);
             
             if (!response.ok) {
                 throw new Error(`Ошибка: ${response.status}`);
             }
             
-            // Получаем blob
             const blob = await response.blob();
             
-            // Создаем ссылку для скачивания
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             
-            // Определяем имя файла
-            const filename = `${book.slug}.txt`; // или извлеките из Content-Disposition
+            const filename = `${book.slug}.txt`;
             a.download = filename;
             
-            // Добавляем на страницу и кликаем
             document.body.appendChild(a);
             a.click();
             
-            // Очистка
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
             
@@ -177,7 +172,6 @@ const BookPage = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </>

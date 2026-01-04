@@ -1,0 +1,295 @@
+[
+{
+  "model": "backend_api.authors",
+  "pk": 1,
+  "fields": {
+    "name": "Александр Сергеевич Пушкин",
+    "user_name": "asdasdasd123",
+    "slug": "aleksandr-sergeevich-pyshkin"
+  }
+},
+{
+  "model": "backend_api.authors",
+  "pk": 2,
+  "fields": {
+    "name": "Михаил Юрьевич Лермонтов",
+    "user_name": null,
+    "slug": "mixail-yrevich-lermontov"
+  }
+},
+{
+  "model": "backend_api.authors",
+  "pk": 3,
+  "fields": {
+    "name": "Иван Сергеевич Тургенев",
+    "user_name": null,
+    "slug": "ivan-sergeevich-tyrgenev"
+  }
+},
+{
+  "model": "backend_api.authors",
+  "pk": 4,
+  "fields": {
+    "name": "Федор Михайлович Достоевский",
+    "user_name": null,
+    "slug": "fedor-mihaulovich-dostaevskiy"
+  }
+},
+{
+  "model": "backend_api.bookcategories",
+  "pk": 1,
+  "fields": {
+    "cat": "Роман",
+    "slug": "roman"
+  }
+},
+{
+  "model": "backend_api.bookcategories",
+  "pk": 2,
+  "fields": {
+    "cat": "Повесть",
+    "slug": "povest"
+  }
+},
+{
+  "model": "backend_api.bookcategories",
+  "pk": 3,
+  "fields": {
+    "cat": "Поэма",
+    "slug": "poema"
+  }
+},
+{
+  "model": "backend_api.bookcategories",
+  "pk": 4,
+  "fields": {
+    "cat": "Рассказ",
+    "slug": "rasskaz"
+  }
+},
+{
+  "model": "backend_api.bookcategories",
+  "pk": 5,
+  "fields": {
+    "cat": "Драма",
+    "slug": "drama"
+  }
+},
+{
+  "model": "backend_api.bookcategories",
+  "pk": 6,
+  "fields": {
+    "cat": "Стихотворение",
+    "slug": "stikhotvorenie"
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 3,
+  "fields": {
+    "title": "Евгений Онегин",
+    "author": 1,
+    "slug": "evgeniy-onegin",
+    "text_file": "books/aleksandr-sergeevich-pyshkin/evgeniy-onegin/Ievghienii_Onieghin_-_Alieksandr_Sierg_cRlTLqi.fb2",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 4,
+  "fields": {
+    "title": "Капитанская дочка",
+    "author": 1,
+    "slug": "kapitanskaya-dochka",
+    "text_file": "",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 5,
+  "fields": {
+    "title": "Дубровский",
+    "author": 1,
+    "slug": "dybrovskiy",
+    "text_file": "",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 6,
+  "fields": {
+    "title": "Пиковая дама",
+    "author": 1,
+    "slug": "pikovaya-dama",
+    "text_file": "",
+    "category": 2
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 7,
+  "fields": {
+    "title": "Повести Белкина",
+    "author": 1,
+    "slug": "povesti-belkina",
+    "text_file": "",
+    "category": 2
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 8,
+  "fields": {
+    "title": "Медный всадник",
+    "author": 1,
+    "slug": "mednyu-vsadnik",
+    "text_file": "",
+    "category": 3
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 9,
+  "fields": {
+    "title": "Мцыри",
+    "author": 2,
+    "slug": "mciri",
+    "text_file": "",
+    "category": 3
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 10,
+  "fields": {
+    "title": "Бородино",
+    "author": 2,
+    "slug": "borodino",
+    "text_file": "",
+    "category": 6
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 11,
+  "fields": {
+    "title": "Маскарад",
+    "author": 2,
+    "slug": "maskarad",
+    "text_file": "",
+    "category": 5
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 12,
+  "fields": {
+    "title": "Герой нашего времени",
+    "author": 2,
+    "slug": "geroy-nashego-vremeni",
+    "text_file": "books/mixail-yrevich-lermontov/geroy-nashego-vremeni/geroy-nashego-vremeni.fb2",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 13,
+  "fields": {
+    "title": "Сборник стихов Михаила Юрьевича Лермонтова",
+    "author": 2,
+    "slug": "sbornik-stihov-mihaila-yrevicha-lermontova",
+    "text_file": "",
+    "category": 6
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 14,
+  "fields": {
+    "title": "Демон",
+    "author": 2,
+    "slug": "demon",
+    "text_file": "",
+    "category": 3
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 15,
+  "fields": {
+    "title": "Отцы и дети",
+    "author": 3,
+    "slug": "otcu-i-deti",
+    "text_file": "",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 16,
+  "fields": {
+    "title": "Ася",
+    "author": 3,
+    "slug": "acya",
+    "text_file": "",
+    "category": 2
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 17,
+  "fields": {
+    "title": "Муму",
+    "author": 3,
+    "slug": "mumu",
+    "text_file": "",
+    "category": 4
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 18,
+  "fields": {
+    "title": "Белые ночи",
+    "author": 4,
+    "slug": "belue-nochi",
+    "text_file": "",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 19,
+  "fields": {
+    "title": "Игрок",
+    "author": 4,
+    "slug": "igrok",
+    "text_file": "",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 20,
+  "fields": {
+    "title": "Преступление и наказание",
+    "author": 4,
+    "slug": "prestyplenie-i-nakazanie",
+    "text_file": "",
+    "category": 1
+  }
+},
+{
+  "model": "backend_api.books",
+  "pk": 21,
+  "fields": {
+    "title": "Братья Карамазовы",
+    "author": 4,
+    "slug": "bratya-karamazovu",
+    "text_file": "",
+    "category": 1
+  }
+}
+]

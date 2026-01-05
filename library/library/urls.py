@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.urls import re_path
-from backend_api.views import BooksView, AuthorsView, AuthorsBooks, BookView, Genres, DownloadBookView
+from backend_api.views import BooksView, AuthorsView, AuthorsBooks, BookView, Genres, DownloadBookView, RegisterView, LoginView, LogoutView, CurrentUserView, CheckAuthView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -14,6 +14,11 @@ urlpatterns = [
     path('book/<slug:book_slug>/', BookView.as_view(), name="book"),
     path('genres/', Genres.as_view(), name="genres"),
     path('book/<slug:book_slug>/download/', DownloadBookView.as_view(), name='download-book'),
+    path('auth/register/', RegisterView.as_view(), name='register'),
+    path('auth/login/', LoginView.as_view(), name='login'),
+    path('auth/logout/', LogoutView.as_view(), name='logout'),
+    path('auth/me/', CurrentUserView.as_view(), name='current_user'),
+    path('auth/check/', CheckAuthView.as_view(), name='check_auth'),
 ]
 
 

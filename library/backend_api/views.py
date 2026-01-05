@@ -2,9 +2,13 @@ from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse, Http404
 from rest_framework.views import APIView
 from .models import Books, Authors, BookCategories
-from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer
+from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer, RegisterSerializer, LoginSerializer, UserSerializer
 from rest_framework.response import Response
 import os
+from rest_framework.authtoken.models import Token
+from rest_framework import generics, permissions, status
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 
 
@@ -100,3 +104,83 @@ class Genres(APIView):
         genres = BookCategories.objects.all()
         serializer = GenresSerializer(genres, many=True)
         return Response(serializer.data)
+    
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = RegisterSerializer
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        user = serializer.save()
+        
+        token, created = Token.objects.get_or_create(user=user)
+        
+        return Response({
+            "user": {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name
+            },
+            "token": token.key,
+            "message": "Пользователь успешно зарегистрирован"
+        }, status=status.HTTP_201_CREATED)
+
+class LoginView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+        
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)
+            
+            login(request, user)
+            
+            return Response({
+                "user": UserSerializer(user).data,
+                "token": token.key,
+                "message": "Успешный вход"
+            })
+        else:
+            return Response(
+                {"error": "Неверное имя пользователя или пароль"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+class LogoutView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request):
+        try:
+            request.user.auth_token.delete()
+        except (AttributeError, Token.DoesNotExist):
+            pass
+        
+        logout(request)
+        
+        return Response({"message": "Успешный выход"}, status=status.HTTP_200_OK)
+
+class CurrentUserView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+class CheckAuthView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def get(self, request):
+        return Response({"authenticated": True, "user": UserSerializer(request.user).data})

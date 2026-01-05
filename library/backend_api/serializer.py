@@ -1,5 +1,8 @@
 from rest_framework import serializers
 from .models import Books, Authors, BookCategories
+from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from rest_framework.authtoken.models import Token
 
 
 class BooksSerializer(serializers.ModelSerializer):
@@ -54,3 +57,54 @@ class GenresSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookCategories
         fields = ['cat', 'slug']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'date_joined')
+        read_only_fields = ('id', 'date_joined')
+
+class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(
+        write_only=True, 
+        required=True, 
+        validators=[validate_password]
+    )
+    password2 = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+        extra_kwargs = {
+            'email': {'required': True},
+            'first_name': {'required': True},
+            'last_name': {'required': True},
+        }
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Пароли не совпадают"})
+        
+        if User.objects.filter(email=attrs['email']).exists():
+            raise serializers.ValidationError({"email": "Этот email уже используется"})
+        
+        return attrs
+
+    def create(self, validated_data):
+        validated_data.pop('password2')
+        
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', '')
+        )
+        
+        return user
+    
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()

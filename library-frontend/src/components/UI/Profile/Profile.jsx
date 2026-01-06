@@ -1,19 +1,26 @@
 import React from "react";
 import classes from "../../header/Header.module.css"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-const Profile = ({User}) => {
+
+const Profile = () => {
     
     const navigate = useNavigate()
-    const color = User.color
-    const name = User.name
-
-    return(
+    const {user, isAuthenticated} = useAuth()
+    if (isAuthenticated) {
+        return (
         <div className={classes.profileDiv}>
-                <button onClick={() => {navigate("/Profile", {state:{...User}})}} style={{backgroundColor:`${User.color}`}} className={classes.Avatar}>{String(User.name)[0]}</button>
-                <button onClick={() => {navigate("/Profile", {state:{...User}})}} className={classes.nickname}>{User.name}</button>
+            <button style={{backgroundColor:`${user.color}`}} className={classes.Avatar}>{String(user.username)[0]}</button>
+            <button className={classes.nickname}>{user.username}</button>
         </div>
-    )
+        )
+    } else {
+        return(
+            <Link to="reg/">Вход/Регистрация</Link>
+        )
+        
+    }
 }
 
 export default Profile

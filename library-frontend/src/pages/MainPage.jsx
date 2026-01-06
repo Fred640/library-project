@@ -8,18 +8,21 @@ import { useBooks } from "../hooks/useBooks.js";
 import { useEffect } from "react";
 import Modal from "../components/UI/modal/Modal.jsx";
 import Genres from "../components/genres/Genres.jsx";
+import { useAuth } from "../components/context/AuthContext.jsx";
 
 const MainPage = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const Elements = [
-    {content:<Profile User={{name:"Fedor Sapronov", color:"red"}}/>, divClasses:"col-lg-3 col-md-12"},
-    {content:<Link to="/authors" style={{textDecoration:"none"}}><Btn>Авторы</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
-    {content:<Btn onClick={() => setModalVisible(true)}>Категории</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
-  ]
+  
   const {books, loading, error} = useBooks()
   const [selectedGenre, setSelectedGenre] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredBooks, setFilteredBooks] = useState([])
+
+  const Elements = [
+    {content: <Profile />, divClasses:"col-lg-3 col-md-12"},
+    {content:<Link to="/authors" style={{textDecoration:"none"}}><Btn>Авторы</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
+    {content:<Btn onClick={() => setModalVisible(true)}>Категории</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
+  ]
   
 
 

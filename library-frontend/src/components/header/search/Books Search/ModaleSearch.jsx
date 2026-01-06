@@ -1,6 +1,6 @@
 import {React, useEffect, useState, useMemo} from "react";
 import classes from "./ModaleSearch.module.css"
-import Inp from "../../../UI/input/Inp";
+// import Inp from "../../../UI/input/Inp";
 import Btn from "../../../UI/button/Btn";
 
 const ModalSearch = ({visible, ...props}) => {
@@ -18,9 +18,13 @@ const ModalSearch = ({visible, ...props}) => {
         ? <div className={`container ${classes.searchDiv} `}>
             <div className="row">
                 <div className="col-8">
-                    <Inp placeholder={props.placeholder}
+                    <input placeholder={props.placeholder}
                     value={searchQuery}
-                    onChange={(event)=>{setSearchQuery(event.target.value)}}/>
+                    onChange={(event)=>{setSearchQuery(event.target.value)}}
+                    id={"modalSearch"}
+                    label={props.label ? props.label : ""}
+                    type={props.type ? props.type : "text"}
+                    className={classes.Input}></input>
                 </div>
                 <div className="col-4">
                     <Btn onClick={searchA}>поиск</Btn>

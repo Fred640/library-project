@@ -16,3 +16,11 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.Input {
+    all: unset;
+    padding: 5px;
+    border: 2px solid grey;
+    border-radius: 10px;
+    width: 100%;
+}

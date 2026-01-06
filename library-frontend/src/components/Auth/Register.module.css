@@ -1,0 +1,35 @@
+.mainDiv {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.window {
+    width: 700px;
+    height: 500px;
+    border: 2px solid black;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+}
+
+.title {
+    padding-top: 10px;
+    font-size: 20px;
+    
+}
+
+.backButton {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.label {
+
+}

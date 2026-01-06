@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import classes from './Register.module.css'
+import Btn from '../UI/button/Btn.jsx'
+import Inp from "../UI/input/Inp.jsx"
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +14,9 @@ const Register = () => {
         first_name: '',
         last_name: ''
     });
+
+    const [reg, setReg] = useState(true)
+
     
     const { register, error } = useAuth();
     const navigate = useNavigate();
@@ -37,106 +43,65 @@ const Register = () => {
     };
 
     return (
-        <div className="auth-container">
-            <div className="auth-card">
-                <h2>Регистрация</h2>
+    <div className={classes.mainDiv}>
+        <div className={classes.window}>
+            <span className={classes.backButton}>
+                <Btn onClick={() => {navigate(-1)}}>Назад</Btn>
+            </span>
+            <button className={`${classes.title} ${reg ? classes.titleActive : ""}`} onClick={() => {setReg(true)}}>Регистрация</button>
+            <button className={`${classes.title} ${!reg ? classes.titleActive : ""}`} onClick={() => {setReg(false)}}>Вход</button>
+            <div>
+                {reg ? 
+                <form onSubmit={handleSubmit} className='container' noValidate>
+                    <Inp 
+                        label="Имя пользователя" 
+                        id="username" 
+                        name="username"
+                        type="text"
+                        value={formData.username} 
+                        onChange={handleChange}
+                        required
+                    />
+                    
+                    <Inp 
+                        label="Email" 
+                        id="email" 
+                        name="email"
+                        type="email" 
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                    
+                    <Inp 
+                        label="Пароль" 
+                        id="password" 
+                        name="password"
+                        type="password" 
+                        value={formData.password} 
+                        onChange={handleChange}
+                        required
+                    />
+                    
+                    <Inp 
+                        label="Подтвердите пароль" 
+                        id="password2" 
+                        name="password2"
+                        type="password" 
+                        value={formData.password2} 
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit" className="btn btn-primary mt-3">Зарегистрироваться</button>
+                </form>    
+                : 
+                <></>
+                }
                 
-                <form onSubmit={handleSubmit}>
-                    {error && (
-                        <div className="error-message">
-                            {Object.entries(error).map(([key, value]) => (
-                                <p key={key}><strong>{key}:</strong> {value}</p>
-                            ))}
-                        </div>
-                    )}
-                    
-                    <div className="form-group">
-                        <label>Имя пользователя *</label>
-                        <input
-                            type="text"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>Email *</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>Имя *</label>
-                        <input
-                            type="text"
-                            name="first_name"
-                            value={formData.first_name}
-                            onChange={handleChange}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>Фамилия *</label>
-                        <input
-                            type="text"
-                            name="last_name"
-                            value={formData.last_name}
-                            onChange={handleChange}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>Пароль *</label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>Подтвердите пароль *</label>
-                        <input
-                            type="password"
-                            name="password2"
-                            value={formData.password2}
-                            onChange={handleChange}
-                            required
-                            disabled={loading}
-                        />
-                    </div>
-                    
-                    <button 
-                        type="submit" 
-                        disabled={loading}
-                        className="btn btn-primary"
-                    >
-                        {loading ? 'Регистрация...' : 'Зарегистрироваться'}
-                    </button>
-                    
-                    <div className="auth-links">
-                        <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
-                    </div>
-                </form>
             </div>
         </div>
-    );
+    </div>
+);
 };
 
 export default Register;

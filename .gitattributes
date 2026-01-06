@@ -1,0 +1,22 @@
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.py linguist-language=Python
+*.html linguist-language=HTML
+*.css linguist-language=CSS
+*.scss linguist-language=CSS
+*.json linguist-language=JSON
+*.md linguist-language=Markdown
+
+
+library/venv/* linguist-vendored
+library/__pycache__/* linguist-vendored
+library-frontend/node_modules/* linguist-vendored
+*.pyc linguist-vendored
+
+
+requirements.txt linguist-documentation
+package.json linguist-documentation
+vite.config.js linguist-documentation
+manage.py linguist-documentation

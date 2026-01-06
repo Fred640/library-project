@@ -1,0 +1,159 @@
+# Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.sqlite3
+*.db
+*.log
+*.pot
+*.pyc
+*.pyd
+*.pyo
+*.whl
+
+# Django migrations (кроме __init__.py)
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Django media and static
+media/
+staticfiles/
+*.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node.js / React
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.yarn/
+.yarnrc
+.pnp.*
+package-lock.json
+yarn.lock
+
+# React build
+build/
+dist/
+.svelte-kit/
+.next/
+.nuxt/
+.cache/
+.serverless/
+.ssr/
+
+# Frontend specific
+*.css.map
+*.js.map
+*.sass.map
+*.scss.map
+*.less.map
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+# Comment in the public line in if your project uses Gatsby and not Next.js
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# public
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# Temporary folders
+tmp/
+temp/
+
+# Database
+*.db
+*.sqlite3
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+
+# Archives
+*.zip
+*.tar.gz
+*.rar

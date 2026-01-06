@@ -7,6 +7,7 @@ import BookPage from './pages/BookPage.jsx';
 import ReadBookPage from "./pages/ReadBookPage.jsx";
 import Register from "./components/Auth/Register.jsx";
 import { AuthProvider } from './components/context/AuthContext.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/book/:book_slug/" element={<BookPage/>}/>
         <Route path="/book/:book_slug/read" element={<ReadBookPage />} />
         <Route path="/reg/" element={<Register />} />
+        <Route path="/profile/" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

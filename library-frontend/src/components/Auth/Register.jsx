@@ -18,7 +18,8 @@ const Register = () => {
     const [reg, setReg] = useState(true)
 
     
-    const { register, error } = useAuth();
+    const { register, login, error } = useAuth();
+
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
@@ -29,16 +30,25 @@ const Register = () => {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleRegSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         
         const result = await register(formData);
         
         if (result.success) {
-            navigate('/');
-        }
+            navigate(-1);
+        }}
+
+    const handleLogSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
         
+        const result = await login(formData);
+        
+        if (result.success) {
+            navigate(-1);
+        }
         setLoading(false);
     };
 
@@ -46,13 +56,18 @@ const Register = () => {
     <div className={classes.mainDiv}>
         <div className={classes.window}>
             <span className={classes.backButton}>
-                <Btn onClick={() => {navigate(-1)}}>Назад</Btn>
+                <Btn onClick={() => {navigate(-1)}}>
+                    Назад
+                </Btn>
             </span>
-            <button className={`${classes.title} ${reg ? classes.titleActive : ""}`} onClick={() => {setReg(true)}}>Регистрация</button>
-            <button className={`${classes.title} ${!reg ? classes.titleActive : ""}`} onClick={() => {setReg(false)}}>Вход</button>
+            <div className={classes.titleDiv}>
+                <button className={`${classes.title} ${reg ? classes.titleActive : ""}`} onClick={() => {setReg(true)}}>Регистрация</button>
+                <button className={`${classes.title} ${!reg ? classes.titleActive : ""}`} onClick={() => {setReg(false)}}>Вход</button>
+            </div>
+            
             <div>
                 {reg ? 
-                <form onSubmit={handleSubmit} className='container' noValidate>
+                <form onSubmit={handleRegSubmit} className='container' noValidate>
                     <Inp 
                         label="Имя пользователя" 
                         id="username" 
@@ -92,10 +107,30 @@ const Register = () => {
                         onChange={handleChange}
                         required
                     />
-                    <button type="submit" className="btn btn-primary mt-3">Зарегистрироваться</button>
+                    <button type="submit" className={classes.submitButton}>Зарегистрироваться</button>
                 </form>    
                 : 
-                <></>
+                <form onSubmit={handleLogSubmit} className='container' noValidate>
+                    <Inp 
+                    label="Имя пользователя" 
+                    id="username" 
+                    name="username"
+                    type="text" 
+                    value={formData.username} 
+                    onChange={handleChange}
+                    required
+                    />
+                    <Inp 
+                        label="Пароль" 
+                        id="password" 
+                        name="password"
+                        type="password" 
+                        value={formData.password} 
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit" className={classes.submitButton}>Войти</button>
+                </form>
                 }
                 
             </div>

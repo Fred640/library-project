@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 import os
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 def cyrillic_to_latin(text):
     cyrillic = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
@@ -101,5 +101,3 @@ class Books(models.Model):
         super().save(*args, **kwargs)
 
 
-
-    

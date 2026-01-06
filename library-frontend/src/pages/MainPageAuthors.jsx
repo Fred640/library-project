@@ -11,7 +11,7 @@ import { useAuthors } from "../hooks/useAuthors";
 const MainPageAuthors = () => {
 
     const Elements = [
-    {content:<Profile User={{name:"Fedor Sapronov", color:"red"}}/>, divClasses:"col-lg-3 col-md-12"},
+    {content:<Profile/>, divClasses:"col-lg-3 col-md-12"},
     {content:<Link to="/" style={{textDecoration:"none"}}><Btn>Книги</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
     {content:<Link style={{textDecoration:"none"}} to="/GenresFilter"><Btn>Фильтры</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
     ]

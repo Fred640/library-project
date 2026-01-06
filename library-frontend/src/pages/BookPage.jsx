@@ -15,7 +15,7 @@ const BookPage = () => {
 
     const Elements = [
         {
-            content: <Profile User={{ name: "Fedor Sapronov", color: "red" }} />,
+            content: <Profile/>,
             divClasses: "col-lg-3 col-md-12"
         },
         {
@@ -169,6 +169,7 @@ const BookPage = () => {
                                 >
                                     Читать онлайн
                                 </Btn>
+                                <Btn className="btn">Добавить в Избранное</Btn>
                             </div>
                         </div>
                     </div>

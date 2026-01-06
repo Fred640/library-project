@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 const AuthorPage = () => {
     const navigate= useNavigate()
     const Elements = [
-        {content:<Profile User={{name:"Fedor Sapronov", color:"red"}}/>, divClasses:"col-lg-3 col-md-12"},
+        {content:<Profile/>, divClasses:"col-lg-3 col-md-12"},
         {content:<Btn onClick={()=>{navigate(-1)}}>Назад</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
     ]
 

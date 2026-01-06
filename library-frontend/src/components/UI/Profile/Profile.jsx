@@ -11,13 +11,13 @@ const Profile = () => {
     if (isAuthenticated) {
         return (
         <div className={classes.profileDiv}>
-            <button style={{backgroundColor:`${user.color}`}} className={classes.Avatar}>{String(user.username)[0]}</button>
-            <button className={classes.nickname}>{user.username}</button>
+            <button onClick={() => navigate("/profile/")} style={{backgroundColor:`${user.color}`}} className={classes.Avatar}>{String(user.username)[0]}</button>
+            <button onClick={() => navigate("/profile/")} className={classes.nickname}>{user.username}</button>
         </div>
         )
     } else {
         return(
-            <Link to="reg/">Вход/Регистрация</Link>
+            <Link to="/reg/">Вход/Регистрация</Link>
         )
         
     }

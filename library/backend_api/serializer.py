@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Books, Authors, BookCategories
+from .models import Books, Authors, BookCategories, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.authtoken.models import Token
@@ -10,12 +10,18 @@ class BooksSerializer(serializers.ModelSerializer):
     author_name = serializers.CharField(source='author.name', read_only=True)
     author_slug = serializers.SlugField(source="author.slug", read_only=True)
     genre = serializers.CharField(source="category.cat", read_only=True)
+    is_favorite = serializers.SerializerMethodField()
+    def get_is_favorite(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.is_favorited_by(request.user)
+        return False
 
     
 
     class Meta:
         model = Books
-        fields = ['title', 'slug', 'author_id', 'author_name', 'genre', 'author_slug']
+        fields = ['id', 'title', 'slug', 'author_id', 'author_name', 'genre', 'author_slug', 'is_favorite']
 
 class BookSerializer(serializers.ModelSerializer):
 
@@ -39,9 +45,10 @@ class BookSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'category', 'slug', 'author_slug', 'author_name', 'download_url']
 
 class AuthorsSerializer(serializers.ModelSerializer):
+    is_favorite = serializers.SerializerMethodField()
     class Meta:
         model = Authors
-        fields = ["id", "name", 'slug', 'user_name']
+        fields = ["id", "name", 'slug', 'user_name', 'is_favorite']
 
 class AuthorsBooksSerializer(serializers.ModelSerializer):
 
@@ -108,3 +115,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    favorite_books = BooksSerializer(many=True, read_only=True, source='user.favorite_books')
+    favorite_authors = AuthorsSerializer(many=True, read_only=True, source='user.favorite_authors')
+    
+    class Meta:
+        model = UserProfile
+        fields = ['id', 'favorite_books', 'favorite_authors']

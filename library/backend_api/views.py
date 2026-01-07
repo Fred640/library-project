@@ -5,6 +5,7 @@ from .models import Books, Authors, BookCategories
 from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer, RegisterSerializer, LoginSerializer, UserSerializer
 from rest_framework.response import Response
 import os
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions, status
 from django.contrib.auth import authenticate, login, logout
@@ -76,7 +77,7 @@ class BooksView(APIView):
 class BookView(APIView):
     def get(self, request, book_slug):
         book = Books.objects.get(slug=book_slug)
-        serializer = BookSerializer(book, context={'request': request})  # Добавьте context
+        serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
 
 class AuthorsView(APIView):
@@ -184,3 +185,69 @@ class CheckAuthView(APIView):
     
     def get(self, request):
         return Response({"authenticated": True, "user": UserSerializer(request.user).data})
+    
+class ToggleFavoriteBookView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, book_id):
+        try:
+            book = Books.objects.get(id=book_id)
+        except Books.DoesNotExist:
+            return Response(
+                {"error": "Книга не найдена"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        if book.favorited_by.filter(id=request.user.id).exists():
+            book.favorited_by.remove(request.user)
+            return Response({
+                "status": "removed",
+                "message": "Книга удалена из избранного"
+            })
+        else:
+            book.favorited_by.add(request.user)
+            return Response({
+                "status": "added",
+                "message": "Книга добавлена в избранное"
+            })
+
+class ToggleFavoriteAuthorView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, author_id):
+        try:
+            author = Authors.objects.get(id=author_id)
+        except Authors.DoesNotExist:
+            return Response(
+                {"error": "Автор не найден"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        if author.favorited_by.filter(id=request.user.id).exists():
+            author.favorited_by.remove(request.user)
+            return Response({
+                "status": "removed",
+                "message": "Автор удален из избранного"
+            })
+        else:
+            author.favorited_by.add(request.user)
+            return Response({
+                "status": "added",
+                "message": "Автор добавлен в избранное"
+            })
+    
+class UserFavoritesView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        favorite_books = user.favorite_books.all()
+        favorite_authors = user.favorite_authors.all()
+        
+        book_serializer = BooksSerializer(favorite_books, many=True, context={'request': request})
+        author_serializer = AuthorsSerializer(favorite_authors, many=True, context={'request': request})
+        
+        return Response({
+            "favorite_books": book_serializer.data,
+            "favorite_authors": author_serializer.data
+        })

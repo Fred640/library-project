@@ -1,7 +1,22 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.urls import re_path
-from backend_api.views import BooksView, AuthorsView, AuthorsBooks, BookView, Genres, DownloadBookView, RegisterView, LoginView, LogoutView, CurrentUserView, CheckAuthView
+from backend_api.views import (
+    BooksView, 
+    AuthorsView, 
+    AuthorsBooks, 
+    BookView, 
+    Genres, 
+    DownloadBookView, 
+    RegisterView, 
+    LoginView, 
+    LogoutView, 
+    CurrentUserView, 
+    CheckAuthView,
+    ToggleFavoriteBookView, 
+    ToggleFavoriteAuthorView, 
+    UserFavoritesView
+    )
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -19,6 +34,9 @@ urlpatterns = [
     path('auth/logout/', LogoutView.as_view(), name='logout'),
     path('auth/me/', CurrentUserView.as_view(), name='current_user'),
     path('auth/check/', CheckAuthView.as_view(), name='check_auth'),
+    path('books/<int:book_id>/favorite/', ToggleFavoriteBookView.as_view(), name='toggle_favorite_book'),
+    path('authors/<int:author_id>/favorite/', ToggleFavoriteAuthorView.as_view(), name='toggle_favorite_author'),
+    path('user/favorites/', UserFavoritesView.as_view(), name='user_favorites'),
 ]
 
 

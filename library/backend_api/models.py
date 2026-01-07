@@ -35,9 +35,6 @@ def book_file_path(instance, filename):
     Файлы будут сохраняться в:
     media/books/{author_slug}/{book_slug}/{filename}
     """
-    """
-    Сокращаем имя файла перед сохранением
-    """
     author_slug = instance.author.slug
     book_slug = instance.slug
     
@@ -51,6 +48,12 @@ class Authors(models.Model):
     user_name = models.CharField(max_length=50, blank=True, null=True)
     slug = models.SlugField(unique=True, max_length=100, blank=True)
     
+    favorited_by = models.ManyToManyField(
+        User, 
+        related_name='favorite_authors',
+        blank=True
+    )
+    
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify_ru(self.name)
@@ -60,6 +63,15 @@ class Authors(models.Model):
                 self.slug = f"{base_slug}-{counter}"
                 counter += 1
         super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.name
+    
+    def is_favorited_by(self, user):
+        """Проверяет, добавил ли пользователь автора в избранное"""
+        if not user.is_authenticated:
+            return False
+        return self.favorited_by.filter(id=user.id).exists()
 
 class BookCategories(models.Model):
     cat = models.CharField(max_length=100)
@@ -74,6 +86,9 @@ class BookCategories(models.Model):
                 self.slug = f"{base_slug}-{counter}"
                 counter += 1
         super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.cat
 
 class Books(models.Model):
     title = models.CharField(max_length=200)
@@ -86,7 +101,13 @@ class Books(models.Model):
         max_length=500
     )
     category = models.ForeignKey("BookCategories", on_delete=models.PROTECT, related_name="books", blank=True, null=True)
-
+    
+    favorited_by = models.ManyToManyField(
+        User, 
+        related_name='favorite_books',
+        blank=True
+    )
+    
     def __str__(self):
         return self.title
     
@@ -99,5 +120,24 @@ class Books(models.Model):
                 self.slug = f"{base_slug}-{counter}"
                 counter += 1
         super().save(*args, **kwargs)
+    
+    def is_favorited_by(self, user):
+        """Проверяет, добавил ли пользователь книгу в избранное"""
+        if not user.is_authenticated:
+            return False
+        return self.favorited_by.filter(id=user.id).exists()
 
-
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    
+    def __str__(self):
+        return f"Профиль {self.user.username}"
+    
+    def get_favorite_books(self):
+        """Получить любимые книги пользователя"""
+        return self.user.favorite_books.all()
+    
+    def get_favorite_authors(self):
+        """Получить любимых авторов пользователя"""
+        return self.user.favorite_authors.all()
+    

@@ -1,4 +1,3 @@
-import React from "react";
 import HeaderTemplate from "../components/header/HeaderTemplate.jsx";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Btn from "../components/UI/button/Btn";
@@ -6,12 +5,22 @@ import Profile from "../components/UI/Profile/Profile";
 import "../styles/pages/BookPage.css";
 import { useBook } from '../hooks/useBook.js';
 import BookCard from "../components/Card/BookCard.jsx";
+import { useBookFavorite } from '../hooks/useFavorites.js';
 
 const BookPage = () => {
     const navigate = useNavigate();
     const params = useParams();
-    const { book, loading, error } = useBook(params.book_slug);
+    const { book, loading: bookLoading, error } = useBook(params.book_slug);
+    
+    const { 
+        isFavorite, 
+        toggleFavorite, 
+        loading: favoriteLoading,
+        error: favoriteError,
+        initialized
+    } = useBookFavorite(book?.id);
 
+    
 
     const Elements = [
         {
@@ -23,6 +32,8 @@ const BookPage = () => {
             divClasses: "col-lg-3 col-md-6 col-12"
         },
     ];
+
+
     const handleDownload = () => {
         if (book && book.download_url) {
             window.open(book.download_url, '_blank');
@@ -31,38 +42,8 @@ const BookPage = () => {
             alert("Файл книги недоступен для скачивания");
         }
     };
-    const handleDownloadWithFetch = async () => {
-        if (!book) return;
-        
-        try {
-            const response = await fetch(`/api/books/${book.slug}/download/`);
-            
-            if (!response.ok) {
-                throw new Error(`Ошибка: ${response.status}`);
-            }
-            
-            const blob = await response.blob();
-            
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            
-            const filename = `${book.slug}.txt`;
-            a.download = filename;
-            
-            document.body.appendChild(a);
-            a.click();
-            
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            
-        } catch (error) {
-            console.error("Ошибка скачивания:", error);
-            alert("Ошибка при скачивании файла");
-        }
-    };
 
-    if (loading) {
+    if (bookLoading) {
         return (
             <>
                 <HeaderTemplate 
@@ -105,6 +86,13 @@ const BookPage = () => {
         );
     }
 
+    const getFavoriteButtonText = () => {
+        if (favoriteLoading) return "Загрузка...";
+        if (favoriteError) return "Ошибка";
+        if (!initialized) return "Проверка...";
+        return isFavorite ? "Удалить из избранного" : "Добавить в Избранное";
+    };
+
     return (
         <>
             <HeaderTemplate 
@@ -118,10 +106,16 @@ const BookPage = () => {
                         <span> / </span>
                         <span onClick={() => navigate("/authors")}>Авторы</span>
                         <span> / </span>
-                        <span to={`/author/${book.author_slug}/`}>{book.author_name}</span>
+                        <span onClick={() => navigate(`/author/${book.author_slug}/`)}>{book.author_name}</span>
                         <span> / </span>
                         <span className="current">{book.title}</span>
                     </div>
+
+                    {favoriteError && (
+                        <div className="alert alert-warning">
+                            Ошибка: {favoriteError.message || favoriteError}
+                        </div>
+                    )}
 
                     <div className="book-main-info">
                         <div className="book-cover">
@@ -137,8 +131,7 @@ const BookPage = () => {
                             
                             <div className="book-genre">
                                 <span className="label">Жанр: </span>
-                                <span className="genre">{book.genre
-                                    }</span>
+                                <span className="genre">{book.genre}</span>
                             </div>
                             
                             {book.year && (
@@ -169,7 +162,14 @@ const BookPage = () => {
                                 >
                                     Читать онлайн
                                 </Btn>
-                                <Btn className="btn">Добавить в Избранное</Btn>
+                                
+                                <Btn 
+                                    className="btn"
+                                    onClick={toggleFavorite}
+                                    disabled={favoriteLoading || !initialized}
+                                >
+                                    {getFavoriteButtonText()}
+                                </Btn>
                             </div>
                         </div>
                     </div>

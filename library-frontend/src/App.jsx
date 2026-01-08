@@ -6,21 +6,23 @@ import AuthorPage from "./pages/AuthorPage";
 import BookPage from './pages/BookPage.jsx';
 import ReadBookPage from "./pages/ReadBookPage.jsx";
 import Register from "./components/Auth/Register.jsx";
-import { AuthProvider } from './components/context/AuthContext.jsx';
+import AuthWrapper from './components/Auth/AuthWrapper.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 
 function App() {
   return (
     <BrowserRouter basename="/">
-      <Routes>
-        <Route path="/" element={<MainPage/>}/>
-        <Route path="/authors" element={<MainPageAuthors />}/>
-        <Route path="/author/:author_slug/" element={<AuthorPage/>}/>
-        <Route path="/book/:book_slug/" element={<BookPage/>}/>
-        <Route path="/book/:book_slug/read" element={<ReadBookPage />} />
-        <Route path="/reg/" element={<Register />} />
-        <Route path="/profile/" element={<ProfilePage />} />
-      </Routes>
+      <AuthWrapper>
+        <Routes>
+          <Route path="/" element={<MainPage/>}/>
+          <Route path="/authors" element={<MainPageAuthors />}/>
+          <Route path="/author/:author_slug/" element={<AuthorPage/>}/>
+          <Route path="/book/:book_slug/" element={<BookPage/>}/>
+          <Route path="/book/:book_slug/read" element={<ReadBookPage />} />
+          <Route path="/reg/" element={<Register />} />
+          <Route path="/profile/" element={<ProfilePage />} />
+        </Routes>
+      </AuthWrapper>
     </BrowserRouter>
   );
 }

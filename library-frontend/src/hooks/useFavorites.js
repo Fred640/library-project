@@ -214,3 +214,124 @@ export const useBookFavorite = (bookId) => {
         refreshStatus: checkStatus
     };
 };
+
+export const useAuthorFavorite = (authorId) => {
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [initialized, setInitialized] = useState(false);
+    const prevAuthorIdRef = useRef(null);
+    
+    const { toggleFavoriteAuthor } = useFavorites();
+    const { checkAuthorFavoriteStatus } = useFavoriteStatus();
+
+    const checkStatus = useCallback(async () => {
+        if (!authorId) {
+            console.log("No authorId provided, setting isFavorite to false");
+            setIsFavorite(false);
+            setLoading(false);
+            setInitialized(true);
+            return { is_favorite: false };
+        }
+
+        console.log(`Checking favorite status for author ${authorId}`);
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const result = await checkAuthorFavoriteStatus(authorId);
+            console.log(`Status result for author ${authorId}:`, result);
+            setIsFavorite(result.is_favorite);
+            setInitialized(true);
+            return result;
+        } catch (err) {
+            console.error(`Error checking status for author ${authorId}:`, err);
+            setError(err);
+            setIsFavorite(false);
+            setInitialized(true);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    }, [authorId, checkAuthorFavoriteStatus]);
+
+    const toggleFavorite = useCallback(async () => {
+        if (!authorId) {
+            console.error("Cannot toggle favorite: no authorId");
+            return;
+        }
+
+        console.log(`Toggling favorite for author ${authorId}, current status: ${isFavorite}`);
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const result = await toggleFavoriteAuthor(authorId);
+            console.log(`Toggle result for author ${authorId}:`, result);
+            
+            const newStatus = result.status === 'added';
+            console.log(`Setting isFavorite to: ${newStatus}`);
+            setIsFavorite(newStatus);
+            
+            return result;
+        } catch (err) {
+            console.error(`Error toggling favorite for author ${authorId}:`, err);
+            setError(err);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    }, [authorId, isFavorite, toggleFavoriteAuthor]);
+
+    useEffect(() => {
+        if (authorId === prevAuthorIdRef.current) {
+            if (!authorId) {
+                setIsFavorite(false);
+                setLoading(false);
+                setInitialized(true);
+            }
+            return;
+        }
+
+        prevAuthorIdRef.current = authorId;
+        
+        setIsFavorite(false);
+        setLoading(true);
+        setInitialized(false);
+        setError(null);
+
+        if (!authorId) {
+            setIsFavorite(false);
+            setLoading(false);
+            setInitialized(true);
+            return;
+        }
+        
+        const loadStatus = async () => {
+            try {
+                const result = await checkAuthorFavoriteStatus(authorId);
+                console.log(`Initial load for author ${authorId}:`, result);
+                setIsFavorite(result.is_favorite);
+            } catch (err) {
+                console.error(`Error in initial load for author ${authorId}:`, err);
+                setIsFavorite(false);
+                setError(err);
+            } finally {
+                setLoading(false);
+                setInitialized(true);
+            }
+        };
+
+        loadStatus();
+    }, [authorId]);
+
+    return {
+        isFavorite,
+        loading,
+        error,
+        initialized,
+        checkStatus,
+        toggleFavorite,
+        refreshStatus: checkStatus
+    };
+};

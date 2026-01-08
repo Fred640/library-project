@@ -14,6 +14,12 @@ api.interceptors.request.use(
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Token ${token}`;
+    } else {
+      if (!window.location.pathname.includes('/login') && 
+          !window.location.pathname.includes('/register')) {
+        window.location.href = '/reg/';
+      }
+      return Promise.reject(new Error('Требуется авторизация'));
     }
     return config;
   },
@@ -27,7 +33,9 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/reg/';
+      }
     }
     return Promise.reject(error);
   }
@@ -90,7 +98,13 @@ const apiService = {
         total_count: (response.data.favorite_books?.length || 0) + 
                     (response.data.favorite_authors?.length || 0)
       }
-    }))
+    })),
+
+  isAuthenticated: () => !!localStorage.getItem('token'),
+  logout: () => {
+    localStorage.removeItem('token');
+    window.location.href = '/reg/';
+  }
 };
 
 export default apiService;

@@ -11,7 +11,7 @@ from backend_api.views import (
     RegisterView, 
     LoginView, 
     LogoutView, 
-    CurrentUserView, 
+    CurrentUserView,
     CheckAuthView,
     ToggleFavoriteBookView, 
     ToggleFavoriteAuthorView, 

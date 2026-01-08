@@ -45,10 +45,9 @@ class BookSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'category', 'slug', 'author_slug', 'author_name', 'download_url']
 
 class AuthorsSerializer(serializers.ModelSerializer):
-    is_favorite = serializers.SerializerMethodField()
     class Meta:
         model = Authors
-        fields = ["id", "name", 'slug', 'user_name', 'is_favorite']
+        fields = ["id", "name", 'slug', 'user_name',]
 
 class AuthorsBooksSerializer(serializers.ModelSerializer):
 

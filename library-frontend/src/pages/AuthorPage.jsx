@@ -8,7 +8,7 @@ import "../styles/pages/AuthorPage.css"
 import { useAuthorWithBooks } from "../hooks/useAuthorWithBooks";
 import { useNavigate } from "react-router-dom";
 import Author from "../components/Author/Author";
-import { Link } from "react-router-dom";
+import { useAuthorFavorite } from "../hooks/useFavorites";
 
 const AuthorPage = () => {
     const navigate= useNavigate()
@@ -20,6 +20,20 @@ const AuthorPage = () => {
     const params = useParams()
     const {author, books, loading, error} = useAuthorWithBooks(params.author_slug)
     console.log('Author:', author)
+    const { 
+            isFavorite,
+            toggleFavorite,
+            loading: favoriteLoading,
+            error: favoriteError,
+            initialized
+        } = useAuthorFavorite(author?.id);
+
+    const getFavoriteButtonText = () => {
+        if (favoriteLoading) return "Загрузка...";
+        if (favoriteError) return "Ошибка";
+        if (!initialized) return "Проверка...";
+        return isFavorite ? "Удалить из избранного" : "Добавить в Избранное";
+    };
 
     if (loading) {
         return (
@@ -87,8 +101,8 @@ const AuthorPage = () => {
                             <div><span>Имя пользователя: </span>{author.user_name}</div> 
                             : <></>}
                             <div className="author-actions">
-                                <Btn className="btn">
-                                    Добавить в избранных
+                                <Btn className="btn" onClick={toggleFavorite}>
+                                    {getFavoriteButtonText()}
                                 </Btn>
                             </div>
                             <CardsList books={books} isAuthorPage={true}/>

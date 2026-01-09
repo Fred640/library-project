@@ -1,6 +1,9 @@
+/* List.module.css */
 .dropdownList {
     overflow: hidden;
     margin: 10px 0;    
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
 }
 
 .dropdownToogle {
@@ -13,9 +16,54 @@
     justify-content: space-between;
     align-items: center;
     font-size: 16px;
-    transition: background-color 0.3s;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    outline: none;
 }
 
 .dropdownToogle:hover {
     background-color: rgb(204, 234, 234);
+}
+
+.dropdownToogle.open {
+    background-color: #e3f2fd;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dropdownContent {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: white;
+}
+
+.dropdownContent.open {
+    max-height: 500px; /* Или используйте auto, если нужно динамическое высота */
+    padding: 15px;
+    overflow-y: auto;
+}
+
+/* Для плавного сворачивания/разворачивания */
+.dropdownContent {
+    transition: max-height 0.3s ease-in-out;
+}
+
+/* Дополнительные стили для стрелки */
+.dropdownToogle::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 10px;
+    vertical-align: middle;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+.dropdownToogle:not(.open)::after {
+    border-top: 5px solid #333;
+}
+
+.dropdownToogle.open::after {
+    border-bottom: 5px solid #333;
 }

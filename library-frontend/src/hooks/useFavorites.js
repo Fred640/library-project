@@ -106,25 +106,21 @@ export const useBookFavorite = (bookId) => {
 
     const checkStatus = useCallback(async () => {
         if (!bookId) {
-            console.log("No bookId provided, setting isFavorite to false");
             setIsFavorite(false);
             setLoading(false);
             setInitialized(true);
             return { is_favorite: false };
         }
 
-        console.log(`Checking favorite status for book ${bookId}`);
         setLoading(true);
         setError(null);
         
         try {
             const result = await checkBookFavoriteStatus(bookId);
-            console.log(`Status result for book ${bookId}:`, result);
             setIsFavorite(result.is_favorite);
             setInitialized(true);
             return result;
         } catch (err) {
-            console.error(`Error checking status for book ${bookId}:`, err);
             setError(err);
             setIsFavorite(false);
             setInitialized(true);
@@ -136,25 +132,20 @@ export const useBookFavorite = (bookId) => {
 
     const toggleFavorite = useCallback(async () => {
         if (!bookId) {
-            console.error("Cannot toggle favorite: no bookId");
             return;
         }
 
-        console.log(`Toggling favorite for book ${bookId}, current status: ${isFavorite}`);
         setLoading(true);
         setError(null);
         
         try {
             const result = await toggleFavoriteBook(bookId);
-            console.log(`Toggle result for book ${bookId}:`, result);
             
             const newStatus = result.status === 'added';
-            console.log(`Setting isFavorite to: ${newStatus}`);
             setIsFavorite(newStatus);
             
             return result;
         } catch (err) {
-            console.error(`Error toggling favorite for book ${bookId}:`, err);
             setError(err);
             throw err;
         } finally {
@@ -189,10 +180,8 @@ export const useBookFavorite = (bookId) => {
         const loadStatus = async () => {
             try {
                 const result = await checkBookFavoriteStatus(bookId);
-                console.log(`Initial load for book ${bookId}:`, result);
                 setIsFavorite(result.is_favorite);
             } catch (err) {
-                console.error(`Error in initial load for book ${bookId}:`, err);
                 setIsFavorite(false);
                 setError(err);
             } finally {
@@ -227,25 +216,21 @@ export const useAuthorFavorite = (authorId) => {
 
     const checkStatus = useCallback(async () => {
         if (!authorId) {
-            console.log("No authorId provided, setting isFavorite to false");
             setIsFavorite(false);
             setLoading(false);
             setInitialized(true);
             return { is_favorite: false };
         }
 
-        console.log(`Checking favorite status for author ${authorId}`);
         setLoading(true);
         setError(null);
         
         try {
             const result = await checkAuthorFavoriteStatus(authorId);
-            console.log(`Status result for author ${authorId}:`, result);
             setIsFavorite(result.is_favorite);
             setInitialized(true);
             return result;
         } catch (err) {
-            console.error(`Error checking status for author ${authorId}:`, err);
             setError(err);
             setIsFavorite(false);
             setInitialized(true);
@@ -257,25 +242,20 @@ export const useAuthorFavorite = (authorId) => {
 
     const toggleFavorite = useCallback(async () => {
         if (!authorId) {
-            console.error("Cannot toggle favorite: no authorId");
             return;
         }
 
-        console.log(`Toggling favorite for author ${authorId}, current status: ${isFavorite}`);
         setLoading(true);
         setError(null);
         
         try {
             const result = await toggleFavoriteAuthor(authorId);
-            console.log(`Toggle result for author ${authorId}:`, result);
             
             const newStatus = result.status === 'added';
-            console.log(`Setting isFavorite to: ${newStatus}`);
             setIsFavorite(newStatus);
             
             return result;
         } catch (err) {
-            console.error(`Error toggling favorite for author ${authorId}:`, err);
             setError(err);
             throw err;
         } finally {
@@ -310,10 +290,8 @@ export const useAuthorFavorite = (authorId) => {
         const loadStatus = async () => {
             try {
                 const result = await checkAuthorFavoriteStatus(authorId);
-                console.log(`Initial load for author ${authorId}:`, result);
                 setIsFavorite(result.is_favorite);
             } catch (err) {
-                console.error(`Error in initial load for author ${authorId}:`, err);
                 setIsFavorite(false);
                 setError(err);
             } finally {

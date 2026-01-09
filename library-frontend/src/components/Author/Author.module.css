@@ -7,6 +7,7 @@
     font-size: 18px;
     width: 200px;
     height: 100px;
+    position: relative;
 }
 .card:hover {
     transition: all 300ms;
@@ -32,6 +33,12 @@
     text-decoration: none !important;
     color: inherit !important;
     display: block;
+}
+
+.star {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 @media (max-width: 1400px) {
@@ -71,6 +78,10 @@
     }
     .desktopName {
         display: none;
+    }
+    .starSVG {
+        height: 18px;
+        width: 18px;
     }
 }
 
@@ -137,6 +148,10 @@
     }
     .surname {
         font-size: 14px;
+    }
+    .starSVG {
+        height: 15px;
+        width: 15px;
     }
 }
 

@@ -45,15 +45,26 @@
 }
 
 .body {
+    display: flex;
     background-color: rgb(242, 244, 232);
     height: 57%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     overflow-wrap: break-word;
+    flex-direction: column;
 }
 
 .param {
     padding-left: 0;
+    flex: 0 0 auto;
+}
+
+.heart {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .Link {
@@ -70,6 +81,10 @@
         padding: 0;
         margin: 0;
     }
+    .heartSVG {
+        height: 10px;
+        width: 10px;
+    }
 }
 
 @media (min-width: 315px) {
@@ -80,6 +95,7 @@
         padding: 0;
         margin: 0;
     }
+    
 }
 
 @media (min-width: 400px) {
@@ -101,6 +117,10 @@
         height: 180px;
         margin: 1px;
     }
+    .heartSVG {
+        height: 24px;
+        width: 24px;
+    }
 }
 
 
@@ -111,6 +131,10 @@
         width: 160px;
         height: 210px;
     }
+    .heartSVG {
+        height: 24px;
+        width: 24px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -118,6 +142,10 @@
         font-size: 11px;
         width: 110px;
         height: 160px;
+    }
+    .heartSVG {
+        height: 15px;
+        width: 15px;
     }
 }
 
@@ -127,6 +155,10 @@
         width: 150px;
         height: 220px;
     }
+    .heartSVG {
+        height: 20px;
+        width: 20px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -135,6 +167,10 @@
         width: 170px;
         height: 250px;
     }
+    .heartSVG {
+        height: 24px;
+        width: 24px;
+    }
 }
 
 @media (min-width: 1400px) {
@@ -142,5 +178,9 @@
         font-size: 14px;
         width: 185px;
         height: 260px;
+    }
+    .heartSVG {
+        height: 24px;
+        width: 24px;
     }
 }

@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import classes from './Register.module.css'
 import Btn from '../UI/button/Btn.jsx'
 import Inp from "../UI/input/Inp.jsx"
-import axios from 'axios';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/';
+
 
 const Register = () => {
     const [formData, setFormData] = useState({

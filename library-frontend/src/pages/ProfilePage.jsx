@@ -6,6 +6,8 @@ import { useFavoriteBooks, useFavoriteAuthors } from '../hooks/useFavoriteItems.
 import List from "../components/UI/list/List.jsx";
 import CardsList from '../components/Card/CardsList.jsx'
 import AuthorsList from '../components/Author/AuthorsList.jsx'
+import Headertemplate from '../components/header/HeaderTemplate.jsx'
+import Profile from '../components/UI/Profile/Profile.jsx'
 const ProfilePage = () => {
     const navigate = useNavigate()
     const {logout} = useAuth()
@@ -15,14 +17,20 @@ const ProfilePage = () => {
         event.preventDefault()
         logout(); navigate('/reg/')
     }
+
+    const Elements = [
+    {content:<Btn onClick={() => {navigate(-1)}}>Назад</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
+    {content: <Profile />, divClasses:"col-lg-3 col-md-12"},
+    {content:<Btn onClick={() => {logout(); navigate('/reg/')}}>Выйти</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
+  ]
     return(
         <>
-        <Btn onClick={logoutClick}>Выйти</Btn>
+        <Headertemplate ContainerElements={Elements} searchIclude={false}/>
         <List title={"Избранные книги"}>
             <CardsList books={books} isCardsList={true}/>
         </List>
         <List title={'Избранные авторы'} >
-            <AuthorsList authors={authors}/>
+            <AuthorsList authors={authors} isCardLink={true}/>
         </List>
         </>
     )

@@ -179,12 +179,9 @@ const ReadBookPage = () => {
                 
                 <div className="page-jump">
                     <span>Страница:</span>
-                    <input 
-                        type="number"
-                        min="1"
-                        max={pages.length}
+                    <input
                         value={currentPage}
-                        onChange={(e) => goToPage(parseInt(e.target.value) || 1)}
+                        onChange={(e) => setCurrentPage(e.target.value)}
                         className="page-input"
                     />
                     <span>/ {pages.length}</span>

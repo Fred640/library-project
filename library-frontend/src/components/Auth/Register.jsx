@@ -85,9 +85,6 @@ const Register = () => {
         <div className={classes.mainDiv}>
             <div className={classes.window}>
                 <span className={classes.backButton}>
-                    <Btn onClick={() => {navigate(-1)}}>
-                        Назад
-                    </Btn>
                 </span>
                 <div className={classes.titleDiv}>
                     <button 

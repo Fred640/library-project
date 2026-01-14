@@ -16,6 +16,55 @@ const Register = () => {
         first_name: '',
         last_name: ''
     });
+    const formatDjangoError = (errorData) => {
+        if (!errorData) return 'Неизвестная ошибка';
+        if (typeof errorData === 'string') {
+            return errorData;
+        }
+        
+        if (typeof errorData === 'object') {
+            const errors = [];
+            
+            if (errorData.email) {
+                let emailErrors = Array.isArray(errorData.email) 
+                    ? errorData.email.join(', ')
+                    : String(errorData.email);
+                errors.push(`${emailErrors}`);
+            }
+            
+            if (errorData.password) {
+                const passwordErrors = Array.isArray(errorData.password) 
+                    ? errorData.password.join(', ') 
+                    : String(errorData.password);
+                errors.push(`${passwordErrors}`);
+            }
+            
+            if (errorData.username) {
+                const usernameErrors = Array.isArray(errorData.username) 
+                    ? errorData.username.join(', ') 
+                    : String(errorData.username);
+                errors.push(`${usernameErrors}`);
+            }
+            
+            if (errorData.non_field_errors) {
+                const nonFieldErrors = Array.isArray(errorData.non_field_errors) 
+                    ? errorData.non_field_errors.join(', ') 
+                    : String(errorData.non_field_errors);
+                errors.push(nonFieldErrors);
+            }
+            
+            if (errors.length === 0) {
+                for (const [key, value] of Object.entries(errorData)) {
+                    const fieldErrors = Array.isArray(value) 
+                        ? value.join(', ') 
+                        : String(value);
+                    errors.push(`${key}: ${fieldErrors}`);
+                }
+            }
+            return errors.join('. ');
+        }
+        return String(errorData);
+    };
     
     const [error, setError] = useState(''); 
     const [reg, setReg] = useState(true)
@@ -47,7 +96,7 @@ const Register = () => {
             if (result.success) {
                 navigate('/');
             } else {
-                setError(result.error || 'Ошибка регистрации');
+                setError(formatDjangoError(result.error) || 'Ошибка регистрации');
             }
         } catch (err) {
             setError(err.response?.data?.error || 'Ошибка регистрации');

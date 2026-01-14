@@ -4,7 +4,6 @@ library/*.pyc
 library/*.pyo
 library/*.pyd
 library/.Python
-library/db.sqlite3
 library/*.log
 library/media/
 library/staticfiles/

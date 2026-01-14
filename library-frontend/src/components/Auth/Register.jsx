@@ -72,7 +72,10 @@ const Register = () => {
             if (result.success) {
                 navigate('/'); 
             } else {
-                setError(result.error || 'Ошибка входа');
+                const errorMessage = typeof result.error === 'string' 
+                ? result.error 
+                : result.error.error
+                setError(errorMessage)
             }
         } catch (err) {
             setError(err.response?.data?.error || 'Ошибка входа');

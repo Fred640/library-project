@@ -16,6 +16,7 @@ const Register = () => {
         first_name: '',
         last_name: ''
     });
+    const latinRegex = /^[a-zA-Z0-9\s]*$/;
     const formatDjangoError = (errorData) => {
         if (!errorData) return 'Неизвестная ошибка';
         if (typeof errorData === 'string') {
@@ -73,10 +74,24 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        if (e.target.name == "username") {
+            if (latinRegex.test(e.target.value)) {
+                setFormData({
+                    ...formData,
+                    [e.target.name]: e.target.value
+                });
+            } else {
+                setError("Имя пользователя может содержвать только латинсике буквы и символы")
+            }
+        } else {
+            setFormData({
+                    ...formData,
+                    [e.target.name]: e.target.value
+                });
+                
+        }
+        
+        
     };
 
     const handleRegSubmit = async (e) => {
@@ -175,16 +190,6 @@ const Register = () => {
                             disabled={loading}
                         />
                         
-                        <Inp 
-                            label="Email" 
-                            id="email" 
-                            name="email"
-                            type="email" 
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            disabled={loading}
-                        />
                         
                         <Inp 
                             label="Пароль" 

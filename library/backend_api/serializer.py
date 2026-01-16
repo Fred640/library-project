@@ -71,13 +71,22 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'date_joined')
 
 class RegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True)
     password = serializers.CharField(
         write_only=True, 
         required=True, 
         validators=[validate_password]
     )
     password2 = serializers.CharField(write_only=True, required=True)
+
+    def validate_email(self, value):
+        if value == '' or value is None:
+            return None
+        
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError(
+                'Пользователь с таким email уже существует'
+            )
+        return value
 
     class Meta:
         model = User
@@ -94,11 +103,15 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         if User.objects.filter(email=attrs['email']).exists():
             raise serializers.ValidationError({"email": "Этот email уже используется"})
+        if 'email' in attrs and attrs['email'] == '':
+            attrs['email'] = None
         
         return attrs
 
     def create(self, validated_data):
         validated_data.pop('password2')
+        if 'email' in validated_data and not validated_data['email']:
+            validated_data['email'] = None
         
         user = User.objects.create_user(
             username=validated_data['username'],

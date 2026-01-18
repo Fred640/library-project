@@ -1,5 +1,4 @@
 import React from "react";
-import { useAuth } from "../components/context/AuthContext";
 import Btn from "../components/UI/button/Btn";
 import { useNavigate } from "react-router-dom";
 import { useFavoriteBooks, useFavoriteAuthors } from '../hooks/useFavoriteItems.js'
@@ -8,7 +7,9 @@ import CardsList from '../components/Card/CardsList.jsx'
 import AuthorsList from '../components/Author/AuthorsList.jsx'
 import Headertemplate from '../components/header/HeaderTemplate.jsx'
 import Profile from '../components/UI/Profile/Profile.jsx'
+import { useAuth } from "../components/context/AuthContext";
 const ProfilePage = () => {
+    const {user, isAuthenticated} = useAuth()
     const navigate = useNavigate()
     const {logout} = useAuth()
     const { books, fetchBooks, refreshBooks } = useFavoriteBooks()
@@ -32,6 +33,12 @@ const ProfilePage = () => {
         <List title={'Избранные авторы'} >
             <AuthorsList authors={authors} isCardLink={true}/>
         </List>
+        <div>
+
+        {user.is_staff ? 
+        <div>Вы автор</div>
+        :<div style={{display:"flex", justifyContent:"center"}}><Btn onClick={() => navigate('/AuthorReg')}>Стать автором</Btn></div>}
+        </div>
         </>
     )
 }

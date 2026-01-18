@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.text import slugify
 import os
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 def cyrillic_to_latin(text):
     cyrillic = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
@@ -129,6 +131,12 @@ class Books(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    patronymic = models.CharField(
+        max_length=100, 
+        blank=True,
+        null=True,
+    )
+    registration_complete = models.BooleanField(default=False)
     
     def __str__(self):
         return f"Профиль {self.user.username}"
@@ -141,3 +149,35 @@ class UserProfile(models.Model):
         """Получить любимых авторов пользователя"""
         return self.user.favorite_authors.all()
     
+    def complete_registration(self, first_name, last_name, email, patronymic=None):
+        """
+        Завершение регистрации пользователя
+        Устанавливает is_staff=True при успешном завершении
+        """
+        self.user.first_name = first_name
+        self.user.last_name = last_name
+        self.user.email = email
+        
+        if patronymic:
+            self.patronymic = patronymic
+        
+        # Устанавливаем флаг is_staff при завершении регистрации
+        self.user.is_staff = True
+        self.registration_complete = True
+        
+        self.user.save()
+        self.save()
+        
+        return self
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """Автоматически создаем профиль при создании пользователя"""
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    """Автоматически сохраняем профиль при сохранении пользователя"""
+    if hasattr(instance, 'profile'):
+        instance.profile.save()

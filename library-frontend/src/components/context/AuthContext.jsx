@@ -57,6 +57,21 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const completeRegistration = async (userData) => {
+        try {
+            setError(null);
+            const response = await axios.post('http://localhost:8000/auth/complete-registration/', userData);
+            
+            setUser(response.data.user);
+            
+            return { success: true, data: response.data };
+        } catch (error) {
+            const errorMessage = error.response?.data || { error: 'Ошибка завершения регистрации' };
+            setError(errorMessage);
+            return { success: false, error: errorMessage };
+        }
+    };
+
     const login = async (credentials) => {
         try {
             setError(null);
@@ -88,14 +103,27 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const checkRegistrationStatus = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/auth/registration-status/');
+            return response.data;
+        } catch (error) {
+            console.error('Ошибка проверки статуса:', error);
+            return { registration_complete: false };
+        }
+    };
+
     const value = {
         user,
         loading,
         error,
         register,
+        completeRegistration,
         login,
-        logout, 
-        isAuthenticated: !!user
+        logout,
+        checkRegistrationStatus,
+        isAuthenticated: !!user,
+        isRegistrationComplete: user?.is_staff || false
     };
 
     return (

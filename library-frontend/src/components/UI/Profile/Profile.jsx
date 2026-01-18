@@ -13,6 +13,7 @@ const Profile = () => {
         <div className={classes.profileDiv}>
             <button onClick={() => navigate("/profile/")} style={{backgroundColor:`${user.color}`}} className={classes.Avatar}>{String(user.username)[0]}</button>
             <button onClick={() => navigate("/profile/")} className={classes.nickname}>{user.username}</button>
+            
         </div>
         )
     } else {

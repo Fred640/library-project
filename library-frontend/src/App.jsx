@@ -8,6 +8,7 @@ import ReadBookPage from "./pages/ReadBookPage.jsx";
 import Register from "./components/Auth/Register.jsx";
 import AuthWrapper from './components/Auth/AuthWrapper.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
+import AuthorRegPage from './components/Auth/AuthorReg.jsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/book/:book_slug/read" element={<ReadBookPage />} />
           <Route path="/reg/" element={<Register />} />
           <Route path="/profile/" element={<ProfilePage />} />
+          <Route path="/AuthorReg/" element={<AuthorRegPage />} />
         </Routes>
       </AuthWrapper>
     </BrowserRouter>

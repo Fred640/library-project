@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse, Http404
 from rest_framework.views import APIView
 from .models import Books, Authors, BookCategories
-from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer, RegisterSerializer, LoginSerializer, UserSerializer
+from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer, LoginSerializer, UserSerializer, FirstRegisterSerializer, CompleteRegistrationSerializer
 from rest_framework.response import Response
 import os
 from rest_framework.permissions import IsAuthenticated
@@ -108,29 +108,46 @@ class Genres(APIView):
     
 
 class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    permission_classes = (permissions.AllowAny,)
-    serializer_class = RegisterSerializer
+    serializer_class = FirstRegisterSerializer
+    permission_classes = [permissions.AllowAny]
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
         user = serializer.save()
         
         token, created = Token.objects.get_or_create(user=user)
         
         return Response({
-            "user": {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name
-            },
-            "token": token.key,
-            "message": "Пользователь успешно зарегистрирован"
+            'user': UserSerializer(user).data,
+            'token': token.key,
+            'message': 'Регистрация успешна. Завершите регистрацию для получения доступа к дополнительным функциям.'
         }, status=status.HTTP_201_CREATED)
+    
+class CompleteRegistrationView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request):
+        if request.user.is_staff:
+            return Response({
+                'error': 'Регистрация уже завершена'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = CompleteRegistrationSerializer(
+            request.user, 
+            data=request.data,
+            partial=True
+        )
+        
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({
+                'user': UserSerializer(user).data,
+                'message': 'Регистрация успешно завершена. Теперь у вас есть доступ к дополнительным функциям.'
+            }, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -250,4 +267,14 @@ class UserFavoritesView(APIView):
         return Response({
             "favorite_books": book_serializer.data,
             "favorite_authors": author_serializer.data
+        })
+    
+class RegistrationStatusView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self, request):
+        return Response({
+            'registration_complete': request.user.is_staff,
+            'has_profile': hasattr(request.user, 'profile'),
+            'user': UserSerializer(request.user).data
         })

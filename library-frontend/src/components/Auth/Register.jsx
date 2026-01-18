@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import classes from './Register.module.css'
-import Btn from '../UI/button/Btn.jsx'
 import Inp from "../UI/input/Inp.jsx"
 
 
@@ -151,8 +150,6 @@ const Register = () => {
     return (
         <div className={classes.mainDiv}>
             <div className={classes.window}>
-                <span className={classes.backButton}>
-                </span>
                 <div className={classes.titleDiv}>
                     <button 
                         className={`${classes.title} ${reg ? classes.titleActive : ""}`} 

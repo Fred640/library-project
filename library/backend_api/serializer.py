@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Books, Authors, BookCategories, UserProfile
+from .models import Books, Authors, BookCategories, UserProfile, Diaries
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.authtoken.models import Token
@@ -20,6 +20,15 @@ class BooksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Books
         fields = ['id', 'title', 'slug', 'author_id', 'author_name', 'genre', 'author_slug', 'is_favorite']
+
+class DiariesSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username", read_only=True)
+    user_last_name = serializers.CharField(source="user.last_name", read_only=True)
+    user_first_name = serializers.CharField(source="user.first_name", read_only=True)
+
+    class Meta:
+        model = Diaries
+        fields = ['id', 'title', 'slug', 'description', 'username', 'user_last_name', 'user_first_name']
 
 
 class BookSerializer(serializers.ModelSerializer):

@@ -33,10 +33,17 @@ const ProfilePage = () => {
         <List title={'Избранные авторы'} >
             <AuthorsList authors={authors} isCardLink={true}/>
         </List>
+        <List title={'Избранные дневники'}>
+            
+        </List>
         <div>
 
         {user.is_staff ? 
+        <>
         <div>Вы автор</div>
+        <List title={'Ваши дневники'}></List>
+        </>
+        
         :<div style={{display:"flex", justifyContent:"center"}}><Btn onClick={() => navigate('/AuthorReg')}>Стать автором</Btn></div>}
         </div>
         </>

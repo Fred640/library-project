@@ -17,7 +17,8 @@ from backend_api.views import (
     ToggleFavoriteBookView, 
     ToggleFavoriteAuthorView, 
     UserFavoritesView,
-    RegistrationStatusView
+    RegistrationStatusView,
+    DiariesView
     )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -42,6 +43,7 @@ urlpatterns = [
     path('registration-status/', RegistrationStatusView.as_view(), name='registration-status'),
     path('register/', RegisterView.as_view(), name='register'),
     path('auth/complete-registration/', CompleteRegistrationView.as_view(), name='complete-registration'),
+    path('diaries', DiariesView.as_view())
 ]
 
 

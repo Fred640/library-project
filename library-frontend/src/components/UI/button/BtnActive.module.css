@@ -1,0 +1,57 @@
+.MyBtn {
+    all: unset;
+    color: aliceblue;
+    background-color: rgb(15, 15, 15);
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 17px;
+}
+
+
+
+
+@media (min-width: 400px) {
+    .MyBtn{
+        font-size: 12px;
+    }
+}
+
+
+
+@media (min-width: 475px) {
+    .MyBtn{
+        font-size: 13px;
+    }
+}
+
+
+
+@media (min-width: 576px) {
+    .MyBtn{
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 768px) {
+    .MyBtn{
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 992px) {
+    .MyBtn{
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .MyBtn{
+        font-size: 17px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .MyBtn{
+        font-size: 17px;
+    }
+}

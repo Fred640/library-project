@@ -45,6 +45,20 @@ def book_file_path(instance, filename):
     
     return os.path.join('books', author_slug, book_slug, short_filename)
 
+
+def diary_file_path(instance, filename):
+    """
+    Файлы будут сохраняться в:
+    media/diary/{username}/{diary_slug}/{filename}
+    """
+    username = instance.user.username
+    diary_slug = instance.slug
+    
+    file_ext = os.path.splitext(filename)[1]
+    short_filename = f"{diary_slug}{file_ext}"
+    
+    return os.path.join('diaries', username, diary_slug, short_filename)
+
 class Authors(models.Model):
     name = models.CharField(max_length=100)
     user_name = models.CharField(max_length=50, blank=True, null=True)
@@ -161,7 +175,6 @@ class UserProfile(models.Model):
         if patronymic:
             self.patronymic = patronymic
         
-        # Устанавливаем флаг is_staff при завершении регистрации
         self.user.is_staff = True
         self.registration_complete = True
         
@@ -181,3 +194,31 @@ def save_user_profile(sender, instance, **kwargs):
     """Автоматически сохраняем профиль при сохранении пользователя"""
     if hasattr(instance, 'profile'):
         instance.profile.save()
+
+class Diaries(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, max_length=250, blank=True, null=True)
+    description = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="diaries")
+    file = models.FileField(upload_to=diary_file_path, blank=True, null=True)
+    favorited_by = models.ManyToManyField(
+        User, 
+        related_name='favorite_diaries',
+        blank=True
+    )
+
+
+    def is_favorited_by(self, user):
+        if not user.is_authenticated:
+            return False
+        return self.favorited_by.filter(id=user.id).exists()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify_ru(self.title)
+            self.slug = base_slug
+            counter = 1
+            while Diaries.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
+                self.slug = f"{base_slug}-{counter}"
+                counter += 1
+        super().save(*args, **kwargs)

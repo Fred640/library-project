@@ -20,10 +20,12 @@ const MainPage = () => {
 
   const Elements = [
     {content: <Profile />, divClasses:"col-lg-3 col-md-12"},
-    {content:<Link to="/authors" style={{textDecoration:"none"}}><Btn>Авторы</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
-    {content:<Btn onClick={() => setModalVisible(true)}>Категории</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
+    {content:<Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
+    {content:<Btn onClick={() => setModalVisible(true)} isActive={true}>Книги</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
+    {content:<Btn onClick={() => setModalVisible(true)}>Жанры</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
+    
   ]
-  
+  2
 
 
   useEffect(() => {

@@ -1,10 +1,20 @@
 import React from "react";
 import classes from "./Btn.module.css"
+import classesActive from "./BtnActive.module.css"
 const Btn = (props) => {
     return(
-        <button className={classes.MyBtn} {...props}>
+        <>
+        {props.isActive ? 
+        <button className={classesActive.MyBtn} {...props}>
             {props.children}
         </button>
+        : <button className={classes.MyBtn} {...props}>
+            {props.children}
+        </button>
+        }
+        </>
+
+        
     )
 }
 

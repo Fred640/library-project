@@ -1,7 +1,9 @@
 .MyBtn {
     all: unset;
-    color: aliceblue;
-    background-color: rgb(15, 15, 15);
+    color: rgb(15, 15, 15);
+    background-color: aliceblue;
+    text-decoration: underline;
+    text-underline-offset: 5px;
     border-radius: 15px;
     padding: 5px 10px;
     font-size: 17px;

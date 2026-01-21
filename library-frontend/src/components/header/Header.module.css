@@ -11,47 +11,58 @@
 .searchButton {
     position: absolute;
     left: 10px;
-    top: 28px;
+    top: 25%;
+}
+
+.genreButton {
+    position: absolute;
+    right: 10px;
+    top: 25%;
+    font-size: 18px;
+}
+
+.genreButton:hover {
+    text-decoration: underline;
 }
 
 @media (min-width: 100px) {
     .profileDiv {
         justify-content: center;
     }
-    .searchButton {
+    /* .searchButton {
         top: 10px; 
         left: 10px;
-    }
+    } */
 }
 
 @media (min-width: 576px) {
     .profileDiv {
         justify-content: center;
     }
-    .searchButton {
+    /* .searchButton {
         top: 50px;
         left: 5px;
-    }
+    } */
 }
 
 @media (min-width: 992px) {
     .profileDiv {
         justify-content: center;
     }
-    .searchButton {
+    /* .searchButton {
         top: 15px;
         left: 5px;
-    }
+    } */
 }
 
 @media (min-width: 1400px) {
     .profileDiv {
         justify-content: center;
     }
-    .searchButton {
+    /* .searchButton {
         top: 16px;
         left: 5px;
-    }
+    } */
 }
 
 .headerButton {

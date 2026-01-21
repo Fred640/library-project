@@ -6,9 +6,6 @@ import Btn from "../components/UI/button/Btn.jsx";
 import CardsList from '../components/Card/CardsList.jsx'
 import { useBooks } from "../hooks/useBooks.js";
 import { useEffect } from "react";
-import Modal from "../components/UI/modal/Modal.jsx";
-import Genres from "../components/genres/Genres.jsx";
-import { useAuth } from "../components/context/AuthContext.jsx";
 
 const MainPage = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -20,12 +17,12 @@ const MainPage = () => {
 
   const Elements = [
     {content: <Profile />, divClasses:"col-lg-3 col-md-12"},
-    {content:<Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>, divClasses:"col-lg-3 col-md-6 col-12"},
-    {content:<Btn onClick={() => setModalVisible(true)} isActive={true}>Книги</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
-    {content:<Btn onClick={() => setModalVisible(true)}>Жанры</Btn>, divClasses:"col-lg-3 col-md-6 col-12"},
-    
+    {content:<><Link style={{textDecoration:"none"}}><Btn>Авторы</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn>Дневники</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
+    {content:<><Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn isActive={true}>Книги</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
   ]
-  2
+
+
+  
 
 
   useEffect(() => {
@@ -60,6 +57,9 @@ const MainPage = () => {
         setModalVisible(false);
         console.log("Selected genre in MainPage:", genreSlug);
     }
+    const toggleGenresModal = () => {
+    setModalVisible(!modalVisible);
+  }
   
     const searchBook = (sQ) => {
     setSearchQuery(sQ);
@@ -76,15 +76,15 @@ const MainPage = () => {
           placeholder:"Введите название книги", 
           searchFunc:searchBook
         }}
+        genresInclude={true}
+        GenresProps={{onGenreSelect:handleGenreSelect}}
+        modaleGenresProps={{
+          visible: modalVisible,
+          onClose: () => setModalVisible(false),
+          onOpen: () => setModalVisible(true)
+        }}
       />
       <CardsList books={filteredBooks} isCardsList={true}/>
-      
-      <Modal 
-        visible={modalVisible} 
-        setVisible={setModalVisible}
-      >
-        <Genres onGenreSelect={handleGenreSelect}/>
-      </Modal>
     </div>
   );
 }

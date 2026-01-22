@@ -9,7 +9,7 @@ import Register from "./components/Auth/Register.jsx";
 import AuthWrapper from './components/Auth/AuthWrapper.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import AuthorRegPage from './components/Auth/AuthorReg.jsx';
-
+import UsersPage from './pages/UsersPage.jsx';
 function App() {
   return (
     <BrowserRouter basename="/">
@@ -23,6 +23,7 @@ function App() {
           <Route path="/reg/" element={<Register />} />
           <Route path="/profile/" element={<ProfilePage />} />
           <Route path="/AuthorReg/" element={<AuthorRegPage />} />
+          <Route path="/Users/" element={<UsersPage />} />
         </Routes>
       </AuthWrapper>
     </BrowserRouter>

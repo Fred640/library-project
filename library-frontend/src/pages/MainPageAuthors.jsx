@@ -15,7 +15,6 @@ const MainPageAuthors = () => {
     {content:<><Link to="/authors" style={{textDecoration:"none"}}><Btn isActive={true}>Писатели</Btn></Link>/<Link to={'/'} style={{textDecoration:"none"}}><Btn>Книги</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
   ]
 
-const [search, setSearch] = useState(false)
 const { authors, loading, error } = useAuthors()
 const [searchedAuthors, setSearchedAuthors] = useState([...authors])
 useEffect(() => {

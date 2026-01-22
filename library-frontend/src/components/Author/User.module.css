@@ -1,0 +1,41 @@
+.mainDiv {
+    display: flex;
+    justify-content: center;
+    margin: 7px;
+    width: 100%;
+    
+}
+
+.content {
+    width: 70%;
+    position: relative;
+}
+
+.lineDiv {
+    transition: all 0.5s;
+    border-radius: 15px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.lineDiv:hover {
+    cursor: pointer;
+    background-color: rgb(210, 233, 250);
+}
+
+.name {
+    display: inline;
+    padding-inline: 10px;
+    font-size: 17px;
+}
+.username {
+    display: inline;
+    padding-inline: 10px;
+    font-weight: 600;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.starSVG {
+    position: absolute;
+    right: 10px;
+}

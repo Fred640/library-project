@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse, Http404
 from rest_framework.views import APIView
 from .models import Books, Authors, BookCategories, Diaries
-from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer, LoginSerializer, UserSerializer, FirstRegisterSerializer, CompleteRegistrationSerializer, DiariesSerializer
+from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer, LoginSerializer, UserSerializer, FirstRegisterSerializer, CompleteRegistrationSerializer, DiariesSerializer, StaffUserSerializer
 from rest_framework.response import Response
 import os
 from rest_framework.permissions import IsAuthenticated
@@ -283,4 +283,10 @@ class DiariesView(APIView):
     def get(self, request):
         diaries = Diaries.objects.all()
         serializer = DiariesSerializer(diaries, many=True)
+        return Response(serializer.data)
+    
+class StaffUsersView(APIView):
+    def get(self, request):
+        staff_users = User.objects.filter(is_staff=True)
+        serializer = StaffUserSerializer(staff_users, many=True)
         return Response(serializer.data)

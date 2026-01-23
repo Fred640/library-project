@@ -104,7 +104,8 @@ const apiService = {
   logout: () => {
     localStorage.removeItem('token');
     window.location.href = '/reg/';
-  }
+  },
+  getStaffUsers: () => api.get(`/staff_users`)
 };
 
 export default apiService;

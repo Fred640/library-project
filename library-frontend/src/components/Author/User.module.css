@@ -3,7 +3,14 @@
     justify-content: center;
     margin: 7px;
     width: 100%;
-    
+}
+
+.link {
+    text-decoration: none !important;
+}
+
+.link {
+    text-decoration: none !important;
 }
 
 .content {

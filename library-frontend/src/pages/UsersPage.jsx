@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Btn from "../components/UI/button/Btn";
 import UsersList from "../components/Author/UserList";
 import { useState, useEffect } from "react";
+import { useStaffUsers } from "../hooks/useStaffUsers";
 
 
 const UsersPage = () => {
@@ -13,13 +14,13 @@ const UsersPage = () => {
     {content:<><Link style={{textDecoration:"none"}}><Btn isActive={true}>Авторы</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn>Дневники</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
     {content:<><Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn >Книги</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
     ]
-    const users = [{first_name:"asd", last_name:"qwe", username:"Fred1901"},{first_name:"fedor", last_name:"sapronov", username:"412"},]
+    const {users, loading, error} = useStaffUsers()
     const [searchedUsers, setSearchedUsers] = useState([...users])
     useEffect(() => {
             if (users.length > 0) {
                 setSearchedUsers([...users]);
             }
-        }, []);
+        }, [users]);
     const searchUsers = (sq) => {
         setSearchedUsers(users.filter((user) => {
             if (sq) {
@@ -27,7 +28,21 @@ const UsersPage = () => {
             } else {return (users)}
         }))
     }
-    
+    if (loading) {
+        return(
+        <>
+        <HeaderTemplate 
+        searchIclude={true}
+        ContainerElements={Elements}
+        modaleSearchProps={{
+          placeholder:"Введите имя пользователя",
+          searchFunc:searchUsers
+        }}
+        />
+        <div>Загрузка</div>
+        </>
+        )
+    } else {
     return(
         <>
         <HeaderTemplate 
@@ -40,7 +55,7 @@ const UsersPage = () => {
         />
         <UsersList users={searchedUsers}/>
         </>
-    )
+    )}
 }
 
 export default UsersPage

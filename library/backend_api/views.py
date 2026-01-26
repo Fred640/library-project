@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse, Http404
 from rest_framework.views import APIView
 from .models import Books, Authors, BookCategories, Diaries
-from .serializer import BooksSerializer, AuthorsSerializer, AuthorsBooksSerializer, BookSerializer, GenresSerializer, LoginSerializer, UserSerializer, FirstRegisterSerializer, CompleteRegistrationSerializer, DiariesSerializer, StaffUserSerializer
 from rest_framework.response import Response
 import os
 from rest_framework.permissions import IsAuthenticated
@@ -10,6 +9,20 @@ from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions, status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from .serializer import (BooksSerializer, 
+                         AuthorsSerializer, 
+                         AuthorsBooksSerializer, 
+                         BookSerializer, 
+                         GenresSerializer, 
+                         LoginSerializer, 
+                         UserSerializer, 
+                         FirstRegisterSerializer, 
+                         CompleteRegistrationSerializer, 
+                         DiariesSerializer, 
+                         StaffUserSerializer, 
+                         UsersDiaries,
+                         DiarySerializer)
+
 
 
 
@@ -67,7 +80,7 @@ class BooksView(APIView):
         books = Books.objects.all()
         serializer = BooksSerializer(books, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request):
         serializer = BooksSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -287,6 +300,74 @@ class DiariesView(APIView):
     
 class StaffUsersView(APIView):
     def get(self, request):
-        staff_users = User.objects.filter(is_staff=True)
+        staff_users = User.objects.filter(is_staff=True, is_superuser=False)
         serializer = StaffUserSerializer(staff_users, many=True)
         return Response(serializer.data)
+
+
+class UserDiariesView(APIView):
+    def get(self, request, username):
+        user = get_object_or_404(
+            User.objects.prefetch_related('diaries'), 
+            username=username
+        )
+        serializer = UsersDiaries(user, context={"request":request})
+        return Response(serializer.data)
+
+class DiaryView(APIView):
+    def get(self, request, diary_slug):
+        diary = get_object_or_404(Diaries, slug=diary_slug)
+        serializer = DiarySerializer(diary, context={'request': request})
+        return Response(serializer.data)
+    
+
+
+
+
+class DownloadDiaryView(APIView):
+    def get(self, request, diary_slug):
+        diary = get_object_or_404(Diaries, slug=diary_slug)
+        
+
+        if not diary.file:
+            return Response(
+                {"error": "Файл дневника не найден"}, 
+                status=404
+            )
+        
+
+        file_path = diary.file.path
+        
+        if not os.path.exists(file_path):
+            return Response(
+                {"error": "Файл не найден на сервере"}, 
+                status=404
+            )
+        
+
+        try:
+            response = FileResponse(
+                open(file_path, 'rb'),
+                as_attachment=True,
+                filename=f"{diary.slug}{os.path.splitext(file_path)[1]}"
+            )
+            
+
+            if file_path.endswith('.pdf'):
+                response['Content-Type'] = 'application/pdf'
+            elif file_path.endswith('.txt'):
+                response['Content-Type'] = 'text/plain'
+            elif file_path.endswith('.epub'):
+                response['Content-Type'] = 'application/epub+zip'
+            elif file_path.endswith('.fb2'):
+                response['Content-Type'] = 'application/xml'
+            else:
+                response['Content-Type'] = 'application/octet-stream'
+            
+            return response
+            
+        except Exception as e:
+            return Response(
+                {"error": f"Ошибка при чтении файла: {str(e)}"}, 
+                status=500
+            )

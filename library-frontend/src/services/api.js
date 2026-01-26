@@ -61,7 +61,7 @@ const apiService = {
   getAuthorBySlug: (slug) => api.get(`/author/${slug}/`),
   getGenres: () => api.get('/genres/'),
 
-  // Избранное
+  // Favority
   toggleFavoriteBook: (bookId) => api.post(`/books/${bookId}/favorite/`),
   toggleFavoriteAuthor: (authorId) => api.post(`/authors/${authorId}/favorite/`),
   getUserFavorites: () => api.get('/user/favorites/'),
@@ -105,7 +105,15 @@ const apiService = {
     localStorage.removeItem('token');
     window.location.href = '/reg/';
   },
-  getStaffUsers: () => api.get(`/staff_users`)
+
+  //Users
+  getStaffUsers: () => api.get(`/staff_users`),
+  getUser: (username) => api.get(`/user/${username}/`),
+
+  //Diaries
+  getDiaries: () => api.get('/diaries/'),
+  getDiaryBySlug: (diary_slug) => api.get(`/diary/${diary_slug}/`),
+  
 };
 
 export default apiService;

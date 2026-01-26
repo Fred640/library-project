@@ -11,6 +11,8 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import AuthorRegPage from './components/Auth/AuthorReg.jsx';
 import UsersPage from './pages/UsersPage.jsx';
 import UserPage from './pages/UserPage.jsx';
+import DiariesPage from './pages/DiariesPage.jsx';
+import DiaryPage from './pages/DiaryPage.jsx';
 function App() {
   return (
     <BrowserRouter basename="/">
@@ -26,6 +28,8 @@ function App() {
           <Route path="/AuthorReg/" element={<AuthorRegPage />} />
           <Route path="/users/" element={<UsersPage />} />
           <Route path="/user/:username/" element={<UserPage />} />
+          <Route path="/diaries/" element={<DiariesPage />} />
+          <Route path="/diary/:diary_slug" element={<DiaryPage />} />
         </Routes>
       </AuthWrapper>
     </BrowserRouter>

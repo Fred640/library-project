@@ -11,8 +11,8 @@ import { useStaffUsers } from "../hooks/useStaffUsers";
 const UsersPage = () => {
     const Elements = [
     {content: <Profile />, divClasses:"col-lg-3 col-md-12"},
-    {content:<><Link style={{textDecoration:"none"}}><Btn isActive={true}>Авторы</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn>Дневники</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
-    {content:<><Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn >Книги</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
+    {content:<><Link style={{textDecoration:"none"}}><Btn isActive={true}>Авторы</Btn></Link>/<Link to={'/diaries'} style={{textDecoration:"none"}}><Btn>Дневники</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
+    {content:<><Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>/<Link to={'/'} style={{textDecoration:"none"}}><Btn >Книги</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
     ]
     const {users, loading, error} = useStaffUsers()
     const [searchedUsers, setSearchedUsers] = useState([...users])

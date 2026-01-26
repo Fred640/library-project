@@ -1,0 +1,128 @@
+import HeaderTemplate from "../components/header/HeaderTemplate.jsx";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import Btn from "../components/UI/button/Btn";
+import Profile from "../components/UI/Profile/Profile";
+import "../styles/pages/BookPage.css";
+import { useDiary } from '../hooks/useDiary.js';
+import DiaryCard from '../components/Card/DiaryCard.jsx'
+
+const DiaryPage = () => {
+    const navigate = useNavigate();
+    const params = useParams();
+    const { diary, loading, error } = useDiary(params.diary_slug);
+
+    const Elements = [
+        {
+            content: <Profile/>,
+            divClasses: "col-lg-3 col-md-12"
+        },
+        {
+            content: <Btn onClick={() => navigate(-1)}>Назад</Btn>,
+            divClasses: "col-lg-3 col-md-6 col-12"
+        },
+    ];
+
+    if (loading) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                />
+                <div className="book-page-loading">
+                    <div className="loading-spinner"></div>
+                    <p>Загрузка дневника...</p>
+                </div>
+            </>
+        );
+    }
+
+    if (error) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                />
+                <div className="book-page-error">
+                    <h2>Ошибка</h2>
+                    <p>{error}</p>
+                    <Btn onClick={() => navigate(-1)}>Вернуться назад</Btn>
+                </div>
+            </>
+        );
+    }
+
+    if (!diary) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                />
+                <div className="book-page-not-found">
+                    <h2>Дневник не найден</h2>
+                    <Btn onClick={() => navigate("/")}>На главную</Btn>
+                </div>
+            </>
+        );
+    }
+
+    return (
+        <>
+            <HeaderTemplate 
+                ContainerElements={Elements} 
+            />
+            
+            <div className="book-page-container">
+                <div className="book-page-content">
+                    <div className="breadcrumbs">
+                        <span onClick={() => navigate("/")}>Главная</span>
+                        <span> / </span>
+                        <span onClick={() => navigate("/diaries")}>Дневники</span>
+                        <span> / </span>
+                        <span className="current">{diary.title}</span>
+                    </div>
+
+                    <div className="book-main-info">
+                        <div className="book-cover">
+                            <DiaryCard diary={diary}/>
+                        </div>
+                        <div className="book-details">
+                            <div className="book-author">
+                                <span className="label">Автор: </span>
+                                <span className="author-link">
+                                    {diary.username}
+                                </span>
+                            </div>
+                            
+                            <div className="book-title">
+                                <h1>{diary.title}</h1>
+                            </div>
+                            
+                            
+                            {diary.description && (
+                                <div className="book-description">
+                                    <h3>Описание</h3>
+                                    <p>{diary.description}</p>
+                                </div>
+                            )}
+                            
+                            
+                            <div className="book-actions">
+                                <Btn 
+                                    className="btn"
+                                    onClick={() => navigate(`${diary.download_url}`)}
+                                >
+                                    Скачать
+                                </Btn>
+                                <Btn className="btn">
+                                    Доабвить в Избранное
+                                </Btn>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+export default DiaryPage;

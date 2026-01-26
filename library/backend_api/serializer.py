@@ -23,12 +23,12 @@ class BooksSerializer(serializers.ModelSerializer):
 
 class DiariesSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
-    user_last_name = serializers.CharField(source="user.last_name", read_only=True)
-    user_first_name = serializers.CharField(source="user.first_name", read_only=True)
+    # user_last_name = serializers.CharField(source="user.last_name", read_only=True)
+    # user_first_name = serializers.CharField(source="user.first_name", read_only=True)
 
     class Meta:
         model = Diaries
-        fields = ['id', 'title', 'slug', 'description', 'username', 'user_last_name', 'user_first_name']
+        fields = ['id', 'title', 'slug', 'description', 'username']
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -47,6 +47,22 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Books
         fields = ['id', 'title', 'category', 'slug', 'author_slug', 'author_name', 'download_url']
+
+class DiarySerializer(serializers.ModelSerializer):
+    download_url = serializers.SerializerMethodField()
+    def get_download_url(self, obj):
+        if obj.file:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(f'/diary/{obj.slug}/download/')
+        return None
+    username = serializers.CharField(source='user.username', read_only=True)
+    user_last_name = serializers.CharField(source='user.last_name', read_only=True)
+    user_first_name = serializers.CharField(source='user.first_name', read_only=True)
+    
+    class Meta:
+        model = Diaries
+        fields = ['id', 'title', 'slug', 'username', 'user_first_name', 'user_last_name', 'download_url']
 
 
 class AuthorsSerializer(serializers.ModelSerializer):
@@ -89,7 +105,6 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'date_joined', 'is_staff', 'registration_complete', 'patronymic']
 
 
-# ПЕРВАЯ РЕГИСТРАЦИЯ (базовая)
 class FirstRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True, 
@@ -188,3 +203,8 @@ class StaffUserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name']
         read_only_fields = fields
 
+class UsersDiaries(serializers.ModelSerializer):
+    diaries = DiariesSerializer(many=True, read_only=True)
+    class Meta:
+        model = User
+        fields = ['id', 'username', "first_name", 'last_name', 'diaries']

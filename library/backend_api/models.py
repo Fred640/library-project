@@ -206,7 +206,7 @@ class Diaries(models.Model):
         related_name='favorite_diaries',
         blank=True
     )
-
+    
 
     def is_favorited_by(self, user):
         if not user.is_authenticated:

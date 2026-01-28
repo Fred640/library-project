@@ -27,7 +27,7 @@ const AuthorRegPage = () => {
                 </button>
                 {/* {error && (
                     <div className={classes.errorMessage}>
-                        {error}
+                        {error}.
                     </div>
                 )} */}
                 <div>

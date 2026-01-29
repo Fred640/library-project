@@ -13,6 +13,7 @@ import UsersPage from './pages/UsersPage.jsx';
 import UserPage from './pages/UserPage.jsx';
 import DiariesPage from './pages/DiariesPage.jsx';
 import DiaryPage from './pages/DiaryPage.jsx';
+import CreateDiaryPage from './pages/CreateDiaryPage.jsx';
 function App() {
   return (
     <BrowserRouter basename="/">
@@ -30,6 +31,7 @@ function App() {
           <Route path="/user/:username/" element={<UserPage />} />
           <Route path="/diaries/" element={<DiariesPage />} />
           <Route path="/diary/:diary_slug" element={<DiaryPage />} />
+          <Route path="/diary/create" element={<CreateDiaryPage />} />
         </Routes>
       </AuthWrapper>
     </BrowserRouter>

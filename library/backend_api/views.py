@@ -9,6 +9,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions, status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from rest_framework.parsers import MultiPartParser, FormParser
+import logging
 from .serializer import (BooksSerializer, 
                          AuthorsSerializer, 
                          AuthorsBooksSerializer, 
@@ -23,8 +25,30 @@ from .serializer import (BooksSerializer,
                          UsersDiaries,
                          DiarySerializer)
 
+logger = logging.getLogger(__name__)
 
+class DiaryCreateView(generics.CreateAPIView):
+    queryset = Diaries.objects.all()
+    serializer_class = DiarySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+    
+    def create(self, request, *args, **kwargs):
 
+        for key, value in request.data.items():
+            print(f"  {key}: {value}")
+        
+        print(f" Файлы (request.FILES):")
+        for key, file in request.FILES.items():
+            print(f"  {key}: {file.name} ({file.size} байт, {file.content_type})")
+        
+        print("=" * 60)
+        
+        try:
+            return super().create(request, *args, **kwargs)
+        except Exception as e:
+            print(f" ОШИБКА: {str(e)}")
+            raise
 
 class DownloadBookView(APIView):
     def get(self, request, book_slug):

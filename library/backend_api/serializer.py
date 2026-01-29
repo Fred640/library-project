@@ -30,6 +30,68 @@ class DiariesSerializer(serializers.ModelSerializer):
         model = Diaries
         fields = ['id', 'title', 'slug', 'description', 'username']
 
+from rest_framework import serializers
+from .models import Diaries
+
+class DiarySerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+    file_url = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Diaries
+        fields = [
+            'id', 
+            'title', 
+            'slug', 
+            'description', 
+            'user', 
+            'file',
+            'file_url',
+            'created_at'
+        ]
+        read_only_fields = ['slug', 'created_at', 'user']
+    
+    def get_file_url(self, obj):
+        """Возвращает URL файла"""
+        if obj.file:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.file.url)
+            return obj.file.url
+        return None
+    
+    def validate(self, data):
+        if 'file' not in data or not data['file']:
+            raise serializers.ValidationError({
+                "file": "Необходимо загрузить файл"
+            })
+        
+        file = data.get('file')
+        if file:
+            allowed_extensions = ['.txt', '.pdf', '.doc', '.docx', '.md', '.zip']
+            import os
+            file_name = file.name.lower()
+            
+            if not any(file_name.endswith(ext) for ext in allowed_extensions):
+                raise serializers.ValidationError({
+                    "file": f"Неподдерживаемый тип файла. Разрешены: {', '.join(allowed_extensions)}"
+                })
+            
+            max_size = 100 * 1024 * 1024
+            if file.size > max_size:
+                raise serializers.ValidationError({
+                    "file": f"Файл слишком большой. Максимальный размер: {max_size // (1024*1024)}MB"
+                })
+        
+        return data
+    
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)
+    
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)
 
 class BookSerializer(serializers.ModelSerializer):
     author_name = serializers.CharField(source='author.name', read_only=True)

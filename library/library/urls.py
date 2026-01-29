@@ -23,6 +23,7 @@ from backend_api.views import (
     UserDiariesView,
     DiaryView,
     DownloadDiaryView,
+    DiaryCreateView,
     )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -51,7 +52,8 @@ urlpatterns = [
     path('staff_users', StaffUsersView.as_view()),
     path('user/<str:username>/', UserDiariesView.as_view()),
     path('diary/<slug:diary_slug>/', DiaryView.as_view()),
-    path('diary/<slug:diary_slug>/download/', DownloadDiaryView.as_view())
+    path('diary/<slug:diary_slug>/download/', DownloadDiaryView.as_view()),
+    path('api/diaries/create/', DiaryCreateView.as_view(), name='diary-create'),
 ]
 
 

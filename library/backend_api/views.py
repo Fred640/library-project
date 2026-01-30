@@ -23,32 +23,34 @@ from .serializer import (BooksSerializer,
                          DiariesSerializer, 
                          StaffUserSerializer, 
                          UsersDiaries,
-                         DiarySerializer)
+                         DiarySerializer,
+                         DiaryCreateSerializer)
 
 logger = logging.getLogger(__name__)
 
 class DiaryCreateView(generics.CreateAPIView):
     queryset = Diaries.objects.all()
-    serializer_class = DiarySerializer
+    serializer_class = DiaryCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
     
     def create(self, request, *args, **kwargs):
 
-        for key, value in request.data.items():
-            print(f"  {key}: {value}")
+        if 'file' not in request.FILES:
+            return Response(
+                {"error": "Файл обязателен для загрузки"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self.get_serializer(data=request.data)
         
-        print(f" Файлы (request.FILES):")
-        for key, file in request.FILES.items():
-            print(f"  {key}: {file.name} ({file.size} байт, {file.content_type})")
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        diary = serializer.save()
+        read_serializer = DiarySerializer(diary, context={'request': request})
         
-        print("=" * 60)
-        
-        try:
-            return super().create(request, *args, **kwargs)
-        except Exception as e:
-            print(f" ОШИБКА: {str(e)}")
-            raise
+        return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
 class DownloadBookView(APIView):
     def get(self, request, book_slug):

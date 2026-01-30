@@ -77,6 +77,17 @@ TEMPLATES = [
     },
 ]
 
+ALLOWED_FILE_EXTENSIONS = ['.txt', '.pdf', '.doc', '.docx', '.md', '.zip']
+ALLOWED_MIME_TYPES = [
+    'text/plain',
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'text/markdown',
+    'application/zip',
+    'application/x-zip-compressed'
+]
+
 WSGI_APPLICATION = 'library.wsgi.application'
 
 

@@ -198,7 +198,7 @@ def save_user_profile(sender, instance, **kwargs):
 class Diaries(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, max_length=250, blank=True, null=True)
-    description = models.TextField()
+    description = models.TextField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="diaries")
     file = models.FileField(upload_to=diary_file_path, blank=True, null=True)
     favorited_by = models.ManyToManyField(

@@ -89,7 +89,7 @@ const DiaryPage = () => {
                             <div className="book-author">
                                 <span className="label">Автор: </span>
                                 <span className="author-link">
-                                    {diary.username}
+                                    {`${diary.username}, ${diary.user_first_name} ${diary.user_last_name}`}
                                 </span>
                             </div>
                             
@@ -99,7 +99,7 @@ const DiaryPage = () => {
                             
                             
                             {diary.description && (
-                                <div className="book-description">
+                                <div className="">
                                     <h3>Описание</h3>
                                     <p>{diary.description}</p>
                                 </div>

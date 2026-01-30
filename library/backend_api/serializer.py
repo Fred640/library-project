@@ -30,29 +30,53 @@ class DiariesSerializer(serializers.ModelSerializer):
         model = Diaries
         fields = ['id', 'title', 'slug', 'description', 'username']
 
-from rest_framework import serializers
-from .models import Diaries
 
-class DiarySerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    file_url = serializers.SerializerMethodField()
+
+class DiaryCreateSerializer(serializers.ModelSerializer):
+    """Сериализатор ТОЛЬКО для создания дневников"""
     
     class Meta:
         model = Diaries
+        fields = ['title', 'description', 'file']
+    
+    def create(self, validated_data):
+        """Создание дневника с пользователем"""
+        request = self.context.get('request')
+        user = request.user
+        title = validated_data.get('title')
+        if title:
+            from .models import slugify_ru
+            base_slug = slugify_ru(title)
+            
+            slug = base_slug
+            counter = 1
+            while Diaries.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            validated_data['slug'] = slug
+        
+        validated_data['user'] = user
+        diary = Diaries.objects.create(**validated_data)
+        return diary
+
+
+class DiarySerializer(serializers.ModelSerializer):
+    """Сериализатор для чтения/отображения дневников"""
+    username = serializers.ReadOnlyField(source='user.username')
+    user_first_name = serializers.ReadOnlyField(source='user.first_name')
+    user_last_name = serializers.ReadOnlyField(source='user.last_name')
+    file_url = serializers.SerializerMethodField()
+    download_url = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Diaries
+        read_only_fields = ['id', 'slug', 'username', 'user_first_name', 'user_last_name', 'download_url']
         fields = [
-            'id', 
-            'title', 
-            'slug', 
-            'description', 
-            'user', 
-            'file',
-            'file_url',
-            'created_at'
+            'id', 'title', 'slug', 'description',
+            'username', 'user_first_name', 'user_last_name', 'download_url',
         ]
-        read_only_fields = ['slug', 'created_at', 'user']
     
     def get_file_url(self, obj):
-        """Возвращает URL файла"""
         if obj.file:
             request = self.context.get('request')
             if request:
@@ -60,38 +84,13 @@ class DiarySerializer(serializers.ModelSerializer):
             return obj.file.url
         return None
     
-    def validate(self, data):
-        if 'file' not in data or not data['file']:
-            raise serializers.ValidationError({
-                "file": "Необходимо загрузить файл"
-            })
-        
-        file = data.get('file')
-        if file:
-            allowed_extensions = ['.txt', '.pdf', '.doc', '.docx', '.md', '.zip']
-            import os
-            file_name = file.name.lower()
-            
-            if not any(file_name.endswith(ext) for ext in allowed_extensions):
-                raise serializers.ValidationError({
-                    "file": f"Неподдерживаемый тип файла. Разрешены: {', '.join(allowed_extensions)}"
-                })
-            
-            max_size = 100 * 1024 * 1024
-            if file.size > max_size:
-                raise serializers.ValidationError({
-                    "file": f"Файл слишком большой. Максимальный размер: {max_size // (1024*1024)}MB"
-                })
-        
-        return data
-    
-    def create(self, validated_data):
-        validated_data['user'] = self.context['request'].user
-        return super().create(validated_data)
-    
-    def create(self, validated_data):
-        validated_data['user'] = self.context['request'].user
-        return super().create(validated_data)
+    def get_download_url(self, obj):
+        if obj.file:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.file.url) + '?download=true'
+            return obj.file.url
+        return None
 
 class BookSerializer(serializers.ModelSerializer):
     author_name = serializers.CharField(source='author.name', read_only=True)
@@ -124,7 +123,7 @@ class DiarySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Diaries
-        fields = ['id', 'title', 'slug', 'username', 'user_first_name', 'user_last_name', 'download_url']
+        fields = ['id', 'title', 'slug', 'username', 'user_first_name', 'user_last_name', 'download_url', 'description']
 
 
 class AuthorsSerializer(serializers.ModelSerializer):

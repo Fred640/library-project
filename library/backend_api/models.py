@@ -28,7 +28,6 @@ def cyrillic_to_latin(text):
     return ''.join(result)
 
 def slugify_ru(text):
-    """Транслитерация + slugify"""
     text = cyrillic_to_latin(text)
     return slugify(text)
 

@@ -39,7 +39,6 @@ const BookPage = () => {
             window.open(book.download_url, '_blank');
         } else {
             console.error("URL для скачивания не найден");
-            alert("Файл книги недоступен для скачивания");
         }
     };
 

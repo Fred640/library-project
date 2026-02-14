@@ -1,8 +1,9 @@
 import React from "react";
 import classes from './User.module.css'
 import { Link } from "react-router-dom";
-const User = ({user}) => {
-    return(
+const User = ({user, isUserPage}) => {
+    if (!isUserPage) {
+        return(
         <>
         <Link to={`/user/${user.username}`} className={classes.link}>
             <div className={classes.mainDiv}>
@@ -18,5 +19,20 @@ const User = ({user}) => {
         </Link>
         </>
     )
+    } else {
+        return (
+            <>
+            <div className={classes.card}>
+                <div className={classes.userName}>{user.username}</div>
+                <div className={classes.divInfo}>
+                    <div className={classes.info}>
+                        <span>{user.last_name}<br/></span>
+                        <span>{user.first_name}</span></div>
+                    </div>
+            </div>
+            </>
+        )
+    }
+    
 }
 export default User

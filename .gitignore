@@ -5,7 +5,7 @@ library/*.pyo
 library/*.pyd
 library/.Python
 library/*.log
-library/media/
+# library/media/
 library/staticfiles/
 library/backend_api/migrations/*.py
 !library/backend_api/migrations/__init__.py

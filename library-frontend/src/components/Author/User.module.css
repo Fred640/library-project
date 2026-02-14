@@ -46,3 +46,49 @@
     position: absolute;
     right: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+.card {
+    width: 250px;
+    height: 125px;
+    border: 2px solid black;
+    border-radius: 15px;
+    position: relative;
+    user-select: none;
+}
+
+.info {
+    position: absolute;
+    top: 30%;
+    color: rgb(66, 109, 250);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.userName {
+    top: 5px;
+    left: 45%;
+    position: absolute;
+    font-weight: 900;
+    color: rgb(66, 109, 250);
+    margin-bottom: 20px;
+}
+.divInfo {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.card:hover {
+    transition: all 300ms;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px;
+}

@@ -38,3 +38,327 @@
     color: inherit !important;
     display: block;
 }
+
+@media (max-width: 1200px) {
+    .card {
+        width: 150px;
+        height: 190px;
+    }
+    .title {
+        font-size: 16px;
+    }
+    .username {
+        font-weight: 400 ;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 992px) {
+    .card {
+        width: 110px;
+        height: 160px;
+    }
+    .title {
+        font-size: 14px;
+    }
+    .username {
+        font-weight: 400 ;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 766px) {
+    .card {
+        width: 165px;
+        height: 200px;
+    }
+    .title {
+        font-size: 15px;
+    }
+    .username {
+        font-weight: 400 ;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    .card {
+        width: 140px;
+        height: 190px;
+    }
+    .title {
+        font-size: 15px;
+    }
+    .username {
+        font-weight: 400 ;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 430px) {
+    .card {
+        width: 120px;
+        height: 160px;
+    }
+    .title {
+        font-size: 15px;
+    }
+    .username {
+        font-weight: 400 ;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    .card {
+        width: 110px;
+        height: 140px;
+    }
+    .title {
+        font-size: 14px;
+    }
+    .username {
+        font-weight: 400 ;
+        font-size: 14px;
+    }
+}
+
+
+
+
+@media (max-width: 380px) {
+    .card {
+        width: 90px;
+        height: 110px;
+    }
+    .title {
+        font-size: 13px;
+    }
+    .username {
+        font-weight: 400 ;
+        font-size: 13px;
+    }
+}
+
+
+
+
+
+
+
+
+.card1 {
+    width: 140px;
+    height: 200px;
+    padding-left: 0;
+    display: block;
+    margin: 10px;
+    border-radius: 12px;
+    background-color: rgb(188, 220, 245);
+    border: 3px solid rgb(96, 178, 206);
+}
+
+.card1:hover {
+    transition: all 300ms;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px;
+}
+
+.username1 {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.title1 {
+    width: 100%;
+    height: 80%;
+    word-wrap: break-word;
+    text-align: center;
+    font-size: 17px;
+    
+}
+
+.Link1 {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
+}
+
+@media (max-width: 1232px) {
+    .card1 {
+        width: 110px;
+        height: 170px;
+    }
+    .title1 {
+        font-size: 14px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 14px;
+    }
+}
+
+
+
+@media (max-width: 1050px) {
+    .card1 {
+        width: 90px;
+        height: 140px;
+    }
+    .title1 {
+        font-size: 12px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 935px) {
+    .card1 {
+        width: 80px;
+        height: 130px;
+    }
+    .title1 {
+        font-size: 12px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 935px) {
+    .card1 {
+        width: 80px;
+        height: 130px;
+    }
+    .title1 {
+        font-size: 12px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 12px;
+    }
+}
+
+
+@media (max-width: 870px) {
+    .card1 {
+        width: 70px;
+        height: 110px;
+    }
+    .title1 {
+        font-size: 11px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 738px) {
+    .card1 {
+        width: 110px;
+        height: 160px;
+    }
+    .title1 {
+        font-size: 14px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 725px) {
+    .card1 {
+        width: 150px;
+        height: 190px;
+    }
+    .title1 {
+        font-size: 16px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 16px;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .card1 {
+        width: 120px;
+        height: 160px;
+    }
+    .title1 {
+        font-size: 15px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .card1 {
+        width: 110px;
+        height: 14  0px;
+    }
+    .title1 {
+        font-size: 14px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    .card1 {
+        width: 100px;
+        height: 140px;
+    }
+    .title1 {
+        font-size: 13px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .card1 {
+        width: 90px;
+        height: 120px;
+    }
+    .title1 {
+        font-size: 13px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 290px) {
+    .card1 {
+        width: 80px;
+        height: 110px;
+        margin: 0;
+    }
+    .title1 {
+        font-size: 12px;
+    }
+    .username1 {
+        font-weight: 400 ;
+        font-size: 12px;
+    }
+}
+
+

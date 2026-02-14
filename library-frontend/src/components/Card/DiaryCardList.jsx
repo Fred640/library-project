@@ -1,7 +1,7 @@
 import React from "react";
 import DiaryCard from "./DiaryCard";
 
-const DiaryCardList = ({ diaries }) => {  // Деструктурируем пропс правильно
+const DiaryCardList = ({ diaries, isCardList }) => {
     const sliceFunc = (array, size) => {
         const rows = [];
         for (let i = 0; i < array.length; i += size) {
@@ -10,17 +10,13 @@ const DiaryCardList = ({ diaries }) => {  // Деструктурируем пр
         return rows;
     };
     
-    if (!diaries || diaries.length === 0) {
-        return <div className="container">Нет дневников</div>;
-    }
     
     const rows = sliceFunc(diaries, 6);
-    
     return (
         <div className="container">
             {rows.map((row, rowIndex) => (
                 <div 
-                    className="justify-content-center" 
+                    className="row justify-content-center" 
                     style={{ marginBottom: "7px", marginTop: "7px" }} 
                     key={`row-${rowIndex}`}
                 >
@@ -30,7 +26,7 @@ const DiaryCardList = ({ diaries }) => {  // Деструктурируем пр
                             style={{ padding: 5 }}
                             key={`diary-${diary.id}`}
                         >
-                            <DiaryCard diary={diary} />
+                            <DiaryCard diary={diary} isCardList={isCardList ? true : false} />
                         </div>
                     ))}
                 </div>

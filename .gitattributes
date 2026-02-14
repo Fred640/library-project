@@ -1,3 +1,6 @@
+* text=auto
+
+
 *.js linguist-language=JavaScript
 *.jsx linguist-language=JavaScript
 *.ts linguist-language=TypeScript
@@ -10,13 +13,18 @@
 *.md linguist-language=Markdown
 
 
+requirements.txt linguist-documentation
+package.json linguist-documentation
+vite.config.js linguist-documentation
+manage.py linguist-documentation
+
+
 library/venv/* linguist-vendored
 library/__pycache__/* linguist-vendored
 library-frontend/node_modules/* linguist-vendored
 *.pyc linguist-vendored
 
 
-requirements.txt linguist-documentation
-package.json linguist-documentation
-vite.config.js linguist-documentation
-manage.py linguist-documentation
+/media/** linguist-generated
+/library/media/** linguist-generated
+**/media/** linguist-generated

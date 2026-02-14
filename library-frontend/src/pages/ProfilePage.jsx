@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Btn from "../components/UI/button/Btn";
 import { useNavigate } from "react-router-dom";
-import { useFavoriteBooks, useFavoriteAuthors } from '../hooks/useFavoriteItems.js'
+import { useFavoriteBooks, useFavoriteAuthors, useFavoriteDiaries } from '../hooks/useFavoriteItems.js'
 import List from "../components/UI/list/List.jsx";
 import CardsList from '../components/Card/CardsList.jsx'
 import AuthorsList from '../components/Author/AuthorsList.jsx'
 import Headertemplate from '../components/header/HeaderTemplate.jsx'
 import Profile from '../components/UI/Profile/Profile.jsx'
 import { useAuth } from "../components/context/AuthContext";
+import DiaryCardList from "../components/Card/DiaryCardList.jsx";
 
 const ProfilePage = () => {
     const { user, isAuthenticated, loading: authLoading } = useAuth();
@@ -15,6 +16,7 @@ const ProfilePage = () => {
     const { logout } = useAuth();
     const { books, fetchBooks, refreshBooks } = useFavoriteBooks();
     const { authors, fetchAuthors, refreshAuthors } = useFavoriteAuthors();
+    const { diaries, fetchDiaries, refreshDiaries} = useFavoriteDiaries();
     const [pageLoading, setPageLoading] = useState(true);
     
     useEffect(() => {
@@ -96,6 +98,7 @@ const ProfilePage = () => {
                 <AuthorsList authors={authors} isCardLink={true} />
             </List>
             <List title={'Избранные дневники'}>
+                <DiaryCardList diaries={diaries}/>
             </List>
             <div>
                 {user.is_staff ? 

@@ -299,13 +299,16 @@ class UserFavoritesView(APIView):
         user = request.user
         favorite_books = user.favorite_books.all()
         favorite_authors = user.favorite_authors.all()
+        favorite_diaries = user.favorite_diaries.all()
         
         book_serializer = BooksSerializer(favorite_books, many=True, context={'request': request})
         author_serializer = AuthorsSerializer(favorite_authors, many=True, context={'request': request})
+        diary_serializer = DiariesSerializer(favorite_diaries, many=True, context={"request":request})
         
         return Response({
             "favorite_books": book_serializer.data,
-            "favorite_authors": author_serializer.data
+            "favorite_authors": author_serializer.data,
+            "favorite_diaries": diary_serializer.data,
         })
     
 class RegistrationStatusView(APIView):
@@ -397,3 +400,28 @@ class DownloadDiaryView(APIView):
                 {"error": f"Ошибка при чтении файла: {str(e)}"}, 
                 status=500
             )
+        
+class ToggleFavoriteDiaryView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, diary_id):
+        try:
+            diary = Diaries.objects.get(id=diary_id)
+        except Diaries.DoesNotExist:
+            return Response(
+                {"error": "Дневник не найден"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        if diary.favorited_by.filter(id=request.user.id).exists():
+            diary.favorited_by.remove(request.user)
+            return Response({
+                "status": "removed",
+                "message": "Дневник удалена из избранного"
+            })
+        else:
+            diary.favorited_by.add(request.user)
+            return Response({
+                "status": "added",
+                "message": "Денвник добавлена в избранное"
+            })

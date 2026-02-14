@@ -24,6 +24,7 @@ from backend_api.views import (
     DiaryView,
     DownloadDiaryView,
     DiaryCreateView,
+    ToggleFavoriteDiaryView
     )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -54,6 +55,7 @@ urlpatterns = [
     path('diary/<slug:diary_slug>/', DiaryView.as_view()),
     path('diary/<slug:diary_slug>/download/', DownloadDiaryView.as_view()),
     path('api/diaries/create/', DiaryCreateView.as_view(), name='diary-create'),
+    path('diary/<int:diary_id>/favorite', ToggleFavoriteDiaryView.as_view())
 ]
 
 

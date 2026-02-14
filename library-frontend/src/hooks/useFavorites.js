@@ -37,9 +37,24 @@ export const useFavorites = () => {
         }
     }, []);
 
+const toggleFavoriteDiary = useCallback(async (diaryId) => {
+    setLoading(true)
+    setError(null)
+    try {
+        const response = await apiService.toggleFavoriteDiary(diaryId)
+        return response.data
+    } catch (error) {
+        setError(error)
+        throw error
+    } finally {
+        setLoading(false)
+    }
+}, [])
+
     return {
         toggleFavoriteBook,
         toggleFavoriteAuthor,
+        toggleFavoriteDiary,
         loading,
         error,
         clearError: () => setError(null)
@@ -82,9 +97,24 @@ export const useFavoriteStatus = () => {
         }
     }, []);
 
+    const checkDiaryFavoriteStatus = useCallback(async (diaryId) => {
+        setLoading(true)
+        setError(null)
+
+        try {
+            const response = await apiService.checkDiaryFavoriteStatus(diaryId)
+            return response.data
+        } catch (error) {
+            setError(error)
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
     return {
         checkBookFavoriteStatus,
         checkAuthorFavoriteStatus,
+        checkDiaryFavoriteStatus,
         loading,
         error,
         clearError: () => setError(null)
@@ -302,6 +332,117 @@ export const useAuthorFavorite = (authorId) => {
 
         loadStatus();
     }, [authorId]);
+
+    return {
+        isFavorite,
+        loading,
+        error,
+        initialized,
+        checkStatus,
+        toggleFavorite,
+        refreshStatus: checkStatus
+    };
+};
+
+
+export const useDiaryFavorite = (diaryId) => {
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [initialized, setInitialized] = useState(false);
+    const prevDiaryIdRef = useRef(null);
+    
+    const { toggleFavoriteDiary } = useFavorites();
+    const { checkDiaryFavoriteStatus } = useFavoriteStatus();
+
+    const checkStatus = useCallback(async () => {
+        if (!diaryId) {
+            setIsFavorite(false);
+            setLoading(false);
+            setInitialized(true);
+            return { is_favorite: false };
+        }
+
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const result = await checkDiaryFavoriteStatus(diaryId);
+            setIsFavorite(result.is_favorite);
+            setInitialized(true);
+            return result;
+        } catch (err) {
+            setError(err);
+            setIsFavorite(false);
+            setInitialized(true);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    }, [diaryId, checkDiaryFavoriteStatus]);
+
+    const toggleFavorite = useCallback(async () => {
+        if (!diaryId) {
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const result = await toggleFavoriteDiary(diaryId);
+            
+            const newStatus = result.status === 'added';
+            setIsFavorite(newStatus);
+            
+            return result;
+        } catch (err) {
+            setError(err);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    }, [diaryId, isFavorite, toggleFavoriteDiary]);
+
+    useEffect(() => {
+        if (diaryId === prevDiaryIdRef.current) {
+            if (!diaryId) {
+                setIsFavorite(false);
+                setLoading(false);
+                setInitialized(true);
+            }
+            return;
+        }
+
+        prevDiaryIdRef.current = diaryId;
+        
+        setIsFavorite(false);
+        setLoading(true);
+        setInitialized(false);
+        setError(null);
+
+        if (!diaryId) {
+            setIsFavorite(false);
+            setLoading(false);
+            setInitialized(true);
+            return;
+        }
+        
+        const loadStatus = async () => {
+            try {
+                const result = await checkDiaryFavoriteStatus(diaryId);
+                setIsFavorite(result.is_favorite);
+            } catch (err) {
+                setIsFavorite(false);
+                setError(err);
+            } finally {
+                setLoading(false);
+                setInitialized(true);
+            }
+        };
+
+        loadStatus();
+    }, [diaryId]);
 
     return {
         isFavorite,

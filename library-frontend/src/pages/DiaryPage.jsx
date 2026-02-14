@@ -5,11 +5,19 @@ import Profile from "../components/UI/Profile/Profile";
 import "../styles/pages/BookPage.css";
 import { useDiary } from '../hooks/useDiary.js';
 import DiaryCard from '../components/Card/DiaryCard.jsx'
+import { useDiaryFavorite } from "../hooks/useFavorites.js";
 
 const DiaryPage = () => {
     const navigate = useNavigate();
     const params = useParams();
     const { diary, loading, error } = useDiary(params.diary_slug);
+    const { 
+            isFavorite, 
+            toggleFavorite, 
+            loading: favoriteLoading,
+            error: favoriteError,
+            initialized
+        } = useDiaryFavorite(diary?.id);
 
     const Elements = [
         {
@@ -21,6 +29,64 @@ const DiaryPage = () => {
             divClasses: "col-lg-3 col-md-6 col-12"
         },
     ];
+
+    const handleDownload = () => {
+        if (diary && diary.download_url) {
+            window.open(diary.download_url, '_blank');
+        } else {
+            console.error("URL для скачивания не найден");
+        }
+    };
+
+    if (loading) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                />
+                <div className="book-page-loading">
+                    <div className="loading-spinner"></div>
+                    <p>Загрузка книги...</p>
+                </div>
+            </>
+        );
+    }
+
+    if (error) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                />
+                <div className="book-page-error">
+                    <h2>Ошибка</h2>
+                    <p>{error}</p>
+                    <Btn onClick={() => navigate(-1)}>Вернуться назад</Btn>
+                </div>
+            </>
+        );
+    }
+
+    if (!diary) {
+        return (
+            <>
+                <HeaderTemplate 
+                    ContainerElements={Elements} 
+                />
+                <div className="book-page-not-found">
+                    <h2>Книга не найдена</h2>
+                    <Btn onClick={() => navigate("/")}>На главную</Btn>
+                </div>
+            </>
+        );
+    }
+
+    const getFavoriteButtonText = () => {
+        if (favoriteLoading) return "Загрузка...";
+        if (favoriteError) return "Ошибка";
+        if (!initialized) return "Проверка...";
+        return isFavorite ? "Удалить из избранного" : "Добавить в Избранное";
+    };
 
     if (loading) {
         return (
@@ -113,8 +179,8 @@ const DiaryPage = () => {
                                 >
                                     Скачать
                                 </Btn>
-                                <Btn className="btn">
-                                    Доабвить в Избранное
+                                <Btn className="btn" onClick={toggleFavorite}>
+                                    {getFavoriteButtonText()}
                                 </Btn>
                             </div>
                         </div>

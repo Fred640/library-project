@@ -239,3 +239,50 @@ export const useFavoriteItemManager = () => {
         totalCount: favoriteItems.totalCount
     };
 };
+
+
+export const useFavoriteDiaries = () => {
+    const [diaries, setDiaries] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const fetchDiaries = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const response = await apiService.getFavoriteDiaries();
+            setDiaries(response.data);
+            return response.data;
+        } catch (err) {
+            const errorMsg = err.response?.data || { error: 'Ошибка загрузки избранных дневников' };
+            setError(errorMsg);
+            throw errorMsg;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const refreshDiaries = useCallback(async () => {
+        return await fetchDiaries();
+    }, [fetchDiaries]);
+
+    const isDiaryFavorite = useCallback((diaryId) => {
+        return diaries.some(diary => diary.id === diaryId);
+    }, [diaries]);
+
+    useEffect(() => {
+        fetchDiaries();
+    }, [fetchDiaries]);
+
+    return {
+        diaries,
+        loading,
+        error,
+        fetchDiaries,
+        refreshDiaries,
+        isDiaryFavorite,
+        clearError: () => setError(null),
+        count: diaries.length
+    };
+};

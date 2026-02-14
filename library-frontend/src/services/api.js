@@ -64,8 +64,10 @@ const apiService = {
   // Favority
   toggleFavoriteBook: (bookId) => api.post(`/books/${bookId}/favorite/`),
   toggleFavoriteAuthor: (authorId) => api.post(`/authors/${authorId}/favorite/`),
+  toggleFavoriteDiary: (diaryId) => api.post(`/diary/${diaryId}/favorite`),
   getUserFavorites: () => api.get('/user/favorites/'),
   getUserProfile: () => api.get('/auth/profile/'),
+
   
   checkBookFavoriteStatus: (bookId) => 
     api.get('/user/favorites/').then(response => {
@@ -78,6 +80,12 @@ const apiService = {
       const isFavorite = response.data.favorite_authors?.some(author => author.id === authorId) || false;
       return { data: { is_favorite: isFavorite } };
     }),
+
+    checkDiaryFavoriteStatus: (diaryId) => 
+    api.get('/user/favorites/').then(response => {
+      const isFavorite = response.data.favorite_diaries?.some(diary => diary.id === diaryId) || false;
+      return { data: { is_favorite: isFavorite } };
+    }),
   
 
   getFavoriteBooks: () => 
@@ -88,6 +96,10 @@ const apiService = {
   getFavoriteAuthors: () => 
     api.get('/user/favorites/').then(response => ({
       data: response.data.favorite_authors || []
+    })),
+    getFavoriteDiaries: () => 
+    api.get('/user/favorites/').then(response => ({
+      data: response.data.favorite_diaries || []
     })),
   
   getFavoritesCount: () => 

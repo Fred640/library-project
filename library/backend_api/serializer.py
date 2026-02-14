@@ -22,13 +22,19 @@ class BooksSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'slug', 'author_id', 'author_name', 'genre', 'author_slug', 'is_favorite']
 
 class DiariesSerializer(serializers.ModelSerializer):
+    def get_is_favorite(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.is_favorited_by(request.user)
+        return False
     username = serializers.CharField(source="user.username", read_only=True)
     # user_last_name = serializers.CharField(source="user.last_name", read_only=True)
     # user_first_name = serializers.CharField(source="user.first_name", read_only=True)
+    is_favorite = serializers.SerializerMethodField()
 
     class Meta:
         model = Diaries
-        fields = ['id', 'title', 'slug', 'description', 'username']
+        fields = ['id', 'title', 'slug', 'description', 'username', 'is_favorite']
 
 
 

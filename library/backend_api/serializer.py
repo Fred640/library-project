@@ -3,7 +3,8 @@ from .models import Books, Authors, BookCategories, UserProfile, Diaries
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.authtoken.models import Token
-
+from .models import slugify_ru
+from library.utils.converter import convert_fb2_to_utf8
 
 class BooksSerializer(serializers.ModelSerializer):
     author_name = serializers.CharField(source='author.name', read_only=True)
@@ -38,22 +39,29 @@ class DiariesSerializer(serializers.ModelSerializer):
 
 
 
+
+
 class DiaryCreateSerializer(serializers.ModelSerializer):
-    """Сериализатор ТОЛЬКО для создания дневников"""
     
     class Meta:
         model = Diaries
         fields = ['title', 'description', 'file']
     
     def create(self, validated_data):
-        """Создание дневника с пользователем"""
         request = self.context.get('request')
         user = request.user
+        
+
+        if 'file' in validated_data:
+            file_obj = validated_data['file']
+            if file_obj.name.lower().endswith('.fb2'):
+                from library.utils.converter import convert_fb2_to_utf8
+                validated_data['file'] = convert_fb2_to_utf8(file_obj)
+        
         title = validated_data.get('title')
         if title:
             from .models import slugify_ru
             base_slug = slugify_ru(title)
-            
             slug = base_slug
             counter = 1
             while Diaries.objects.filter(slug=slug).exists():
@@ -62,6 +70,7 @@ class DiaryCreateSerializer(serializers.ModelSerializer):
             validated_data['slug'] = slug
         
         validated_data['user'] = user
+        
         diary = Diaries.objects.create(**validated_data)
         return diary
 
@@ -114,23 +123,6 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Books
         fields = ['id', 'title', 'category', 'slug', 'author_slug', 'author_name', 'download_url']
-
-class DiarySerializer(serializers.ModelSerializer):
-    download_url = serializers.SerializerMethodField()
-    def get_download_url(self, obj):
-        if obj.file:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(f'/diary/{obj.slug}/download/')
-        return None
-    username = serializers.CharField(source='user.username', read_only=True)
-    user_last_name = serializers.CharField(source='user.last_name', read_only=True)
-    user_first_name = serializers.CharField(source='user.first_name', read_only=True)
-    
-    class Meta:
-        model = Diaries
-        fields = ['id', 'title', 'slug', 'username', 'user_first_name', 'user_last_name', 'download_url', 'description']
-
 
 class AuthorsSerializer(serializers.ModelSerializer):
     is_favorite = serializers.SerializerMethodField()

@@ -4,6 +4,7 @@ import os
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from library.utils.converter import convert_fb2_to_utf8
 
 def cyrillic_to_latin(text):
     cyrillic = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
@@ -144,12 +145,8 @@ class Books(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    patronymic = models.CharField(
-        max_length=100, 
-        blank=True,
-        null=True,
-    )
     registration_complete = models.BooleanField(default=False)
+    favorited_by = models.ManyToManyField(User, related_name='favorited_authors', blank=True)
     
     def __str__(self):
         return f"Профиль {self.user.username}"
@@ -213,6 +210,22 @@ class Diaries(models.Model):
         return self.favorited_by.filter(id=user.id).exists()
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify_ru(self.title)
+            self.slug = base_slug
+            counter = 1
+            while Diaries.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
+                self.slug = f"{base_slug}-{counter}"
+                counter += 1
+        super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if self.file and self.file.name.endswith('.fb2'):
+            original_file = self.file
+            
+            converted_file = convert_fb2_to_utf8(original_file)
+            
+            self.file.save(original_file.name, converted_file, save=False)
+        
         if not self.slug:
             base_slug = slugify_ru(self.title)
             self.slug = base_slug

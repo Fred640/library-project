@@ -311,6 +311,8 @@ class UserFavoritesView(APIView):
             "favorite_diaries": diary_serializer.data,
         })
     
+
+    
 class RegistrationStatusView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
@@ -425,3 +427,4 @@ class ToggleFavoriteDiaryView(APIView):
                 "status": "added",
                 "message": "Денвник добавлена в избранное"
             })
+        

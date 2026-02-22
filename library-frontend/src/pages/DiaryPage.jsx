@@ -60,7 +60,7 @@ const DiaryPage = () => {
                 />
                 <div className="book-page-error">
                     <h2>Ошибка</h2>
-                    <p>{error}</p>
+                    <p>{error.message || error.error || String(error)}</p>
                     <Btn onClick={() => navigate(-1)}>Вернуться назад</Btn>
                 </div>
             </>
@@ -110,7 +110,7 @@ const DiaryPage = () => {
                 />
                 <div className="book-page-error">
                     <h2>Ошибка</h2>
-                    <p>{error}</p>
+                    <p>{error.message || error.error || String(error)}</p>
                     <Btn onClick={() => navigate(-1)}>Вернуться назад</Btn>
                 </div>
             </>

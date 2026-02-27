@@ -33,10 +33,10 @@ def slugify_ru(text):
     return slugify(text)
 
 def book_file_path(instance, filename):
-    """
-    Файлы будут сохраняться в:
-    media/books/{author_slug}/{book_slug}/{filename}
-    """
+
+    #Файлы будут сохраняться в:
+    #media/books/{author_slug}/{book_slug}/{filename}
+
     author_slug = instance.author.slug
     book_slug = instance.slug
     
@@ -47,10 +47,10 @@ def book_file_path(instance, filename):
 
 
 def diary_file_path(instance, filename):
-    """
-    Файлы будут сохраняться в:
-    media/diary/{username}/{diary_slug}/{filename}
-    """
+
+    #Файлы будут сохраняться в:
+    #media/diary/{username}/{diary_slug}/{filename}
+
     username = instance.user.username
     diary_slug = instance.slug
     
@@ -84,7 +84,7 @@ class Authors(models.Model):
         return self.name
     
     def is_favorited_by(self, user):
-        """Проверяет, добавил ли пользователь автора в избранное"""
+        #Проверяет, добавил ли пользователь автора в избранное
         if not user.is_authenticated:
             return False
         return self.favorited_by.filter(id=user.id).exists()
@@ -138,7 +138,7 @@ class Books(models.Model):
         super().save(*args, **kwargs)
     
     def is_favorited_by(self, user):
-        """Проверяет, добавил ли пользователь книгу в избранное"""
+        #Проверяет, добавил ли пользователь книгу в избранное
         if not user.is_authenticated:
             return False
         return self.favorited_by.filter(id=user.id).exists()
@@ -146,24 +146,31 @@ class Books(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     registration_complete = models.BooleanField(default=False)
-    favorited_by = models.ManyToManyField(User, related_name='favorited_authors', blank=True)
+    favorited_by = models.ManyToManyField(User, related_name='favorited_profiles', blank=True)
+    favorited_staff = models.ManyToManyField(User, related_name='favprited_staff_users', blank=True, help_text="Staff-пользователи, которых добавил в избранное этот пользователь")
     
     def __str__(self):
         return f"Профиль {self.user.username}"
     
     def get_favorite_books(self):
-        """Получить любимые книги пользователя"""
         return self.user.favorite_books.all()
     
     def get_favorite_authors(self):
-        """Получить любимых авторов пользователя"""
         return self.user.favorite_authors.all()
     
+    def get_favorite_staff(self):
+        #Получить избранных staff-пользователей
+        return self.favorited_staff.all()
+    
+    def is_staff_favorited(self, staff_user):
+        #Проверяет, добавлен ли staff-пользователь в избранное
+        return self.favorited_staff.filter(id=staff_user.id).exists()
+    
     def complete_registration(self, first_name, last_name, email, patronymic=None):
-        """
-        Завершение регистрации пользователя
-        Устанавливает is_staff=True при успешном завершении
-        """
+
+        #Завершение регистрации пользователя
+        #Устанавливает is_staff=True при успешном завершении
+ 
         self.user.first_name = first_name
         self.user.last_name = last_name
         self.user.email = email
@@ -181,13 +188,13 @@ class UserProfile(models.Model):
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    """Автоматически создаем профиль при создании пользователя"""
+    #Автоматически создаем профиль при создании пользователя
     if created:
         UserProfile.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    """Автоматически сохраняем профиль при сохранении пользователя"""
+    #Автоматически сохраняем профиль при сохранении пользователя
     if hasattr(instance, 'profile'):
         instance.profile.save()
 

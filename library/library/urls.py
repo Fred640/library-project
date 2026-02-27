@@ -24,7 +24,11 @@ from backend_api.views import (
     DiaryView,
     DownloadDiaryView,
     DiaryCreateView,
-    ToggleFavoriteDiaryView
+    ToggleFavoriteDiaryView,
+    toggle_favorite_staff,
+    get_all_staff_users,
+    get_favorite_staff,
+    check_staff_favorite_status
     )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -55,7 +59,11 @@ urlpatterns = [
     path('diary/<slug:diary_slug>/', DiaryView.as_view()),
     path('diary/<slug:diary_slug>/download/', DownloadDiaryView.as_view()),
     path('api/diaries/create/', DiaryCreateView.as_view(), name='diary-create'),
-    path('diary/<int:diary_id>/favorite', ToggleFavoriteDiaryView.as_view())
+    path('diary/<int:diary_id>/favorite', ToggleFavoriteDiaryView.as_view()),
+    path('staff/', get_all_staff_users, name='staff-list'),
+    path('staff/favorites/', get_favorite_staff, name='favorite-staff-list'),
+    path('staff/<int:user_id>/favorite/', toggle_favorite_staff, name='toggle-favorite-staff'),
+    path('staff/<int:user_id>/favorite/status/', check_staff_favorite_status, name='check-favorite-status'),
 ]
 
 

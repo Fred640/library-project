@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse, Http404
 from rest_framework.views import APIView
-from .models import Books, Authors, BookCategories, Diaries
+from .models import Books, Authors, BookCategories, Diaries, UserProfile
 from rest_framework.response import Response
 import os
 from rest_framework.permissions import IsAuthenticated
@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.parsers import MultiPartParser, FormParser
 import logging
+from rest_framework.decorators import api_view, permission_classes
 from .serializer import (BooksSerializer, 
                          AuthorsSerializer, 
                          AuthorsBooksSerializer, 
@@ -428,3 +429,55 @@ class ToggleFavoriteDiaryView(APIView):
                 "message": "Денвник добавлена в избранное"
             })
         
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def toggle_favorite_staff(request, user_id):
+    try:
+        target_user = User.objects.get(id=user_id, is_staff=True)
+    except User.DoesNotExist:
+        return Response(
+            {"error": "Staff пользователь не найден"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    
+    profile = request.user.profile
+    
+    if profile.favorited_staff.filter(id=target_user.id).exists():
+        profile.favorited_staff.remove(target_user)
+        return Response({
+            "status": "removed",
+            "message": f"Пользователь {target_user.username} удален из избранного"
+        })
+    else:
+        profile.favorited_staff.add(target_user)
+        return Response({
+            "status": "added",
+            "message": f"Пользователь {target_user.username} добавлен в избранное"
+        })
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_favorite_staff(request):
+    profile = request.user.profile
+    favorite_staff = profile.favorited_staff.filter(is_staff=True)
+    serializer = StaffUserSerializer(favorite_staff, many=True, context={'request': request})
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_all_staff_users(request):
+    staff_users = User.objects.filter(is_staff=True)
+    serializer = StaffUserSerializer(staff_users, many=True, context={'request': request})
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_staff_favorite_status(request, user_id):
+    try:
+        target_user = User.objects.get(id=user_id)
+        profile = request.user.profile
+        is_favorite = profile.favorited_staff.filter(id=target_user.id).exists()
+        return Response({"is_favorite": is_favorite})
+    except User.DoesNotExist:
+        return Response({"error": "Пользователь не найден"}, status=404)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)

@@ -6,6 +6,7 @@ import Btn from "../components/UI/button/Btn";
 import UsersList from "../components/Author/UserList";
 import { useState, useEffect } from "react";
 import { useStaffUsers } from "../hooks/useStaffUsers";
+import { useStaffFavorite } from '../hooks/useStaffFavorite';
 
 
 const UsersPage = () => {

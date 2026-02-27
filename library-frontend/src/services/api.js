@@ -126,6 +126,11 @@ const apiService = {
   getDiaries: () => api.get('/diaries/'),
   getDiaryBySlug: (diary_slug) => api.get(`/diary/${diary_slug}/`),
   
+  // staff_users
+  getAllStaff: () => api.get('/staff/'),
+  getFavoriteStaff: () => api.get('/staff/favorites/'),
+  toggleFavoriteStaff: (userId) => api.post(`/staff/${userId}/favorite/`),
+  checkStaffFavoriteStatus: (userId) => api.get(`/staff/${userId}/favorite/status/`),
 };
 
 export default apiService;

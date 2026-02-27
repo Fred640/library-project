@@ -267,3 +267,34 @@ class UsersDiaries(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', "first_name", 'last_name', 'diaries']
+
+class StaffUserSerializer(serializers.ModelSerializer):
+    is_favorited = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'is_staff', 'is_favorited']
+    
+    def get_is_favorited(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return request.user.profile.is_staff_favorited(obj)
+        return False
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    first_name = serializers.CharField(source='user.first_name', read_only=True)
+    last_name = serializers.CharField(source='user.last_name', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
+    is_staff = serializers.BooleanField(source='user.is_staff', read_only=True)
+    favorite_staff = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = UserProfile
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 
+                  'is_staff', 'registration_complete', 'favorite_staff']
+    
+    def get_favorite_staff(self, obj):
+        request = self.context.get('request')
+        staff_users = obj.favorited_staff.filter(is_staff=True)
+        return StaffUserSerializer(staff_users, many=True, context=self.context).data

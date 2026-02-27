@@ -57,9 +57,9 @@ const MainPage = () => {
         setModalVisible(false);
         console.log("Selected genre in MainPage:", genreSlug);
     }
-    const toggleGenresModal = () => {
-    setModalVisible(!modalVisible);
-  }
+  //   const toggleGenresModal = () => {
+  //   setModalVisible(!modalVisible);
+  // }
   
     const searchBook = (sQ) => {
     setSearchQuery(sQ);

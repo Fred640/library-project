@@ -30,13 +30,13 @@ const DiaryPage = () => {
         },
     ];
 
-    const handleDownload = () => {
-        if (diary && diary.download_url) {
-            window.open(diary.download_url, '_blank');
-        } else {
-            console.error("URL для скачивания не найден");
-        }
-    };
+    // const handleDownload = () => {
+    //     if (diary && diary.download_url) {
+    //         window.open(diary.download_url, '_blank');
+    //     } else {
+    //         console.error("URL для скачивания не найден");
+    //     }
+    // };
 
     if (loading) {
         return (

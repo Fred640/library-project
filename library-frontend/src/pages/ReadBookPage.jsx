@@ -97,12 +97,12 @@ const ReadBookPage = () => {
         }
     };
     
-    const goToPage = (pageNum) => {
-        if (pageNum >= 1 && pageNum <= pages.length) {
-            setCurrentPage(pageNum);
-            window.scrollTo(0, 0);
-        }
-    };
+    // const goToPage = (pageNum) => {
+    //     if (pageNum >= 1 && pageNum <= pages.length) {
+    //         setCurrentPage(pageNum);
+    //         window.scrollTo(0, 0);
+    //     }
+    // };
     
     useEffect(() => {
         if (content) {

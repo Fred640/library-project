@@ -37,9 +37,7 @@ export const parseFB2Clean = (xmlText) => {
     }
 };
 
-/**
- * Парсинг секций
- */
+ // парсинг секций
 function parseSections(text) {
     let result = '';
     
@@ -60,9 +58,7 @@ function parseSections(text) {
     return result;
 }
 
-/**
- * Парсинг содержимого секции
- */
+// парсинг содержимого секции
 function parseSectionContent(content, index) {
     let sectionText = '';
     
@@ -95,9 +91,7 @@ function parseSectionContent(content, index) {
     return sectionText;
 }
 
-/**
- * Парсинг стихов
- */
+// gfhcbyu cnb[jd]
 function parsePoem(poemContent) {
     let poemText = '';
     
@@ -155,9 +149,7 @@ function parseText(content) {
     return result;
 }
 
-/**
- * Парсинг заголовка
- */
+// парсинг заголовков
 function parseTitle(titleContent) {
     let title = titleContent
         .replace(/<p[^>]*>/gi, ' ')
@@ -171,9 +163,7 @@ function parseTitle(titleContent) {
     return decodeEntities(title);
 }
 
-/**
- * Прямой парсинг (без секций)
- */
+// парсинг без секций
 function parseDirectContent(text) {
     let result = text;
 
@@ -190,10 +180,7 @@ function parseDirectContent(text) {
     
     return result;
 }
-
-/**
- * Декодирует HTML entities
- */
+// декодинг HTML
 function decodeEntities(text) {
     return text
         .replace(/&lt;/g, '<')
@@ -208,9 +195,7 @@ function decodeEntities(text) {
         .replace(/&ndash;/g, '–');
 }
 
-/**
- * Финальная очистка текста
- */
+// фианльная очистка текста
 function cleanText(text) {
     return text
         .replace(/^[ ]{4}/gm, '    ')

@@ -103,7 +103,14 @@ const ProfilePage = () => {
             <div>
                 {user.is_staff ? 
                     <>
-                        <div>Вы автор</div>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            fontSize:20,
+                            fontWeight:600,
+                        }}>
+                            Вы автор
+                        </div>
                         <List title={'Ваши дневники'}></List>
                     </>
                     :

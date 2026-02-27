@@ -38,17 +38,17 @@
 }
 
 .dropdownContent.open {
-    max-height: 500px; /* Или используйте auto, если нужно динамическое высота */
+    max-height: 500px;
     padding: 15px;
     overflow-y: auto;
 }
 
-/* Для плавного сворачивания/разворачивания */
+
 .dropdownContent {
     transition: max-height 0.3s ease-in-out;
 }
 
-/* Дополнительные стили для стрелки */
+
 .dropdownToogle::after {
     content: '';
     display: inline-block;
@@ -66,4 +66,11 @@
 
 .dropdownToogle.open::after {
     border-bottom: 5px solid #333;
+}
+
+.svgContainer {
+    display: block;
+    width: 100%;
+    height: 100%;
+
 }

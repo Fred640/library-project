@@ -28,7 +28,7 @@ const DiariesPage = () => {
     const Elements = [
     {content: <Profile />, divClasses:"col-lg-3 col-md-12"},
     {content:<><Link to={'/users/'} style={{textDecoration:"none"}}><Btn>Авторы</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn isActive={true}>Дневники</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
-    {content:<><Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>/<Link style={{textDecoration:"none"}}><Btn>Книги</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
+    {content:<><Link to="/authors" style={{textDecoration:"none"}}><Btn>Писатели</Btn></Link>/<Link to="/" style={{textDecoration:"none"}}><Btn>Книги</Btn></Link></>, divClasses:"col-lg-4 col-md-6 col-12"},
   ]
     return(
         <>

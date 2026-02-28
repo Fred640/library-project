@@ -72,6 +72,24 @@
 - **Frontend:** HTML, CSS+Bootstrap, JavaScript, React, axios
 - **База данных:** SQLite3 DjangoORM
 
+
+## Инструкция по установке и запуску
+Для запуска необходимо устнавить python, nodejs, npm <br></br>
+В терминале выполнить: <br></br>
+`git clone git@github.com:Fred640/library-project.git`<br></br>
+`cd library-project/library`<br></br>
+`python -m venv venv`<br></br>
+`source venv/bin/activate (на Linux)`<br></br>
+`venv\Scripts\activate.bat (на Windows)`<br></br>
+`pip install -r requirements.txt`<br></br>
+`python manage.py runserver`<br></br>
+Октрыть второе окно терминала и уже там выполнить:<br></br>
+`cd library-project/library-frontend` <br></br>
+`npm install`<br></br>
+`npm run dev`<br></br>
+После этого сайт будет доступен по ссылке http://localhost:5173/
+
+
 ---
 
 *Проект создан в учебных целях для закрепления практических навыков веб-разработки.*

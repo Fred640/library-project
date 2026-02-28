@@ -166,7 +166,7 @@ class UserProfile(models.Model):
         #Проверяет, добавлен ли staff-пользователь в избранное
         return self.favorited_staff.filter(id=staff_user.id).exists()
     
-    def complete_registration(self, first_name, last_name, email, patronymic=None):
+    def complete_registration(self, first_name, last_name, email):
 
         #Завершение регистрации пользователя
         #Устанавливает is_staff=True при успешном завершении
@@ -175,15 +175,12 @@ class UserProfile(models.Model):
         self.user.last_name = last_name
         self.user.email = email
         
-        if patronymic:
-            self.patronymic = patronymic
         
         self.user.is_staff = True
         self.registration_complete = True
         
         self.user.save()
         self.save()
-        
         return self
 
 @receiver(post_save, sender=User)

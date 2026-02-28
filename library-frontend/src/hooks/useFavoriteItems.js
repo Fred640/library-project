@@ -242,7 +242,7 @@ export const useFavoriteItemManager = () => {
 
 
 export const useFavoriteDiaries = () => {
-    const [diaries, setDiaries] = useState([]);
+    const [favoriteDiaries, setDiaries] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -268,21 +268,20 @@ export const useFavoriteDiaries = () => {
     }, [fetchDiaries]);
 
     const isDiaryFavorite = useCallback((diaryId) => {
-        return diaries.some(diary => diary.id === diaryId);
-    }, [diaries]);
+        return favoriteDiaries.some(diary => diary.id === diaryId);
+    }, [favoriteDiaries]);
 
     useEffect(() => {
         fetchDiaries();
     }, [fetchDiaries]);
 
     return {
-        diaries,
+        favoriteDiaries,
         loading,
         error,
         fetchDiaries,
         refreshDiaries,
         isDiaryFavorite,
         clearError: () => setError(null),
-        count: diaries.length
     };
 };

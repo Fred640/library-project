@@ -9,16 +9,19 @@ import Headertemplate from '../components/header/HeaderTemplate.jsx'
 import Profile from '../components/UI/Profile/Profile.jsx'
 import { useAuth } from "../components/context/AuthContext";
 import DiaryCardList from "../components/Card/DiaryCardList.jsx";
-
+import { useStaffFavorite } from '../hooks/useStaffFavorite.js'
+import UserList from '../components/Author/UserList.jsx'
+import { useUser } from "../hooks/useUser.js";
 const ProfilePage = () => {
     const { user, isAuthenticated, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const { logout } = useAuth();
     const { books, fetchBooks, refreshBooks } = useFavoriteBooks();
     const { authors, fetchAuthors, refreshAuthors } = useFavoriteAuthors();
-    const { diaries, fetchDiaries, refreshDiaries} = useFavoriteDiaries();
+    const { favoriteDiaries, fetchDiaries, refreshDiaries} = useFavoriteDiaries();
     const [pageLoading, setPageLoading] = useState(true);
-    
+    const { favoriteStaff } = useStaffFavorite()
+    const { diaries } = useUser(user?.username)
     useEffect(() => {
         if (!authLoading) {
             const timer = setTimeout(() => {
@@ -94,11 +97,14 @@ const ProfilePage = () => {
             <List title={"Избранные книги"}>
                 <CardsList books={books} isCardsList={true} />
             </List>
-            <List title={'Избранные авторы'} >
+            <List title={'Избранные писатели'} >
                 <AuthorsList authors={authors} isCardLink={true} />
             </List>
             <List title={'Избранные дневники'}>
-                <DiaryCardList diaries={diaries}/>
+                <DiaryCardList diaries={favoriteDiaries}/>
+            </List>
+            <List title={'Избранные авторы'}>
+                <UserList users={favoriteStaff}/>
             </List>
             <div>
                 {user.is_staff ? 
@@ -111,7 +117,13 @@ const ProfilePage = () => {
                         }}>
                             Вы автор
                         </div>
-                        <List title={'Ваши дневники'}></List>
+                        <div style={{display:"flex", justifyContent:"center", margin:30}}>
+                            <Btn onClick={() => { navigate('/diary/create') }}>Выложить Дневник</Btn>
+                        </div>
+                        
+                        <List title={'Ваши дневники'}>
+                            <DiaryCardList diaries={diaries}/>
+                        </List>
                     </>
                     :
                     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -119,7 +131,6 @@ const ProfilePage = () => {
                     </div>
                 }
             </div>
-            <Btn onClick={() => { navigate('/diary/create') }}>Выложить Дневник</Btn>
         </>
     );
 }

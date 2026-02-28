@@ -10,7 +10,6 @@ const AuthorRegPage = () => {
         first_name: '',
         last_name: '',
         email: '',
-        patronymic: ''
     });
     const handleSubmit = async (e) => {
         e.preventDefault();

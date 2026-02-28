@@ -167,26 +167,59 @@ class RegisterView(generics.CreateAPIView):
 class CompleteRegistrationView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
+    
     def post(self, request):
-        if request.user.is_staff:
+        serializer = CompleteRegistrationSerializer(data=request.data, context={'user_id':request.user.id})
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=400)
+        try:
+            user = request.user
+            user.first_name = serializer.validated_data['first_name']
+            user.last_name = serializer.validated_data['last_name']
+            user.email = serializer.validated_data['email']
+            user.is_staff = True
+            user.save()
+            if hasattr(user, 'profile'):
+                user.profile.registration_complete = True
+                user.profile.save()
             return Response({
-                'error': 'Регистрация уже завершена'
-            }, status=status.HTTP_400_BAD_REQUEST)
-        
-        serializer = CompleteRegistrationSerializer(
-            request.user, 
-            data=request.data,
-            partial=True
-        )
-        
-        if serializer.is_valid():
-            user = serializer.save()
+                "status": "success",
+                "message": "Регистрация завершена",
+                "user": {
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "email": user.email,
+                    "is_staff": user.is_staff
+                }
+            }, status=200)
+            
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
             return Response({
-                'user': UserSerializer(user).data,
-                'message': 'Регистрация успешно завершена. Теперь у вас есть доступ к дополнительным функциям.'
-            }, status=status.HTTP_200_OK)
+                "status": "error",
+                "error": str(e)
+            }, status=500)
+        # if request.user.is_staff:
+        #     return Response({
+        #         'error': 'Регистрация уже завершена'
+        #     }, status=status.HTTP_400_BAD_REQUEST)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # serializer = CompleteRegistrationSerializer(
+        #     request.user, 
+        #     data=request.data,
+        #     partial=True
+        # )
+        
+        # if serializer.is_valid():
+        #     user = serializer.save()
+        #     return Response({
+        #         'user': UserSerializer(user).data,
+        #         'message': 'Регистрация успешно завершена. Теперь у вас есть доступ к дополнительным функциям.'
+        #     }, status=status.HTTP_200_OK)
+        
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(APIView):

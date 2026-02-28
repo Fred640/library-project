@@ -76,7 +76,6 @@ class DiaryCreateSerializer(serializers.ModelSerializer):
 
 
 class DiarySerializer(serializers.ModelSerializer):
-    """Сериализатор для чтения/отображения дневников"""
     username = serializers.ReadOnlyField(source='user.username')
     user_first_name = serializers.ReadOnlyField(source='user.first_name')
     user_last_name = serializers.ReadOnlyField(source='user.last_name')
@@ -88,7 +87,7 @@ class DiarySerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'slug', 'username', 'user_first_name', 'user_last_name', 'download_url']
         fields = [
             'id', 'title', 'slug', 'description',
-            'username', 'user_first_name', 'user_last_name', 'download_url',
+            'username', 'user_first_name', 'user_last_name', 'download_url', 'file_url'
         ]
     
     def get_file_url(self, obj):
@@ -103,7 +102,7 @@ class DiarySerializer(serializers.ModelSerializer):
         if obj.file:
             request = self.context.get('request')
             if request:
-                return request.build_absolute_uri(obj.file.url) + '?download=true'
+                return request.build_absolute_uri(f"/diary/{obj.slug}/download/")
             return obj.file.url
         return None
 
@@ -199,11 +198,10 @@ class FirstRegisterSerializer(serializers.ModelSerializer):
 
 
 class CompleteRegistrationSerializer(serializers.ModelSerializer):
-    patronymic = serializers.CharField(required=False, allow_blank=True, write_only=True)
     
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'patronymic']
+        fields = ['first_name', 'last_name', 'email']
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True},
@@ -212,7 +210,8 @@ class CompleteRegistrationSerializer(serializers.ModelSerializer):
     
     def validate_email(self, value):
         user = self.instance
-        if User.objects.filter(email=value).exclude(id=user.id).exists():
+        user_id = self.context.get('user_id')
+        if User.objects.filter(email=value).exclude(id=user_id).exists():
             raise serializers.ValidationError("Этот email уже используется")
         return value
     

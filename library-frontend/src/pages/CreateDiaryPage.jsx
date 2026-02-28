@@ -85,44 +85,30 @@ const CreateDiaryPage = () => {
 
     return (
         <>
-            <div className='mainDiv'>
+            <div className='create-diary-page'>
+                <div className='mainDiv'>
                 <div className='window'>
                     <div className='titleDiv'>
                         Создание дневника
                     </div>
                     <div>
-                        {/* Отображение ошибок */}
                         {error && (
-                            <div className="error-message" style={{
-                                backgroundColor: '#fff5f5',
-                                color: '#c53030',
-                                padding: '15px',
-                                margin: '0 20px 20px 20px',
-                                borderRadius: '10px',
-                                border: '1px solid #feb2b2'
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                                    <span style={{ fontSize: '20px' }}>⚠️</span>
-                                    <h3 style={{ margin: 0, fontSize: '16px' }}>Произошла ошибка:</h3>
+                            <div className="error-message">
+                                <div className="message-header">
+                                    <span className="message-icon">⚠️</span>
+                                    <h3 className="message-title">Произошла ошибка:</h3>
                                 </div>
-                                <p style={{ margin: 0, whiteSpace: 'pre-line' }}>{error}</p>
+                                <p className="message-text">{error}</p>
                             </div>
                         )}
                         
                         {success && createdDiary && (
-                            <div className="success-message" style={{
-                                backgroundColor: '#f0fff4',
-                                color: '#276749',
-                                padding: '15px',
-                                margin: '0 20px 20px 20px',
-                                borderRadius: '10px',
-                                border: '1px solid #9ae6b4'
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                                    <span style={{ fontSize: '20px' }}></span>
-                                    <h3 style={{ margin: 0, fontSize: '16px' }}>Дневник создан успешно!</h3>
+                            <div className="success-message">
+                                <div className="message-header">
+                                    <span className="message-icon"></span>
+                                    <h3 className="message-title">Дневник создан успешно!</h3>
                                 </div>
-                                <p style={{ margin: 0 }}>
+                                <p className="message-text">
                                     Дневник "<strong>{createdDiary.title}</strong>" был успешно создан.
                                 </p>
                             </div>
@@ -140,43 +126,24 @@ const CreateDiaryPage = () => {
                                 onChange={(e) => setTitle(e.target.value)}
                             />
                             <textarea 
-                                className="form-control" 
+                                className="form-control description-textarea" 
                                 placeholder="Описание" 
                                 id="description"
-                                style={{height:"100px", width:"500px", marginBottom:"20px"}}
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 required
                                 disabled={loading}
                             />
-                            <div style={{ 
-                                display: 'flex', 
-                                gap: '20px',
-                                flexWrap: 'wrap',
-                                marginBottom: '20px'
-                            }}>
+                            
+                            <div className="file-type-container">
                                 <div 
-                                    style={{
-                                        flex: 1,
-                                        minWidth: '200px',
-                                        padding: '20px',
-                                        border: `2px solid ${fileType === 'regular' ? '#007bff' : '#e2e8f0'}`,
-                                        borderRadius: '10px',
-                                        cursor: loading ? 'not-allowed' : 'pointer',
-                                        backgroundColor: fileType === 'regular' ? '#f0f8ff' : 'white',
-                                        transition: 'all 0.3s'
-                                    }}
+                                    className={`file-type-card ${fileType === 'regular' ? 'active' : ''}`}
                                     onClick={() => !loading && setFileType('regular')}
                                 >
-                                    <div style={{ 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        gap: '15px',
-                                        marginBottom: '10px'
-                                    }}>
+                                    <div className="file-type-content">
                                         <div>
-                                            <h4 style={{ margin: 0, fontSize: '16px' }}>Обычный файл</h4>
-                                            <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>
+                                            <h4 className="file-type-title">Обычный файл</h4>
+                                            <p className="file-type-description">
                                                 TXT, PDF, DOC, MD
                                             </p>
                                         </div>
@@ -186,32 +153,18 @@ const CreateDiaryPage = () => {
                                         checked={fileType === 'regular'}
                                         onChange={() => setFileType('regular')}
                                         disabled={loading}
-                                        style={{ display: 'none' }}
+                                        className="file-type-radio"
                                     />
                                 </div>
                                 
                                 <div 
-                                    style={{
-                                        flex: 1,
-                                        minWidth: '200px',
-                                        padding: '20px',
-                                        border: `2px solid ${fileType === 'zip' ? '#007bff' : '#e2e8f0'}`,
-                                        borderRadius: '10px',
-                                        cursor: loading ? 'not-allowed' : 'pointer',
-                                        backgroundColor: fileType === 'zip' ? '#f0f8ff' : 'white',
-                                        transition: 'all 0.3s'
-                                    }}
+                                    className={`file-type-card ${fileType === 'zip' ? 'active' : ''}`}
                                     onClick={() => !loading && setFileType('zip')}
                                 >
-                                    <div style={{ 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        gap: '15px',
-                                        marginBottom: '10px'
-                                    }}>
+                                    <div className="file-type-content">
                                         <div>
-                                            <h4 style={{ margin: 0, fontSize: '16px' }}>ZIP архив</h4>
-                                            <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>
+                                            <h4 className="file-type-title">ZIP архив</h4>
+                                            <p className="file-type-description">
                                                 Несколько файлов в архиве
                                             </p>
                                         </div>
@@ -221,48 +174,31 @@ const CreateDiaryPage = () => {
                                         checked={fileType === 'zip'}
                                         onChange={() => setFileType('zip')}
                                         disabled={loading}
-                                        style={{ display: 'none' }}
+                                        className="file-type-radio"
                                     />
                                 </div>
                             </div>
                             
-                            <div style={{ marginBottom: '40px' }}>
-                                <label style={{
-                                    display: 'block',
-                                    marginBottom: '10px',
-                                    fontWeight: '600',
-                                    color: '#333',
-                                    fontSize: '16px'
-                                }}>
+                            <div className="file-upload-section">
+                                <label className="file-upload-label">
                                     {fileType === 'zip' ? 'ZIP архив *' : 'Файл дневника *'}
                                 </label>
                                 
                                 <div 
-                                    style={{
-                                        border: '2px dashed #cbd5e0',
-                                        borderRadius: '10px',
-                                        padding: '40px 20px',
-                                        textAlign: 'center',
-                                        backgroundColor: '#f8fafc',
-                                        transition: 'all 0.3s',
-                                        cursor: loading ? 'not-allowed' : 'pointer'
-                                    }}
+                                    className={`file-dropzone ${loading ? 'disabled' : ''}`}
                                     onClick={() => !loading && document.getElementById('fileInput').click()}
                                     onDragOver={(e) => {
                                         e.preventDefault();
-                                        e.currentTarget.style.borderColor = '#007bff';
-                                        e.currentTarget.style.backgroundColor = '#f0f8ff';
+                                        e.currentTarget.classList.add('drag-over');
                                     }}
                                     onDragLeave={(e) => {
-                                        e.currentTarget.style.borderColor = '#cbd5e0';
-                                        e.currentTarget.style.backgroundColor = '#f8fafc';
+                                        e.currentTarget.classList.remove('drag-over');
                                     }}
                                     onDrop={(e) => {
                                         e.preventDefault();
                                         if (loading) return;
                                         
-                                        e.currentTarget.style.borderColor = '#cbd5e0';
-                                        e.currentTarget.style.backgroundColor = '#f8fafc';
+                                        e.currentTarget.classList.remove('drag-over');
                                         
                                         const droppedFile = e.dataTransfer.files[0];
                                         if (droppedFile) {
@@ -272,26 +208,19 @@ const CreateDiaryPage = () => {
                                 >
                                     {file ? (
                                         <>
-                                            <div style={{ fontSize: '50px', marginBottom: '15px' }}>
+                                            <div className="file-icon">
                                                 {fileType === 'zip' ? '' : ''}
                                             </div>
-                                            <p style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '5px' }}>
+                                            <p className="file-name">
                                                 {file.name}
                                             </p>
                                             <button
                                                 type="button"
+                                                className="file-remove-btn"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     setFile(null);
                                                     document.getElementById('fileInput').value = '';
-                                                }}
-                                                style={{
-                                                    padding: '8px 20px',
-                                                    backgroundColor: '#e53e3e',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer'
                                                 }}
                                             >
                                                 Удалить файл
@@ -299,28 +228,20 @@ const CreateDiaryPage = () => {
                                         </>
                                     ) : (
                                         <>
-                                            <div style={{ fontSize: '50px', marginBottom: '15px' }}>
+                                            <div className="upload-icon">
                                                 {fileType === 'zip' ? '' : ''}
                                             </div>
-                                            <p style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>
+                                            <p className="upload-title">
                                                 Нажмите или перетащите файл
                                             </p>
-                                            <p style={{ color: '#666', marginBottom: '20px' }}>
+                                            <p className="upload-description">
                                                 {fileType === 'zip' 
                                                     ? 'Поддерживаются только ZIP архивы' 
                                                     : 'Поддерживаются: TXT, PDF, DOC, DOCX, MD'}
                                             </p>
                                             <button
                                                 type="button"
-                                                style={{
-                                                    padding: '10px 25px',
-                                                    backgroundColor: '#007bff',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                    fontWeight: 'bold'
-                                                }}
+                                                className="upload-button"
                                             >
                                                 Выбрать файл
                                             </button>
@@ -333,20 +254,16 @@ const CreateDiaryPage = () => {
                                     type="file"
                                     accept={fileType === 'zip' ? '.zip' : '.txt,.pdf,.doc,.docx,.md'}
                                     onChange={handleFileChange}
-                                    style={{ display: 'none' }}
+                                    className="hidden-input"
                                     disabled={loading}
                                 />
                                 
-                                <p style={{ marginTop: '10px', fontSize: '14px', color: '#718096' }}>
+                                <p className="file-size-hint">
                                     Максимальный размер файла: 100MB
                                 </p>
                             </div>
-                            <div style={{
-                                display: 'flex',
-                                gap: '20px',
-                                justifyContent: 'center',
-                                marginTop: '20px'
-                            }}>
+                            
+                            <div className="form-actions">
                                 <button
                                     type="button"
                                     onClick={() => navigate(-1)}
@@ -360,19 +277,11 @@ const CreateDiaryPage = () => {
                                     type="submit"
                                     className='submitButton'
                                     disabled={loading || !title || !description || !file}
-                                    
                                 >
                                     {loading ? (
                                         <>
                                             <span>Создание...</span>
-                                            <div style={{
-                                                width: '16px',
-                                                height: '16px',
-                                                border: '2px solid rgba(255,255,255,0.3)',
-                                                borderTopColor: 'white',
-                                                borderRadius: '50%',
-                                                animation: 'spin 1s linear infinite'
-                                            }}></div>
+                                            <div className="spinner"></div>
                                         </>
                                     ) : (
                                         'Создать дневник'
@@ -383,6 +292,8 @@ const CreateDiaryPage = () => {
                     </div>
                 </div>
             </div>
+        </div>
+            
         </>
     );
 };
